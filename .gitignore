@@ -1,0 +1,10 @@
+target
+out
+*.iml
+.idea
+log
+logs
+.log
+pom.xml.versionsBackup
+build
+dest
