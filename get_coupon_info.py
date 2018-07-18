@@ -22,7 +22,7 @@ def get_couponNo(cookieStr, oid):
 
     response = requests.get('https://api.ffan.com/wechatxmt/v1/order', headers=headers, params=params)
     result = response.text
-    print('===>\n' + result)
+    # print('===>\n' + result)
     return result
 
     # NB. Original query string below. It seems impossible to parse and

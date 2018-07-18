@@ -36,7 +36,7 @@ def get_coupon(memberId, productId, mobile, cookieStr, puid):
     response = requests.post('https://api.ffan.com/wechatxmt/v1/order/create/proxy', headers=headers, params=params,
                              data=data)
     result = response.text
-    print('=========>' + result)
+    # print('=========>' + result)
     return result
 
 

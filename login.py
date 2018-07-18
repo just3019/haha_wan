@@ -28,7 +28,7 @@ def wanda_login(mobile, code):
 
     response = requests.post('https://api.ffan.com/microapp/v1/ffanLogin', headers=headers, data=data)
     result = response.text
-    print('登录后的信息：\n' + result)
+    # print('登录后的信息：\n' + result)
     return result
 
 

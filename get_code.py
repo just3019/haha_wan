@@ -24,7 +24,7 @@ def get_code(mobile):
 
     response = requests.post('https://api.ffan.com/wechatxmt/v1/member/verifyCode', headers=headers, params=params,
                              data=data)
-    print('获取验证码接口返回参数：\n' + response.text)
+    # print('获取验证码接口返回参数：\n' + response.text)
 
     # NB. Original query string below. It seems impossible to parse and
     # reproduce query strings 100% accurately so the one below is given

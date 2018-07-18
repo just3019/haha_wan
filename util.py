@@ -23,10 +23,10 @@ def get_phone():
     MOBILE = request.urlopen(request.Request(url=url, headers=header_dict)).read().decode(encoding='utf-8')
     if MOBILE.split('|')[0] == 'success':
         MOBILE = MOBILE.split('|')[1]
-        print('获取号码是:\n' + MOBILE)
+        # print('获取号码是:\n' + MOBILE)
         return MOBILE
     else:
-        print('获取TOKEN错误,错误代码' + MOBILE)
+        # print('获取TOKEN错误,错误代码' + MOBILE)
         return ''
 
 
@@ -49,21 +49,21 @@ def get_code_login(MOBILE, productId):
     if text1.split('|')[0] == "success":
         text = text1.split('|')[1]
         TIME = str(round(TIME2 - TIME1, 1))
-        print('短信内容是' + text + '\n耗费时长' + TIME + 's,循环数是' + ROUND)
-    else:
-        print('获取短信超时，错误代码是' + text1 + ',循环数是' + ROUND)
+        # print('短信内容是' + text + '\n耗费时长' + TIME + 's,循环数是' + ROUND)
+    # else:
+        # print('获取短信超时，错误代码是' + text1 + ',循环数是' + ROUND)
 
     # 释放号码
-    url = 'http://api.fxhyd.cn/UserInterface.aspx?action=release&token=' + TOKEN + '&itemid=' + ITEMID + '&mobile=' + MOBILE
-    RELEASE = request.urlopen(request.Request(url=url, headers=header_dict)).read().decode(encoding='utf-8')
-    if RELEASE == 'success':
-        print('号码没有成功释放')
+    # url = 'http://api.fxhyd.cn/UserInterface.aspx?action=release&token=' + TOKEN + '&itemid=' + ITEMID + '&mobile=' + MOBILE
+    # RELEASE = request.urlopen(request.Request(url=url, headers=header_dict)).read().decode(encoding='utf-8')
+    # if RELEASE == 'success':
+    #     print('号码没有成功释放')
 
     # 拉黑号码
-    url = 'http://api.fxhyd.cn/UserInterface.aspx?action=addignore&token=' + TOKEN + '&itemid=' + ITEMID + '&mobile=' + MOBILE
-    BLACK = request.urlopen(request.Request(url=url, headers=header_dict)).read().decode(encoding='utf-8')
-    if BLACK == 'success':
-        print('号码没有拉黑成功')
+    # url = 'http://api.fxhyd.cn/UserInterface.aspx?action=addignore&token=' + TOKEN + '&itemid=' + ITEMID + '&mobile=' + MOBILE
+    # BLACK = request.urlopen(request.Request(url=url, headers=header_dict)).read().decode(encoding='utf-8')
+    # if BLACK == 'success':
+    #     print('号码没有拉黑成功')
 
     code = text[text.find('，') - 8: text.find('，')]
     pat = "[0-9]+"
@@ -71,10 +71,10 @@ def get_code_login(MOBILE, productId):
     IC = re.search(pat, code)
     if IC:
         code = IC.group()
-        print("验证码是:\n" + code)
-    else:
-        print("请重新设置表达式")
-    print("验证码为：" + code)
+    #     print("验证码是:\n" + code)
+    # else:
+    #     print("请重新设置表达式")
+    # print("验证码为：" + code)
     result = json.loads(login.wanda_login(MOBILE, code))
     uid = result['data']['uid']
     cookieStr = result['data']['cookieStr']
@@ -88,7 +88,7 @@ def get_code_login(MOBILE, productId):
 
 if __name__ == '__main__':
     # print('开始')
-    for i in range(0, 10):
+    for i in range(0, 1):
         mobile = ''
         try:
             mobile = get_phone()
