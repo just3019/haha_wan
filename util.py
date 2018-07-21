@@ -51,7 +51,7 @@ def get_code_login(MOBILE, productId):
         TIME = str(round(TIME2 - TIME1, 1))
         # print('短信内容是' + text + '\n耗费时长' + TIME + 's,循环数是' + ROUND)
     # else:
-        # print('获取短信超时，错误代码是' + text1 + ',循环数是' + ROUND)
+    # print('获取短信超时，错误代码是' + text1 + ',循环数是' + ROUND)
 
     # 释放号码
     # url = 'http://api.fxhyd.cn/UserInterface.aspx?action=release&token=' + TOKEN + '&itemid=' + ITEMID + '&mobile=' + MOBILE
@@ -84,6 +84,10 @@ def get_code_login(MOBILE, productId):
     couponInfoResult = json.loads(get_coupon_info.get_couponNo(cookieStr, oid))
     couponNo = couponInfoResult['data']['product'][0]['couponNo']
     print(MOBILE + "  " + "https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=" + couponNo)
+
+
+def test():
+    print('11111111')
 
 
 if __name__ == '__main__':

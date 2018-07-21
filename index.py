@@ -11,6 +11,11 @@ from urllib import parse, request
 import time
 import re
 
+
+def logs(s):
+    f1.write('%s\n' % s)
+
+
 header_dict = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko'}
 
 # 登陆/获取TOKEN
@@ -97,3 +102,8 @@ if IC:
     print("验证码是:\n" + IC.group())
 else:
     print("请重新设置表达式")
+
+if __name__ == '__main__':
+    global f1
+    f1 = open('%s.txt' % time.strftime("%Y%m%d%H%M"), 'a')
+    logs('sfa')
