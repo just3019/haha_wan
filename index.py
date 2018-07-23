@@ -6,7 +6,7 @@
 # 官方网址：www.51ym.me
 # 技术支持QQ：2114927217
 # 发布时间：217-12-11
-
+import json
 from urllib import parse, request
 import time
 import re
@@ -104,6 +104,10 @@ else:
     print("请重新设置表达式")
 
 if __name__ == '__main__':
-    global f1
-    f1 = open('%s.txt' % time.strftime("%Y%m%d%H%M"), 'a')
-    logs('sfa')
+    # global f1
+    # f1 = open('%s.txt' % time.strftime("%Y%m%d%H%M"), 'a')
+    # logs('sfa')
+    a = '{"status":200,"message":"\u6210\u529f","data":{"orderId":"51898425408154","memberId":"15000000369748154","status":"PAY_SUCCESS","createTime":1532323775,"createTimeYmd":"2018\u5e7407\u670823\u65e5","createTimeHi":"13:29","payTime":0,"orderAmt":"0.00","realPay":"0","orderCode":7010,"tradeCode":7010,"orderCodeName":"\u4f18\u60e0\u5238","usePoint":"0","usePointDiscount":"0","paySequenceNo":null,"orderSrc":2030,"payOrderNo":null,"usePointFlag":0,"useCouponFlag":0,"refund":"","reBuy":1,"currentStatus":"\u4ed8\u6b3e\u6210\u529f","product":[{"orderNo":"51898425408154","productId":"20180514141349","productCount":1,"productPrice":"0","productCode":"7010","merchantId":"10045938","productInfo":{"parentId":"20180514141349","saleStartTime":1526278492,"title":"\u5c0f\u7a0b\u5e8f\u4e13\u5c5e\u4e34\u65f6\u505c\u8f66\u724c","price":"0.00","pic":"T1CuhgB7Jg1RCvBVdK","saleEndTime":1532948281},"title":"\u5c0f\u7a0b\u5e8f\u4e13\u5c5e\u4e34\u65f6\u505c\u8f66\u724c","picture":"T1CuhgB7Jg1RCvBVdK","applyRefundFlag":0,"refundFinishedFlag":0,"realPayAmt":"0","couponNo":null}],"track":[{"logTime":1532323776146,"logInfo":"\u5546\u54c1\u5df2\u53d1\u9001","operator":"\u7cfb\u7edf"},{"logTime":1532323776004,"logInfo":"\u8ba2\u5355\u5df2\u4ed8\u6b3e","operator":"\u7cfb\u7edf"},{"logTime":1532323775887,"logInfo":"\u8ba2\u5355\u5df2\u63d0\u4ea4","operator":"\u5ba2\u6237"}],"store":[],"buyType":1,"couponList":[],"priceDetail":{"orderAmt":"0.00","usePoint":"0","memberPromotion":0,"combinationpromotion":0,"userYouHui":0,"userDuiHuan":0,"realpayAmt":"0"},"dispatching":"","promotionList":[],"operateCode":[],"payType":""}}';
+    result = json.loads(a)
+    if result['data']['product'][0]['couponNo'] is None:
+        print(1)

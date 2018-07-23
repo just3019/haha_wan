@@ -15,6 +15,7 @@ channelId = '1003'
 type = '1001'
 adSpaceId = 'couponList'
 plazaId = '1004483'
+count = 0
 
 
 def log(s):
@@ -229,6 +230,7 @@ def get_code_login(MOBILE, index):
         ROUND = ROUND + 1
 
     ROUND = str(ROUND)
+    text = ''
     if text1.split('|')[0] == "success":
         text = text1.split('|')[1]
         TIME = str(round(TIME2 - TIME1, 1))
@@ -248,6 +250,8 @@ def get_code_login(MOBILE, index):
     if BLACK == 'success':
         print('号码拉黑成功')
 
+    if '欢迎注册飞凡会员' not in text:
+        raise RuntimeError('该会员已经是注册用户')
     code = text[text.find('，') - 8: text.find('，')]
     pat = "[0-9]+"
     IC = re.search(pat, code)
@@ -270,30 +274,43 @@ def get_code_login(MOBILE, index):
     couponInfoResult = json.loads(get_couponNo(cookieStr, oid))
     # 处理没有成功拿到优惠券操作
     if couponInfoResult['status'] != 200:
-        json.loads(wanda_login(MOBILE, code))
+        result = json.loads(wanda_login(MOBILE, code))
         cookieStr = result['data']['cookieStr']
         couponInfoResult = json.loads(get_couponNo(cookieStr, oid))
     couponNo = couponInfoResult['data']['product'][0]['couponNo']
+    print('优惠券：' + couponNo)
+    if couponNo is None:
+        for i in range(0, 3):
+            couponInfoResult = json.loads(get_couponNo(cookieStr, oid))
+            if couponInfoResult['status'] == 200:
+                json.loads(wanda_login(MOBILE, code))
+                couponNo = couponInfoResult['data']['product'][0]['couponNo']
+                if couponNo is not None:
+                    break
+        raise RuntimeError("优惠券为null")
+
     log(MOBILE + "  " + "https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=" + couponNo)
 
 
 def deal(num, index):
-    for i in range(0, num):
+    global count
+    count = 0
+    while count < num:
         mobile = ''
         try:
             mobile = get_phone()
             if mobile == '':
                 continue
             get_code_login(mobile, index)
+            count += 1
         except RuntimeError as e:
             print(e)
-            continue
 
 
 def ui():
     root = Tk()  # 创建窗口对象的背景色
     # 创建两个列表
-    root.title('飞凡刷粉工具-回民区万达版')
+    root.title('飞凡刷粉工具-回民万达版')
     root.geometry('600x600')
     label1 = Label(root, text='生成粉丝数量：')
     global entry1

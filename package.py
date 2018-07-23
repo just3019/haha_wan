@@ -11,6 +11,11 @@ import requests
 header_dict = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko'}
 TOKEN = '00499849cbf687835af75182698438eb3c2ccdf4'
 ITEMID = '7982'
+channelId = '1003'
+type = '1001'
+adSpaceId = 'couponList'
+plazaId = '1000769'
+count = 0
 
 
 def log(s):
@@ -44,7 +49,8 @@ def submit():
         if index == '' and index < 0:
             index = 0
         deal(num, index)
-    except:
+    except RuntimeError as e:
+        print(e)
         log('获取失败，请确保输入参数都是整数')
 
 
@@ -97,7 +103,7 @@ def wanda_login(mobile, code):
     data = [
         ('mobile', mobile),
         ('verifyCode', code),
-        ('plazaId', '1000770'),
+        ('plazaId', plazaId),
         ('source', 'MINA'),
         ('wxFfanToken', '6cc7fda5c8674951b446126226ac51ac'),
         ('wandaUser', '[object Object]'),
@@ -140,7 +146,7 @@ def get_coupon(memberId, productId, mobile, cookieStr, puid):
     data = [
         ('memberId', memberId),
         ('actionType', 'create'),
-        ('remark', '{"orderType":"coupon","plazaId":1000769,"adSpaceId":"couponList"}'),
+        ('remark', '{"orderType":"coupon","plazaId":' + plazaId + ',"adSpaceId":"' + adSpaceId + '"}'),
         ('productInfos', productInfos),
         ('clientInfo', '{"clientVersion":"wx07dfb5d79541eca9","ipAddr":"","clientType":"11"}'),
         ('tradeCode', '7010'),
@@ -193,10 +199,10 @@ def get_product_info():
     }
 
     params = (
-        ('adSpaceId', 'couponList'),
-        ('plazaId', '1000769'),
-        ('channelId', '1003'),
-        ('type', '1001'),
+        ('adSpaceId', adSpaceId),
+        ('plazaId', plazaId),
+        ('channelId', channelId),
+        ('type', type),
         ('pageNum', '1'),
         ('pageSize', '10'),
     )
@@ -218,11 +224,13 @@ def get_code_login(MOBILE, index):
     ROUND = 1
     while (TIME2 - TIME1) < WAIT and not text1.split('|')[0] == "success":
         time.sleep(5)
+        print
         text1 = request.urlopen(request.Request(url=url, headers=header_dict)).read().decode(encoding='utf-8')
         TIME2 = time.time()
         ROUND = ROUND + 1
 
     ROUND = str(ROUND)
+    text = ''
     if text1.split('|')[0] == "success":
         text = text1.split('|')[1]
         TIME = str(round(TIME2 - TIME1, 1))
@@ -242,6 +250,8 @@ def get_code_login(MOBILE, index):
     if BLACK == 'success':
         print('号码拉黑成功')
 
+    if '欢迎注册飞凡会员' not in text:
+        raise RuntimeError('该会员已经是注册用户')
     code = text[text.find('，') - 8: text.find('，')]
     pat = "[0-9]+"
     IC = re.search(pat, code)
@@ -268,20 +278,43 @@ def get_code_login(MOBILE, index):
         cookieStr = result['data']['cookieStr']
         couponInfoResult = json.loads(get_couponNo(cookieStr, oid))
     couponNo = couponInfoResult['data']['product'][0]['couponNo']
+    if couponNo is None:
+        for i in range(0, 3):
+            couponInfoResult = json.loads(get_couponNo(cookieStr, oid))
+            if couponInfoResult['status'] != 200:
+                json.loads(wanda_login(MOBILE, code))
+                couponNo = couponInfoResult['data']['product'][0]['couponNo']
+                if couponNo is not None:
+                    break
+        raise RuntimeError("优惠券为null")
+
     log(MOBILE + "  " + "https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=" + couponNo)
 
 
 def deal(num, index):
-    for i in range(0, num):
+    global count
+    count = 0
+    # for i in range(0, num):
+    #     mobile = ''
+    #     try:
+    #         mobile = get_phone()
+    #         if mobile == '':
+    #             continue
+    #         get_code_login(mobile, index)
+    #         count += 1
+    #     except RuntimeError as e:
+    #         print(e)
+    #         continue
+    while count < num:
         mobile = ''
         try:
             mobile = get_phone()
             if mobile == '':
                 continue
             get_code_login(mobile, index)
-        except:
-            print(mobile)
-            continue
+            count += 1
+        except RuntimeError as e:
+            print(e)
 
 
 def ui():
