@@ -1,3 +1,6 @@
+import json
+import time
+
 import requests
 
 cookies = {
@@ -29,15 +32,17 @@ params = (
     ('scopes[]', 'DQFquanjituan'),
     ('scope', 'DQFquanjituan'),
     ('orgType', '10001'),
-    ('mobileNo', '13675822155'),
+    ('mobileNo', '13675822154'),
     ('wechatBind', '3'),
     ('drainageTypeshow', 'false'),
     ('drainagedateshow', 'false'),
-    ('timestr', '1532340111603'),
+    ('timestr', time.time()),
 )
 
 response = requests.get('http://wanda.ffan.com/sail/member/list', headers=headers, params=params, cookies=cookies)
-print(response.text)
+result = json.loads(response.text)
+print(result)
+print(len(result['data']) == 0)
 
 # NB. Original query string below. It seems impossible to parse and
 # reproduce query strings 100% accurately so the one below is given
