@@ -9,15 +9,15 @@ import re
 import requests
 
 header_dict = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko'}
-TOKEN = '00499849cbf687835af75182698438eb3c2ccdf4'
+TOKEN = '007064165942ad7749271ead0a851d4ebefc0fb3'
 ITEMID = '7982'
 channelId = '1003'
 type = '1001'
 adSpaceId = 'couponList'
-plazaId = '1000769'
+plazaId = '1104483'
 count = 0
-province = '330000'
-place = '平阳'
+# province = '650000'
+place = '回民区'
 
 
 def log(s):
@@ -58,7 +58,7 @@ def submit():
 
 def get_phone():
     EXCLUDENO = ''  # 排除号段170_171
-    url = 'http://api.fxhyd.cn/UserInterface.aspx?action=getmobile&token=' + TOKEN + '&itemid=' + ITEMID + '&excludeno=' + EXCLUDENO + '&province=' + province
+    url = 'http://api.fxhyd.cn/UserInterface.aspx?action=getmobile&token=' + TOKEN + '&itemid=' + ITEMID + '&excludeno=' + EXCLUDENO
     MOBILE = request.urlopen(request.Request(url=url, headers=header_dict)).read().decode(encoding='utf-8')
     print(MOBILE)
     if MOBILE.split('|')[0] == 'success':
@@ -259,10 +259,10 @@ def get_product_info():
     }
 
     params = (
-        ('adSpaceId', adSpaceId),
+        ('adSpaceId', 'couponList'),
         ('plazaId', plazaId),
-        ('channelId', channelId),
-        ('type', type),
+        ('channelId', '1003'),
+        ('type', '1001'),
         ('pageNum', '1'),
         ('pageSize', '10'),
     )
@@ -276,14 +276,15 @@ def get_product_info():
 
 def get_code_login(MOBILE, index):
     get_code(MOBILE)
-    WAIT = 25  # 接受短信时长60s
+    WAIT = 30  # 接受短信时长60s
     url = 'http://api.fxhyd.cn/UserInterface.aspx?action=getsms&token=' + TOKEN + '&itemid=' + ITEMID + '&mobile=' + MOBILE + '&release=1'
     text1 = request.urlopen(request.Request(url=url, headers=header_dict)).read().decode(encoding='utf-8')
     TIME1 = time.time()
     TIME2 = time.time()
     ROUND = 1
     while (TIME2 - TIME1) < WAIT and not text1.split('|')[0] == "success":
-        time.sleep(5)
+        time.sleep(2)
+        print(text1)
         text1 = request.urlopen(request.Request(url=url, headers=header_dict)).read().decode(encoding='utf-8')
         TIME2 = time.time()
         ROUND = ROUND + 1
@@ -318,6 +319,8 @@ def get_code_login(MOBILE, index):
         code = IC.group()
 
     print("验证码为：" + code)
+    if code is None:
+        raise RuntimeError('验证码为空')
 
     # 模拟飞凡小程序登录
     result = json.loads(wanda_login(MOBILE, code))

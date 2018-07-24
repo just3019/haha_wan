@@ -9,15 +9,15 @@ import re
 import requests
 
 header_dict = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko'}
-TOKEN = '00499849cbf687835af75182698438eb3c2ccdf4'
+TOKEN = '00707771d8232a2de49bb1a4189d57d7b5ea5b23'
 ITEMID = '7982'
 channelId = '1003'
 type = '1001'
 adSpaceId = 'couponList'
-plazaId = '1000769'
+plazaId = '1102223'
 count = 0
 province = '330000'
-place = '平阳'
+place = '湖州'
 
 
 def log(s):
@@ -259,10 +259,10 @@ def get_product_info():
     }
 
     params = (
-        ('adSpaceId', adSpaceId),
-        ('plazaId', plazaId),
-        ('channelId', channelId),
-        ('type', type),
+        ('adSpaceId', 'couponList'),
+        ('plazaId', '1102223'),
+        ('channelId', '1003'),
+        ('type', '1001'),
         ('pageNum', '1'),
         ('pageSize', '10'),
     )
@@ -276,7 +276,8 @@ def get_product_info():
 
 def get_code_login(MOBILE, index):
     get_code(MOBILE)
-    WAIT = 25  # 接受短信时长60s
+    WAIT = 60  # 接受短信时长60s
+    print(MOBILE)
     url = 'http://api.fxhyd.cn/UserInterface.aspx?action=getsms&token=' + TOKEN + '&itemid=' + ITEMID + '&mobile=' + MOBILE + '&release=1'
     text1 = request.urlopen(request.Request(url=url, headers=header_dict)).read().decode(encoding='utf-8')
     TIME1 = time.time()
@@ -284,6 +285,7 @@ def get_code_login(MOBILE, index):
     ROUND = 1
     while (TIME2 - TIME1) < WAIT and not text1.split('|')[0] == "success":
         time.sleep(5)
+        print
         text1 = request.urlopen(request.Request(url=url, headers=header_dict)).read().decode(encoding='utf-8')
         TIME2 = time.time()
         ROUND = ROUND + 1
@@ -309,8 +311,8 @@ def get_code_login(MOBILE, index):
     if BLACK == 'success':
         print('号码拉黑成功')
 
-    # if '欢迎注册飞凡会员' not in text:
-    #     raise RuntimeError('该会员已经是注册用户')
+    if '欢迎注册飞凡会员' not in text:
+        raise RuntimeError('该会员已经是注册用户')
     code = text[text.find('，') - 8: text.find('，')]
     pat = "[0-9]+"
     IC = re.search(pat, code)
@@ -338,10 +340,14 @@ def get_code_login(MOBILE, index):
         couponInfoResult = json.loads(get_couponNo(cookieStr, oid))
     couponNo = couponInfoResult['data']['product'][0]['couponNo']
     if couponNo is None:
-        couponInfoResult = json.loads(get_couponNo(cookieStr, oid))
-        couponNo = couponInfoResult['data']['product'][0]['couponNo']
-        if couponNo is None:
-            raise RuntimeError("优惠券为null")
+        for i in range(0, 3):
+            couponInfoResult = json.loads(get_couponNo(cookieStr, oid))
+            if couponInfoResult['status'] != 200:
+                json.loads(wanda_login(MOBILE, code))
+                couponNo = couponInfoResult['data']['product'][0]['couponNo']
+                if couponNo is not None:
+                    break
+        raise RuntimeError("优惠券为null")
 
     log(MOBILE + "  " + "https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=" + couponNo)
 
