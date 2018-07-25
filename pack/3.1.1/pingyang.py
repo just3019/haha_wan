@@ -283,7 +283,7 @@ def get_code_login(MOBILE, index):
     TIME2 = time.time()
     ROUND = 1
     while (TIME2 - TIME1) < WAIT and not text1.split('|')[0] == "success":
-        time.sleep(5)
+        time.sleep(2)
         print(text1)
         text1 = request.urlopen(request.Request(url=url, headers=header_dict)).read().decode(encoding='utf-8')
         TIME2 = time.time()

@@ -9,15 +9,15 @@ import re
 import requests
 
 header_dict = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko'}
-TOKEN = '00499849cbf687835af75182698438eb3c2ccdf4'
+TOKEN = '007056140310e2f0d4c284953feeb964b150d4cc'
 ITEMID = '7982'
 channelId = '1003'
 type = '1001'
 adSpaceId = 'couponList'
-plazaId = '1000769'
+plazaId = '1100573'
 count = 0
-province = '330000'
-place = '平阳'
+province = '230000'
+place = '鸡西'
 
 
 def log(s):
@@ -283,7 +283,7 @@ def get_code_login(MOBILE, index):
     TIME2 = time.time()
     ROUND = 1
     while (TIME2 - TIME1) < WAIT and not text1.split('|')[0] == "success":
-        time.sleep(5)
+        time.sleep(2)
         print(text1)
         text1 = request.urlopen(request.Request(url=url, headers=header_dict)).read().decode(encoding='utf-8')
         TIME2 = time.time()
