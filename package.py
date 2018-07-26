@@ -283,7 +283,7 @@ def get_code_login(MOBILE, index):
     TIME2 = time.time()
     ROUND = 1
     while (TIME2 - TIME1) < WAIT and not text1.split('|')[0] == "success":
-        time.sleep(5)
+        time.sleep(2)
         print(text1)
         text1 = request.urlopen(request.Request(url=url, headers=header_dict)).read().decode(encoding='utf-8')
         TIME2 = time.time()
@@ -310,6 +310,8 @@ def get_code_login(MOBILE, index):
     if BLACK == 'success':
         print('号码拉黑成功')
 
+    # if '欢迎注册飞凡会员' not in text:
+    #     raise RuntimeError('该会员已经是注册用户')
     code = text[text.find('，') - 8: text.find('，')]
     pat = "[0-9]+"
     IC = re.search(pat, code)

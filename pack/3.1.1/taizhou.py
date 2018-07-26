@@ -16,7 +16,7 @@ type = '1001'
 adSpaceId = 'couponList'
 plazaId = '1100650'
 count = 0
-# province = '330000'
+province = '330000'
 place = '台州'
 
 
@@ -58,7 +58,7 @@ def submit():
 
 def get_phone():
     EXCLUDENO = ''  # 排除号段170_171
-    url = 'http://api.fxhyd.cn/UserInterface.aspx?action=getmobile&token=' + TOKEN + '&itemid=' + ITEMID + '&excludeno=' + EXCLUDENO
+    url = 'http://api.fxhyd.cn/UserInterface.aspx?action=getmobile&token=' + TOKEN + '&itemid=' + ITEMID + '&excludeno=' + EXCLUDENO + '&province=' + province
     MOBILE = request.urlopen(request.Request(url=url, headers=header_dict)).read().decode(encoding='utf-8')
     print(MOBILE)
     if MOBILE.split('|')[0] == 'success':
@@ -395,6 +395,7 @@ def ui():
 
 if __name__ == '__main__':
     global file_path
-    file_path = '%s.txt' % time.strftime("%Y%m%d%H%M")
+    file_path = '%s.txt' % time.strftime("%Y%m%d")
+    print(file_path)
     ui()
     # get_phone()

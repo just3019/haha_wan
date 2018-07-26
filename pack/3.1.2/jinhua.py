@@ -278,7 +278,7 @@ def get_product_info():
 
 def get_code_login(MOBILE, index):
     get_code(MOBILE)
-    WAIT = 60  # 接受短信时长60s
+    WAIT = 30  # 接受短信时长60s
     url = 'http://api.fxhyd.cn/UserInterface.aspx?action=getsms&token=' + TOKEN + '&itemid=' + ITEMID + '&mobile=' + MOBILE + '&release=1'
     text1 = request.urlopen(request.Request(url=url, headers=header_dict)).read().decode(encoding='utf-8')
     TIME1 = time.time()
