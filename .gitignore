@@ -8,3 +8,4 @@ logs
 pom.xml.versionsBackup
 build
 dest
+__*
