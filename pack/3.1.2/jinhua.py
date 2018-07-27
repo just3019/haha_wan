@@ -339,6 +339,8 @@ def get_code_login(MOBILE, index):
         json.loads(wanda_login(MOBILE, code))
         cookieStr = result['data']['cookieStr']
         couponInfoResult = json.loads(get_couponNo(cookieStr, oid))
+        if couponInfoResult['status'] != 200:
+            raise RuntimeError("fail get couponNo")
     couponNo = couponInfoResult['data']['product'][0]['couponNo']
     if couponNo is None:
         couponInfoResult = json.loads(get_couponNo(cookieStr, oid))
@@ -395,7 +397,7 @@ def ui():
 
 if __name__ == '__main__':
     global file_path
-    file_path = '%s.txt' % time.strftime("%Y%m%d")
+    file_path = place + '%s.txt' % time.strftime("%Y%m%d")
     print(file_path)
     ui()
     # get_phone()
