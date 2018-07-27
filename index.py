@@ -42,15 +42,15 @@ TOKEN = '00499849cbf687835af75182698438eb3c2ccdf4'  # 输入TOKEN
 #     print('获取TOKEN错误,错误代码' + ACCOUNT1)
 
 # 获取手机号码
-# ITEMID = '7982'  # 项目编号
-# EXCLUDENO = ''  # 排除号段170_171
-# url = 'http://api.fxhyd.cn/UserInterface.aspx?action=getmobile&token=' + TOKEN + '&itemid=' + ITEMID + '&excludeno=' + EXCLUDENO
-# MOBILE1 = request.urlopen(request.Request(url=url, headers=header_dict)).read().decode(encoding='utf-8')
-# if MOBILE1.split('|')[0] == 'success':
-#     MOBILE = MOBILE1.split('|')[1]
-#     print('获取号码是:\n' + MOBILE)
-# else:
-#     print('获取TOKEN错误,错误代码' + MOBILE1)
+ITEMID = '7982'  # 项目编号
+EXCLUDENO = ''  # 排除号段170_171
+url = 'http://api.fxhyd.cn/UserInterface.aspx?action=getmobile&token=' + TOKEN + '&itemid=' + ITEMID + '&excludeno=' + EXCLUDENO
+MOBILE1 = request.urlopen(request.Request(url=url, headers=header_dict)).read().decode(encoding='utf-8')
+if MOBILE1.split('|')[0] == 'success':
+    MOBILE = MOBILE1.split('|')[1]
+    print('获取号码是:\n' + MOBILE)
+else:
+    print('获取TOKEN错误,错误代码' + MOBILE1)
 #
 # # 获取短信，注意线程挂起5秒钟，每次取短信最少间隔5秒
 # TOKEN = TOKEN  # TOKEN
@@ -92,20 +92,20 @@ TOKEN = '00499849cbf687835af75182698438eb3c2ccdf4'  # 输入TOKEN
 # if BLACK == 'success':
 #     print('号码拉黑成功')
 
-str = '【飞凡】短信验证码 498820 ，欢迎注册飞凡会员。如需帮助，请关注微信号“飞凡逛街”联系在线客服。'
-print(str[str.find('，') - 8: str.find('，')])
-# 提取短信内容中的数字验证码
-pat = "[0-9]+"
-IC = 0
-IC = re.search(pat, str)
-if IC:
-    print("验证码是:\n" + IC.group())
-else:
-    print("请重新设置表达式")
-
-a = '{"status":"0000","message":"成功","data":[{"memberCode":"228167255530831872","name":"","mobileNo":"14726502729","rating":"普通","ratingId":"1","points":0,"regDate":1532328913000,"regTime":1532328913000,"fromOrg":"东营万达广场","expandingType":"引流","expandingChannel":"新媒体小程序","expandingTypeCode":"drainage","expandingChannelCode":"20","salesUserName":null,"memberStatus":"NORMAL","sex":"","certificateType":"","certificateCode":"","consumeAmountSum":null,"createUserName":null,"refereeUserName":null,"descRuleVO":null,"plazaId":"1000985","plazaName":null,"storeId":null,"lastConsumeTime":1532328922000,"firstLoginTime":"2018-07-23 14:55:13","couponType":null,"couponBusiness":null,"useTime":null,"tinyOrgId":"1000985","tinyOrgName":"东营万达广场"}],"_metadata":{"totalCount":1,"pageIndex":0,"pageSize":0}}'
-b = json.loads(a)
-print(b['_metadata']['totalCount'])
+# str = '【飞凡】短信验证码 498820 ，欢迎注册飞凡会员。如需帮助，请关注微信号“飞凡逛街”联系在线客服。'
+# print(str[str.find('，') - 8: str.find('，')])
+# # 提取短信内容中的数字验证码
+# pat = "[0-9]+"
+# IC = 0
+# IC = re.search(pat, str)
+# if IC:
+#     print("验证码是:\n" + IC.group())
+# else:
+#     print("请重新设置表达式")
+#
+# a = '{"status":"0000","message":"成功","data":[{"memberCode":"228167255530831872","name":"","mobileNo":"14726502729","rating":"普通","ratingId":"1","points":0,"regDate":1532328913000,"regTime":1532328913000,"fromOrg":"东营万达广场","expandingType":"引流","expandingChannel":"新媒体小程序","expandingTypeCode":"drainage","expandingChannelCode":"20","salesUserName":null,"memberStatus":"NORMAL","sex":"","certificateType":"","certificateCode":"","consumeAmountSum":null,"createUserName":null,"refereeUserName":null,"descRuleVO":null,"plazaId":"1000985","plazaName":null,"storeId":null,"lastConsumeTime":1532328922000,"firstLoginTime":"2018-07-23 14:55:13","couponType":null,"couponBusiness":null,"useTime":null,"tinyOrgId":"1000985","tinyOrgName":"东营万达广场"}],"_metadata":{"totalCount":1,"pageIndex":0,"pageSize":0}}'
+# b = json.loads(a)
+# print(b['_metadata']['totalCount'])
 
 
 # if __name__ == '__main__':

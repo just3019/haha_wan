@@ -324,7 +324,11 @@ def get_code_login(MOBILE, index):
 
     # 模拟飞凡小程序登录
     result = json.loads(wanda_login(MOBILE, code))
-    uid = result['data']['uid']
+    uid = ''
+    try:
+        uid = result['data']['uid']
+    except RuntimeError as e:
+        print(e)
     cookieStr = result['data']['cookieStr']
     puid = result['data']['puid']
     # 获取第一页的第几个商品id

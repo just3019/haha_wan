@@ -393,6 +393,6 @@ def ui():
 
 if __name__ == '__main__':
     global file_path
-    file_path = '%s.txt' % time.strftime("%Y%m%d%H%M")
+    file_path = place + '%s.txt' % time.strftime("%Y%m%d%H%M")
     ui()
     # get_phone()

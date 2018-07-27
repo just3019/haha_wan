@@ -324,7 +324,11 @@ def get_code_login(MOBILE, index):
 
     # 模拟飞凡小程序登录
     result = json.loads(wanda_login(MOBILE, code))
-    uid = result['data']['uid']
+    uid = ''
+    try:
+        uid = result['data']['uid']
+    except RuntimeError as e:
+        print(e)
     cookieStr = result['data']['cookieStr']
     puid = result['data']['puid']
     # 获取第一页的第几个商品id
@@ -339,6 +343,8 @@ def get_code_login(MOBILE, index):
         json.loads(wanda_login(MOBILE, code))
         cookieStr = result['data']['cookieStr']
         couponInfoResult = json.loads(get_couponNo(cookieStr, oid))
+        if couponInfoResult['status'] != 200:
+            raise RuntimeError("fail get couponNo")
     couponNo = couponInfoResult['data']['product'][0]['couponNo']
     if couponNo is None:
         couponInfoResult = json.loads(get_couponNo(cookieStr, oid))
@@ -395,7 +401,7 @@ def ui():
 
 if __name__ == '__main__':
     global file_path
-    file_path = '%s.txt' % time.strftime("%Y%m%d")
+    file_path = place + '%s.txt' % time.strftime("%Y%m%d")
     print(file_path)
     ui()
     # get_phone()

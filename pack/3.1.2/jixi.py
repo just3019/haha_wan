@@ -9,15 +9,15 @@ import re
 import requests
 
 header_dict = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko'}
-TOKEN = '00499849cbf687835af75182698438eb3c2ccdf4'
+TOKEN = '007056140310e2f0d4c284953feeb964b150d4cc'
 ITEMID = '7982'
 channelId = '1003'
 type = '1001'
 adSpaceId = 'couponList'
-plazaId = '1000769'
+plazaId = '1100573'
 count = 0
-province = '330000'
-place = '平阳'
+province = '230000'
+place = '鸡西'
 
 
 def log(s):
@@ -312,8 +312,6 @@ def get_code_login(MOBILE, index):
     if BLACK == 'success':
         print('号码拉黑成功')
 
-    # if '欢迎注册飞凡会员' not in text:
-    #     raise RuntimeError('该会员已经是注册用户')
     code = text[text.find('，') - 8: text.find('，')]
     pat = "[0-9]+"
     IC = re.search(pat, code)
@@ -326,7 +324,11 @@ def get_code_login(MOBILE, index):
 
     # 模拟飞凡小程序登录
     result = json.loads(wanda_login(MOBILE, code))
-    uid = result['data']['uid']
+    uid = ''
+    try:
+        uid = result['data']['uid']
+    except RuntimeError as e:
+        print(e)
     cookieStr = result['data']['cookieStr']
     puid = result['data']['puid']
     # 获取第一页的第几个商品id
@@ -341,6 +343,8 @@ def get_code_login(MOBILE, index):
         json.loads(wanda_login(MOBILE, code))
         cookieStr = result['data']['cookieStr']
         couponInfoResult = json.loads(get_couponNo(cookieStr, oid))
+        if couponInfoResult['status'] != 200:
+            raise RuntimeError("fail get couponNo")
     couponNo = couponInfoResult['data']['product'][0]['couponNo']
     if couponNo is None:
         couponInfoResult = json.loads(get_couponNo(cookieStr, oid))
