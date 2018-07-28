@@ -9,15 +9,15 @@ import re
 import requests
 
 header_dict = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko'}
-TOKEN = '00707771d8232a2de49bb1a4189d57d7b5ea5b23'
+TOKEN = '00499849cbf687835af75182698438eb3c2ccdf4'
 ITEMID = '7982'
 channelId = '1003'
 type = '1001'
 adSpaceId = 'couponList'
-plazaId = '1102223'
+plazaId = '1000769'
 count = 0
 province = '330000'
-place = '湖州'
+place = '平阳'
 
 
 def log(s):
@@ -25,6 +25,9 @@ def log(s):
     textView.insert(END, '%s\n' % s)
     textView.update()
     textView.see(END)
+
+
+def write(s):
     f = open(file_path, "a")
     f.write('%s\n' % s)
     f.close()
@@ -63,7 +66,7 @@ def get_phone():
     print(MOBILE)
     if MOBILE.split('|')[0] == 'success':
         MOBILE = MOBILE.split('|')[1]
-        print('获取手机号：' + MOBILE)
+        log('获取手机号：' + MOBILE)
         result = json.loads(check_phone(MOBILE))
         if result['status'] == '0000' and result['_metadata']['totalCount'] == 0:
             return MOBILE
@@ -72,15 +75,15 @@ def get_phone():
             url = 'http://api.fxhyd.cn/UserInterface.aspx?action=release&token=' + TOKEN + '&itemid=' + ITEMID + '&mobile=' + MOBILE
             RELEASE = request.urlopen(request.Request(url=url, headers=header_dict)).read().decode(encoding='utf-8')
             if RELEASE == 'success':
-                print('号码成功释放')
+                log('号码成功释放')
             # # 拉黑号码
             url = 'http://api.fxhyd.cn/UserInterface.aspx?action=addignore&token=' + TOKEN + '&itemid=' + ITEMID + '&mobile=' + MOBILE
             BLACK = request.urlopen(request.Request(url=url, headers=header_dict)).read().decode(encoding='utf-8')
             if BLACK == 'success':
-                print('号码拉黑成功')
+                log('号码拉黑成功')
             return get_phone()
     else:
-        print('获取不到手机号')
+        log('获取不到手机号')
         return ''
 
 
@@ -186,6 +189,8 @@ def wanda_login(mobile, code):
             status = json.loads(result)['status']
             if status == 200:
                 break
+            else:
+                raise RuntimeError("登录失败")
     return result
 
 
@@ -259,10 +264,10 @@ def get_product_info():
     }
 
     params = (
-        ('adSpaceId', 'couponList'),
-        ('plazaId', '1102223'),
-        ('channelId', '1003'),
-        ('type', '1001'),
+        ('adSpaceId', adSpaceId),
+        ('plazaId', plazaId),
+        ('channelId', channelId),
+        ('type', type),
         ('pageNum', '1'),
         ('pageSize', '10'),
     )
@@ -276,16 +281,15 @@ def get_product_info():
 
 def get_code_login(MOBILE, index):
     get_code(MOBILE)
-    WAIT = 60  # 接受短信时长60s
-    print(MOBILE)
+    WAIT = 30  # 接受短信时长60s
     url = 'http://api.fxhyd.cn/UserInterface.aspx?action=getsms&token=' + TOKEN + '&itemid=' + ITEMID + '&mobile=' + MOBILE + '&release=1'
     text1 = request.urlopen(request.Request(url=url, headers=header_dict)).read().decode(encoding='utf-8')
     TIME1 = time.time()
     TIME2 = time.time()
     ROUND = 1
     while (TIME2 - TIME1) < WAIT and not text1.split('|')[0] == "success":
-        time.sleep(5)
-        print
+        time.sleep(2)
+        print(text1)
         text1 = request.urlopen(request.Request(url=url, headers=header_dict)).read().decode(encoding='utf-8')
         TIME2 = time.time()
         ROUND = ROUND + 1
@@ -295,31 +299,33 @@ def get_code_login(MOBILE, index):
     if text1.split('|')[0] == "success":
         text = text1.split('|')[1]
         TIME = str(round(TIME2 - TIME1, 1))
-        print('短信内容是' + text + '\n耗费时长' + TIME + 's,循环数是' + ROUND)
+        log('短信内容是' + text + '\n耗费时长' + TIME + 's,循环数是' + ROUND)
     else:
-        print('获取短信超时，错误代码是' + text1 + ',循环数是' + ROUND)
+        log('获取短信超时，错误代码是' + text1 + ',循环数是' + ROUND)
 
     # # 释放号码
     url = 'http://api.fxhyd.cn/UserInterface.aspx?action=release&token=' + TOKEN + '&itemid=' + ITEMID + '&mobile=' + MOBILE
     RELEASE = request.urlopen(request.Request(url=url, headers=header_dict)).read().decode(encoding='utf-8')
     if RELEASE == 'success':
-        print('号码成功释放')
+        log('号码成功释放')
 
     # # 拉黑号码
     url = 'http://api.fxhyd.cn/UserInterface.aspx?action=addignore&token=' + TOKEN + '&itemid=' + ITEMID + '&mobile=' + MOBILE
     BLACK = request.urlopen(request.Request(url=url, headers=header_dict)).read().decode(encoding='utf-8')
     if BLACK == 'success':
-        print('号码拉黑成功')
+        log('号码拉黑成功')
 
-    if '欢迎注册飞凡会员' not in text:
-        raise RuntimeError('该会员已经是注册用户')
+    # if '欢迎注册飞凡会员' not in text:
+    #     raise RuntimeError('该会员已经是注册用户')
     code = text[text.find('，') - 8: text.find('，')]
     pat = "[0-9]+"
     IC = re.search(pat, code)
     if IC:
         code = IC.group()
 
-    print("验证码为：" + code)
+    log("验证码为：" + code)
+    if code is None:
+        raise RuntimeError('验证码为空')
 
     # 模拟飞凡小程序登录
     result = json.loads(wanda_login(MOBILE, code))
@@ -340,16 +346,13 @@ def get_code_login(MOBILE, index):
         couponInfoResult = json.loads(get_couponNo(cookieStr, oid))
     couponNo = couponInfoResult['data']['product'][0]['couponNo']
     if couponNo is None:
-        for i in range(0, 3):
-            couponInfoResult = json.loads(get_couponNo(cookieStr, oid))
-            if couponInfoResult['status'] != 200:
-                json.loads(wanda_login(MOBILE, code))
-                couponNo = couponInfoResult['data']['product'][0]['couponNo']
-                if couponNo is not None:
-                    break
-        raise RuntimeError("优惠券为null")
+        couponInfoResult = json.loads(get_couponNo(cookieStr, oid))
+        couponNo = couponInfoResult['data']['product'][0]['couponNo']
+        if couponNo is None:
+            raise RuntimeError("优惠券为null")
 
     log(MOBILE + "  " + "https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=" + couponNo)
+    write(MOBILE + "  " + "https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=" + couponNo)
 
 
 def deal(num, index):
@@ -357,6 +360,7 @@ def deal(num, index):
     count = 0
     while count < num:
         try:
+            log("执行到第" + str(count) + "条。")
             mobile = get_phone()
             if mobile == '':
                 continue
@@ -398,6 +402,7 @@ def ui():
 
 if __name__ == '__main__':
     global file_path
-    file_path = '%s.txt' % time.strftime("%Y%m%d%H%M")
+    file_path = place + '%s.txt' % time.strftime("%Y%m%d")
+    print(file_path)
     ui()
     # get_phone()

@@ -25,6 +25,9 @@ def log(s):
     textView.insert(END, '%s\n' % s)
     textView.update()
     textView.see(END)
+
+
+def write(s):
     f = open(file_path, "a")
     f.write('%s\n' % s)
     f.close()
@@ -63,7 +66,7 @@ def get_phone():
     print(MOBILE)
     if MOBILE.split('|')[0] == 'success':
         MOBILE = MOBILE.split('|')[1]
-        print('获取手机号：' + MOBILE)
+        log('获取手机号：' + MOBILE)
         result = json.loads(check_phone(MOBILE))
         if result['status'] == '0000' and result['_metadata']['totalCount'] == 0:
             return MOBILE
@@ -72,15 +75,15 @@ def get_phone():
             url = 'http://api.fxhyd.cn/UserInterface.aspx?action=release&token=' + TOKEN + '&itemid=' + ITEMID + '&mobile=' + MOBILE
             RELEASE = request.urlopen(request.Request(url=url, headers=header_dict)).read().decode(encoding='utf-8')
             if RELEASE == 'success':
-                print('号码成功释放')
+                log('号码成功释放')
             # # 拉黑号码
             url = 'http://api.fxhyd.cn/UserInterface.aspx?action=addignore&token=' + TOKEN + '&itemid=' + ITEMID + '&mobile=' + MOBILE
             BLACK = request.urlopen(request.Request(url=url, headers=header_dict)).read().decode(encoding='utf-8')
             if BLACK == 'success':
-                print('号码拉黑成功')
+                log('号码拉黑成功')
             return get_phone()
     else:
-        print('获取不到手机号')
+        log('获取不到手机号')
         return ''
 
 
@@ -296,21 +299,21 @@ def get_code_login(MOBILE, index):
     if text1.split('|')[0] == "success":
         text = text1.split('|')[1]
         TIME = str(round(TIME2 - TIME1, 1))
-        print('短信内容是' + text + '\n耗费时长' + TIME + 's,循环数是' + ROUND)
+        log('短信内容是' + text + '\n耗费时长' + TIME + 's,循环数是' + ROUND)
     else:
-        print('获取短信超时，错误代码是' + text1 + ',循环数是' + ROUND)
+        log('获取短信超时，错误代码是' + text1 + ',循环数是' + ROUND)
 
     # # 释放号码
     url = 'http://api.fxhyd.cn/UserInterface.aspx?action=release&token=' + TOKEN + '&itemid=' + ITEMID + '&mobile=' + MOBILE
     RELEASE = request.urlopen(request.Request(url=url, headers=header_dict)).read().decode(encoding='utf-8')
     if RELEASE == 'success':
-        print('号码成功释放')
+        log('号码成功释放')
 
     # # 拉黑号码
     url = 'http://api.fxhyd.cn/UserInterface.aspx?action=addignore&token=' + TOKEN + '&itemid=' + ITEMID + '&mobile=' + MOBILE
     BLACK = request.urlopen(request.Request(url=url, headers=header_dict)).read().decode(encoding='utf-8')
     if BLACK == 'success':
-        print('号码拉黑成功')
+        log('号码拉黑成功')
 
     # if '欢迎注册飞凡会员' not in text:
     #     raise RuntimeError('该会员已经是注册用户')
@@ -320,7 +323,7 @@ def get_code_login(MOBILE, index):
     if IC:
         code = IC.group()
 
-    print("验证码为：" + code)
+    log("验证码为：" + code)
     if code is None:
         raise RuntimeError('验证码为空')
 
@@ -349,6 +352,7 @@ def get_code_login(MOBILE, index):
             raise RuntimeError("优惠券为null")
 
     log(MOBILE + "  " + "https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=" + couponNo)
+    write(MOBILE + "  " + "https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=" + couponNo)
 
 
 def deal(num, index):
@@ -356,6 +360,7 @@ def deal(num, index):
     count = 0
     while count < num:
         try:
+            log("执行到第" + str(count) + "条。")
             mobile = get_phone()
             if mobile == '':
                 continue
