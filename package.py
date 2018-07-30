@@ -11,9 +11,6 @@ import requests
 header_dict = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko'}
 TOKEN = '00499849cbf687835af75182698438eb3c2ccdf4'
 ITEMID = '7982'
-channelId = '1003'
-type = '1001'
-adSpaceId = 'couponList'
 plazaId = '1000769'
 count = 0
 province = '330000'
@@ -211,7 +208,7 @@ def get_coupon(memberId, productId, mobile, cookieStr, puid):
     data = [
         ('memberId', memberId),
         ('actionType', 'create'),
-        ('remark', '{"orderType":"coupon","plazaId":' + plazaId + ',"adSpaceId":"' + adSpaceId + '"}'),
+        ('remark', '{"orderType":"coupon","plazaId":' + plazaId + ',"adSpaceId":"couponList"}'),
         ('productInfos', productInfos),
         ('clientInfo', '{"clientVersion":"wx07dfb5d79541eca9","ipAddr":"","clientType":"11"}'),
         ('tradeCode', '7010'),
@@ -264,10 +261,10 @@ def get_product_info():
     }
 
     params = (
-        ('adSpaceId', adSpaceId),
+        ('adSpaceId', 'couponList'),
         ('plazaId', plazaId),
-        ('channelId', channelId),
-        ('type', type),
+        ('channelId', '1003'),
+        ('type', '1001'),
         ('pageNum', '1'),
         ('pageSize', '10'),
     )
