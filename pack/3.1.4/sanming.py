@@ -16,12 +16,12 @@ headers = {
     'Accept-Language': 'zh-cn',
 }
 header_dict = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko'}
-TOKEN = '00499849cbf687835af75182698438eb3c2ccdf4'
-plazaId = '1000769'
+TOKEN = '0072891891c7981d81cb2918b3b22a879064d4af'
+plazaId = '1102566'
 ITEMID = '7982'
 count = 0
-province = '330000'
-place = '平阳'
+province = '350000'
+place = '三明'
 lock = threading.Lock()
 
 

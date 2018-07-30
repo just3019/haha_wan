@@ -16,12 +16,11 @@ headers = {
     'Accept-Language': 'zh-cn',
 }
 header_dict = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko'}
-TOKEN = '00499849cbf687835af75182698438eb3c2ccdf4'
-plazaId = '1000769'
+TOKEN = '007064165942ad7749271ead0a851d4ebefc0fb3'
+plazaId = '1104483'
 ITEMID = '7982'
 count = 0
-province = '330000'
-place = '平阳'
+place = '回民区'
 lock = threading.Lock()
 
 
@@ -46,7 +45,7 @@ def log_err(s):
 
 def get_phone():
     EXCLUDENO = ''  # 排除号段170_171
-    url = 'http://api.fxhyd.cn/UserInterface.aspx?action=getmobile&token=' + TOKEN + '&itemid=' + ITEMID + '&excludeno=' + EXCLUDENO + '&province=' + province
+    url = 'http://api.fxhyd.cn/UserInterface.aspx?action=getmobile&token=' + TOKEN + '&itemid=' + ITEMID + '&excludeno=' + EXCLUDENO
     MOBILE = request.urlopen(request.Request(url=url, headers=header_dict)).read().decode(encoding='utf-8')
     print(MOBILE)
     if MOBILE.split('|')[0] == 'success':
