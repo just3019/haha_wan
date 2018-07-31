@@ -301,7 +301,6 @@ def get_code_login(MOBILE, index):
 
         log(MOBILE + "  " + "https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=" + couponNo)
         write(MOBILE + "  " + "https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=" + couponNo)
-        writecode(couponNo)
     except RuntimeError as e:
         print(e)
 
