@@ -38,6 +38,12 @@ def write(s):
     f.close()
 
 
+def writecode(s):
+    f = open(code_path, "a")
+    f.write('%s\n' % s)
+    f.close()
+
+
 def log_err(s):
     textView.insert(END, '%s\n' % s)
     textView.update()
@@ -46,7 +52,7 @@ def log_err(s):
 
 def get_phone():
     EXCLUDENO = ''  # 排除号段170_171
-    url = 'http://api.fxhyd.cn/UserInterface.aspx?action=getmobile&token=' + TOKEN + '&itemid=' + ITEMID + '&excludeno=' + EXCLUDENO + '&province=' + province
+    url = 'http://api.fxhyd.cn/UserInterface.aspx?action=getmobile&token=' + TOKEN + '&itemid=' + ITEMID + '&excludeno=' + EXCLUDENO
     MOBILE = request.urlopen(request.Request(url=url, headers=header_dict)).read().decode(encoding='utf-8')
     print(MOBILE)
     if MOBILE.split('|')[0] == 'success':
@@ -221,81 +227,88 @@ def get_product_info():
 
 
 def get_code_login(MOBILE, index):
-    get_code(MOBILE)
-    WAIT = 30  # 接受短信时长60s
-    url = 'http://api.fxhyd.cn/UserInterface.aspx?action=getsms&token=' + TOKEN + '&itemid=' + ITEMID + '&mobile=' + MOBILE + '&release=1'
-    text1 = request.urlopen(request.Request(url=url, headers=header_dict)).read().decode(encoding='utf-8')
-    TIME1 = time.time()
-    TIME2 = time.time()
-    ROUND = 1
-    while (TIME2 - TIME1) < WAIT and not text1.split('|')[0] == "success":
-        time.sleep(2)
-        print(text1)
+    try:
+        get_code(MOBILE)
+        WAIT = 30  # 接受短信时长60s
+        url = 'http://api.fxhyd.cn/UserInterface.aspx?action=getsms&token=' + TOKEN + '&itemid=' + ITEMID + '&mobile=' + MOBILE + '&release=1'
         text1 = request.urlopen(request.Request(url=url, headers=header_dict)).read().decode(encoding='utf-8')
+        TIME1 = time.time()
         TIME2 = time.time()
-        ROUND = ROUND + 1
+        ROUND = 1
+        while (TIME2 - TIME1) < WAIT and not text1.split('|')[0] == "success":
+            time.sleep(2)
+            print(text1)
+            text1 = request.urlopen(request.Request(url=url, headers=header_dict)).read().decode(encoding='utf-8')
+            TIME2 = time.time()
+            ROUND = ROUND + 1
 
-    ROUND = str(ROUND)
-    text = ''
-    if text1.split('|')[0] == "success":
-        text = text1.split('|')[1]
-        TIME = str(round(TIME2 - TIME1, 1))
-        log('短信内容是' + text + '\n耗费时长' + TIME + 's,循环数是' + ROUND)
-    else:
-        log('获取短信超时，错误代码是' + text1 + ',循环数是' + ROUND)
+        ROUND = str(ROUND)
+        text = ''
+        if text1.split('|')[0] == "success":
+            text = text1.split('|')[1]
+            TIME = str(round(TIME2 - TIME1, 1))
+            log('短信内容是' + text + '\n耗费时长' + TIME + 's,循环数是' + ROUND)
+        else:
+            log('获取短信超时，错误代码是' + text1 + ',循环数是' + ROUND)
 
-    # # 释放号码
-    url = 'http://api.fxhyd.cn/UserInterface.aspx?action=release&token=' + TOKEN + '&itemid=' + ITEMID + '&mobile=' + MOBILE
-    RELEASE = request.urlopen(request.Request(url=url, headers=header_dict)).read().decode(encoding='utf-8')
-    if RELEASE == 'success':
-        log('号码成功释放')
+        # # 释放号码
+        url = 'http://api.fxhyd.cn/UserInterface.aspx?action=release&token=' + TOKEN + '&itemid=' + ITEMID + '&mobile=' + MOBILE
+        RELEASE = request.urlopen(request.Request(url=url, headers=header_dict)).read().decode(encoding='utf-8')
+        if RELEASE == 'success':
+            log('号码成功释放')
 
-    # # 拉黑号码
-    url = 'http://api.fxhyd.cn/UserInterface.aspx?action=addignore&token=' + TOKEN + '&itemid=' + ITEMID + '&mobile=' + MOBILE
-    BLACK = request.urlopen(request.Request(url=url, headers=header_dict)).read().decode(encoding='utf-8')
-    if BLACK == 'success':
-        log('号码拉黑成功')
+        # # 拉黑号码
+        url = 'http://api.fxhyd.cn/UserInterface.aspx?action=addignore&token=' + TOKEN + '&itemid=' + ITEMID + '&mobile=' + MOBILE
+        BLACK = request.urlopen(request.Request(url=url, headers=header_dict)).read().decode(encoding='utf-8')
+        if BLACK == 'success':
+            log('号码拉黑成功')
 
-    # if '欢迎注册飞凡会员' not in text:
-    #     raise RuntimeError('该会员已经是注册用户')
-    code = text[text.find('，') - 8: text.find('，')]
-    pat = "[0-9]+"
-    IC = re.search(pat, code)
-    if IC:
-        code = IC.group()
+        # if '欢迎注册飞凡会员' not in text:
+        #     raise RuntimeError('该会员已经是注册用户')
+        code = text[text.find('，') - 8: text.find('，')]
+        pat = "[0-9]+"
+        IC = re.search(pat, code)
+        if IC:
+            code = IC.group()
 
-    log("验证码为：" + code)
-    if code is None:
-        raise RuntimeError('验证码为空')
+        log("验证码为：" + code)
+        if code is None:
+            raise RuntimeError('验证码为空')
 
-    # 模拟飞凡小程序登录
-    result = json.loads(wanda_login(MOBILE, code))
-    uid = result['data']['uid']
-    cookieStr = result['data']['cookieStr']
-    puid = result['data']['puid']
-    # 获取第一页的第几个商品id
-    productId = json.loads(get_product_info())['data']['resource'][index - 1]['couponNo']
-    # 领取商品id的优惠券，生成订单号
-    couponResult = json.loads(get_coupon(uid, productId, MOBILE, cookieStr, puid))
-    oid = couponResult['orderNo']
-    # 获取订单号下对应的优惠券信息
-    couponInfoResult = json.loads(get_couponNo(cookieStr, oid))
-    # 处理没有成功拿到优惠券操作
-    if couponInfoResult['status'] != 200:
-        json.loads(wanda_login(MOBILE, code))
+        # 模拟飞凡小程序登录
+        result = json.loads(wanda_login(MOBILE, code))
+        uid = result['data']['uid']
         cookieStr = result['data']['cookieStr']
+        puid = result['data']['puid']
+        # 获取第一页的第几个商品id
+        productId = json.loads(get_product_info())['data']['resource'][index - 1]['couponNo']
+        # 领取商品id的优惠券，生成订单号
+        couponResult = json.loads(get_coupon(uid, productId, MOBILE, cookieStr, puid))
+        oid = couponResult['orderNo']
+        # 获取订单号下对应的优惠券信息
         couponInfoResult = json.loads(get_couponNo(cookieStr, oid))
+        # 处理没有成功拿到优惠券操作
         if couponInfoResult['status'] != 200:
-            raise RuntimeError("获取不到二维码明细")
-    couponNo = couponInfoResult['data']['product'][0]['couponNo']
+            json.loads(wanda_login(MOBILE, code))
+            cookieStr = result['data']['cookieStr']
+            couponInfoResult = json.loads(get_couponNo(cookieStr, oid))
+        couponNo = couponInfoResult['data']['product'][0]['couponNo']
+        if couponNo is None:
+            couponInfoResult = json.loads(get_couponNo(cookieStr, oid))
+            couponNo = couponInfoResult['data']['product'][0]['couponNo']
+            if couponNo is None:
+                raise RuntimeError("优惠券为null")
 
-    log(MOBILE + "  " + "https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=" + couponNo)
-    write(MOBILE + "  " + "https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=" + couponNo)
+        log(MOBILE + "  " + "https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=" + couponNo)
+        write(MOBILE + "  " + "https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=" + couponNo)
+        writecode(couponNo)
+    except RuntimeError as e:
+        print(e)
 
 
 def deal(num, index):
     global count
-    lock.acquire()
+    # lock.acquire()
     while count < num:
         try:
             log("执行到第" + str(count + 1) + "条。")
@@ -306,7 +319,7 @@ def deal(num, index):
             count += 1
         except RuntimeError as e:
             print(e)
-    lock.release()
+            # lock.release()
 
 
 def submit():
@@ -323,10 +336,10 @@ def submit():
         if index == '' and index < 0:
             index = 0
 
-        th = threading.Thread(target=deal, args=(num, index,))
-        th.setDaemon(True)  # 守护线程
-        th.start()
-        # deal(num, index)
+        # th = threading.Thread(target=deal, args=(num, index,))
+        # th.setDaemon(True)  # 守护线程
+        # th.start()
+        deal(num, index)
     except RuntimeError as e:
         print(e)
         log('获取失败，请确保输入参数都是整数')
@@ -364,7 +377,9 @@ def ui():
 
 if __name__ == '__main__':
     global file_path
+    global code_path
     file_path = place + '%s.txt' % time.strftime("%Y%m%d")
+    code_path = place + 'code%s.txt' % time.strftime("%Y%m%d")
     print(file_path)
     ui()
     # get_phone()
