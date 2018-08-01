@@ -161,6 +161,23 @@ def wanda_login(mobile, code):
     return result
 
 
+# 获取新用户优惠券
+def get_order_no(cookieStr):
+    params = (
+        ('cookieStr', cookieStr),
+    )
+
+    data = [
+        ('plazaId', plazaId),
+    ]
+
+    response = requests.post('https://api.ffan.com/wechatxmt/v1/coupons-package/', headers=headers, params=params,
+                             data=data)
+    print("获取订单号：" + response.text)
+    return response.text
+
+
+# 获取指定优惠券
 def get_coupon(memberId, productId, mobile, cookieStr, puid):
     params = (
         ('cookieStr', cookieStr),
@@ -276,8 +293,8 @@ def get_code_login(MOBILE, index):
     # 获取第一页的第几个商品id
     productId = json.loads(get_product_info())['data']['resource'][index - 1]['couponNo']
     # 领取商品id的优惠券，生成订单号
-    couponResult = json.loads(get_coupon(uid, productId, MOBILE, cookieStr, puid))
-    oid = couponResult['orderNo']
+    couponResult = json.loads(get_order_no(cookieStr))
+    oid = couponResult['data'][0]['order']['orderNo']
     # 获取订单号下对应的优惠券信息
     couponInfoResult = json.loads(get_couponNo(cookieStr, oid))
     # 处理没有成功拿到优惠券操作

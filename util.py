@@ -1,38 +1,29 @@
-# coding:utf-8
-from tkinter import *
-from ScrolledText import ScrolledText  # 文本滚动条
-import threading
-import time
-from PIL import ImageTk, Image
+import requests
 
+# 获取优惠券码
 
-def count(i):
-    for k in range(1, 100 + 1):
-        text.insert(END, '第' + str(i) + '线程count:  ' + str(k) + '\n')
-        time.sleep(0.001)
+headers = {
+    'Host': 'api.ffan.com',
+    'Content-Type': 'application/json',
+    'Accept': '*/*',
+    'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_4_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15G77 MicroMessenger/6.7.1 NetType/WIFI Language/zh_CN',
+    'Referer': 'https://servicewechat.com/wx07dfb5d79541eca9/83/page-frame.html',
+    'Accept-Language': 'zh-cn',
+}
 
+params = (
+    ('cookieStr', 'psid=b59def45289ca608e824c0343cce3957; puid=01D132E5F32343EEB9F7D08C1B400102; up=bup; sid=6c395e0d3184f3a7d1b2d30695cbaf3f; uid=15000000371775781; uniqkey2=RZhczLgfkoQJoTrJRhGcRs+uCdOz+AtZ29UP8LP8D1b11t5Znk7AQ2Nn+8jBUyzzmK7d4I8KAlNbEgSS9HMSwG7gWwdTxpyBCBxZcwkzeXb1Xz13f4tkjXHYigxXB2RqRJwgz29iHKqfT9xI6wHsYTiGBaDnKGf/pQzn8rg9y4qFHWn7cPoTW9+rqruUiKQbhdLw; puid=01D132E5F32343EEB9F7D08C1B400102; uid=15000000371775781; ploginToken=b59def45289ca608e824c0343cce3957; '),
+    ('plazaId', '1102223'),
+    ('memberId', '15000000371775781'),
+    ('status', '3'),
+    ('offset', '0'),
+    ('limit', '10'),
+)
 
-def fun():
-    for i in range(1, 5 + 1):
-        th = threading.Thread(target=count, args=(i,))
-        th.setDaemon(True)  # 守护线程
-        th.start()
-    var.set('MDZZ')
+response = requests.get('https://api.ffan.com/wechatxmt/v1/member/coupons', headers=headers, params=params)
+print(response.text)
 
-
-root = Tk()
-root.title('九日王朝')  # 窗口标题
-root.geometry('+600+100')  # 窗口呈现位置
-image2 = Image.open(r'ParticleSmoke.png')
-background_image = ImageTk.PhotoImage(image2)
-textlabel = Label(root, image=background_image)
-textlabel.grid()
-text = ScrolledText(root, font=('微软雅黑', 10), fg='blue')
-text.grid()
-button = Button(root, text='屠龙宝刀 点击就送', font=('微软雅黑', 10), command=fun)
-button.grid()
-var = StringVar()  # 设置变量
-label = Label(root, font=('微软雅黑', 10), fg='red', textvariable=var)
-label.grid()
-var.set('我不断的洗澡，油腻的师姐在哪里')
-root.mainloop()
+#NB. Original query string below. It seems impossible to parse and
+#reproduce query strings 100% accurately so the one below is given
+#in case the reproduced version is not "correct".
+# response = requests.get('https://api.ffan.com/wechatxmt/v1/member/coupons?cookieStr=psid%3Db59def45289ca608e824c0343cce3957%3B%20puid%3D01D132E5F32343EEB9F7D08C1B400102%3B%20up%3Dbup%3B%20sid%3D6c395e0d3184f3a7d1b2d30695cbaf3f%3B%20uid%3D15000000371775781%3B%20uniqkey2%3DRZhczLgfkoQJoTrJRhGcRs%2BuCdOz%2BAtZ29UP8LP8D1b11t5Znk7AQ2Nn%2B8jBUyzzmK7d4I8KAlNbEgSS9HMSwG7gWwdTxpyBCBxZcwkzeXb1Xz13f4tkjXHYigxXB2RqRJwgz29iHKqfT9xI6wHsYTiGBaDnKGf%2FpQzn8rg9y4qFHWn7cPoTW9%2BrqruUiKQbhdLw%3B%20puid%3D01D132E5F32343EEB9F7D08C1B400102%3B%20uid%3D15000000371775781%3B%20ploginToken%3Db59def45289ca608e824c0343cce3957%3B%20&plazaId=1102223&memberId=15000000371775781&status=3&offset=0&limit=10', headers=headers)
