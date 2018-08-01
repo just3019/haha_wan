@@ -285,9 +285,12 @@ def get_code_login(MOBILE, index):
         json.loads(wanda_login(MOBILE, code))
         cookieStr = result['data']['cookieStr']
         couponInfoResult = json.loads(get_couponNo(cookieStr, oid))
-        if couponInfoResult['status'] != 200:
-            raise RuntimeError("获取不到二维码明细")
     couponNo = couponInfoResult['data']['product'][0]['couponNo']
+    if couponNo is None:
+        couponInfoResult = json.loads(get_couponNo(cookieStr, oid))
+        couponNo = couponInfoResult['data']['product'][0]['couponNo']
+        if couponNo is None:
+            raise RuntimeError("优惠券为null")
 
     log(MOBILE + "  " + "https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=" + couponNo)
     write(MOBILE + "  " + "https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=" + couponNo)
