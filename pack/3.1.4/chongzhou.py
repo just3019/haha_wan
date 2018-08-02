@@ -20,7 +20,7 @@ TOKEN = '007373010e787df886c6a246f5877fec161a9316'
 plazaId = '1104507'
 ITEMID = '7982'
 count = 0
-province = '330000'
+province = '510000'
 place = '崇州'
 lock = threading.Lock()
 
