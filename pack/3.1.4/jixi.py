@@ -307,7 +307,7 @@ def get_code_login(MOBILE, index):
 
 def deal(num, index):
     global count
-    # lock.acquire()
+    lock.acquire()
     while count < num:
         try:
             log("执行到第" + str(count + 1) + "条。")
@@ -318,7 +318,7 @@ def deal(num, index):
             count += 1
         except RuntimeError as e:
             print(e)
-            # lock.release()
+    lock.release()
 
 
 def submit():
@@ -335,10 +335,10 @@ def submit():
         if index == '' and index < 0:
             index = 0
 
-        # th = threading.Thread(target=deal, args=(num, index,))
-        # th.setDaemon(True)  # 守护线程
-        # th.start()
-        deal(num, index)
+        th = threading.Thread(target=deal, args=(num, index,))
+        th.setDaemon(True)  # 守护线程
+        th.start()
+        # deal(num, index)
     except RuntimeError as e:
         print(e)
         log('获取失败，请确保输入参数都是整数')
