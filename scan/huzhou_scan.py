@@ -1,3 +1,4 @@
+import json
 import random
 
 import requests
@@ -108,20 +109,34 @@ def scan(code):
 
     response = requests.post('https://sop.ffan.com/goods/coupon/checkCoupon', headers=headers, params=params1,
                              cookies=cookies1, data=data1)
-    print(response.text)
+    result = response.text
+    if json.loads(result)['status'] != 200:
+        raise RuntimeError("已验证过")
+    print(result)
 
 
 if __name__ == '__main__':
     # scan('088003966832')
-    file = open("/Users/demon/Desktop/fan/huzhou/1.txt", 'r')
+    file = open("/Users/demon/Desktop/fan/huzhou/2.txt", 'r')
     index = 0
+    t1 = time.time()
     while True:
-        index += 1
-        mystr = file.readline()
-        if not mystr:
-            break
-        print(str(index) + "  " + mystr, end='')
-        code = mystr[mystr.find('info=') + 5: mystr.find('info=') + 17]
-        print(code)
-        scan(code)
-        time.sleep(random.randint(2, 5))
+        try:
+            index += 1
+            mystr = file.readline()
+            if not mystr:
+                break
+            print(str(index) + "  " + mystr, end='')
+            code = mystr[mystr.find('info=') + 5: mystr.find('info=') + 17]
+            print(code)
+            scan(code)
+            sleeptime = random.randint(10, 60)
+            print("本次停顿：" + str(sleeptime))
+            time.sleep(sleeptime)
+            print(str(index) + "次耗时" + str(time.time() - t1))
+        except RuntimeError as e:
+            print(e)
+            continue
+
+    t2 = time.time()
+    print("总共使用：" + str(t2 - t1))
