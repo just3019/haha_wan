@@ -117,7 +117,7 @@ def scan(code):
 
 if __name__ == '__main__':
     # scan('088003966832')
-    file = open("/Users/demon/Desktop/fan/huzhou/2.txt", 'r')
+    file = open("/Users/demon/Desktop/fan/huzhou/1.txt", 'r')
     index = 0
     t1 = time.time()
     while True:
@@ -130,7 +130,7 @@ if __name__ == '__main__':
             code = mystr[mystr.find('info=') + 5: mystr.find('info=') + 17]
             print(code)
             scan(code)
-            sleeptime = random.randint(10, 60)
+            sleeptime = random.randint(20, 180)
             print("本次停顿：" + str(sleeptime))
             time.sleep(sleeptime)
             print(str(index) + "次耗时" + str(time.time() - t1))
