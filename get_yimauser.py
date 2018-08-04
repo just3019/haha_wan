@@ -38,7 +38,7 @@ def get_user(username, password):
 
 
 if __name__ == '__main__':
-    f = open("账号使用情况.txt", "a")
+    f = open("账号使用情况.txt", "w")
 
     for i in list:
         result = json.loads(get_user(i['username'], i['password']))
