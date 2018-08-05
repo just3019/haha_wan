@@ -4,24 +4,10 @@
     <meta charset="UTF-8">
     <title>易码账号查询</title>
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="http://wm.lrswl.com/page/?s=281487"></script>
 </head>
 <body>
 <input id="btn" type="button" value="跨域获取数据"/>
 <textarea id="text" style="width: 400px; height: 100px;"></textarea>
 </body>
-<script>
-    $(document).ready(function () {
-        $("#btn").click(function () {
-            $.ajax({
-                url: "http://api.fxhyd.cn/UserInterface.aspx?action=getaccountinfo&token=00499849cbf687835af75182698438eb3c2ccdf4",
-                type: "get",
-                dataType: "jsonp",
-                success: function (data) {
-                    $("#test").val(data)
-                }
-            })
-        });
-
-    });
-</script>
 </html>
