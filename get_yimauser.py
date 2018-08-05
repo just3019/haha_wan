@@ -10,6 +10,7 @@ list = [{"name": "平阳", "username": "ye907182374", "password": "baobao1515"},
         {"name": "三明", "username": "sanming1", "password": "sanming1"},
         {"name": "辽阳", "username": "chongzhou", "password": "chongzhou"},
         {"name": "崇州", "username": "chongzhou", "password": "chongzhou"},
+        {"name": "宁德", "username": "ningde", "password": "ningde"},
         {"name": "西双版纳", "username": "xishuangbanna", "password": "xishuangbanna"},
         {"name": "重庆北碚", "username": "chongqingbeibei", "password": "chongqingbeibei"},
         {"name": "漳州台商", "username": "zhangzhouts", "password": "zhangzhouts"},
@@ -46,7 +47,7 @@ if __name__ == '__main__':
 
     for i in list:
         result = json.loads(get_user(i['username'], i['password']))
-        p = i['name'] + " " + i['username'] + " " + str(result['Balance']) + "元"
+        p = i['name'] + " " + i['username'] + " " + i['password'] + " " + str(result['Balance']) + "元"
         print(p)
         f.write('%s\n' % p)
 
