@@ -13,9 +13,12 @@ list = [{"name": "平阳", "username": "ye907182374", "password": "baobao1515"},
         {"name": "宁德", "username": "ningde", "password": "ningde"},
         {"name": "西双版纳", "username": "xishuangbanna", "password": "xishuangbanna"},
         {"name": "重庆北碚", "username": "chongqingbeibei", "password": "chongqingbeibei"},
-        {"name": "漳州台商", "username": "zhangzhouts", "password": "zhangzhouts"},
+        {"name": "漳州台商", "username": "zhangzhouts1", "password": "zhangzhouts1"},
         {"name": "观山湖", "username": "guanshanhu", "password": "guanshanhu"},
         {"name": "江门", "username": "jiangmeng", "password": "jiangmeng"}]
+
+
+#         {"name": "漳州台商", "username": "zhangzhouts", "password": "zhangzhouts"},
 
 
 def get_user(username, password):
