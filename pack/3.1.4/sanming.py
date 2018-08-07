@@ -45,8 +45,8 @@ def log_err(s):
 
 
 def get_phone():
-    EXCLUDENO = ''  # 排除号段170_171
-    url = 'http://api.fxhyd.cn/UserInterface.aspx?action=getmobile&token=' + TOKEN + '&itemid=' + ITEMID + '&excludeno=' + EXCLUDENO + '&province=' + province
+    EXCLUDENO = '170.171.172.173'  # 排除号段170_171
+    url = 'http://api.fxhyd.cn/UserInterface.aspx?action=getmobile&token=' + TOKEN + '&itemid=' + ITEMID + '&excludeno=' + EXCLUDENO
     MOBILE = request.urlopen(request.Request(url=url, headers=header_dict)).read().decode(encoding='utf-8')
     print(MOBILE)
     if MOBILE.split('|')[0] == 'success':
