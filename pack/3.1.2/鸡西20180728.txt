@@ -1,5 +1,0 @@
-17151893094  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=009404473194
-17151893215  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=069603042176
-17029466640  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=075503482552
-17151899641  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=060704687036
-17151898158  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=092204579264
