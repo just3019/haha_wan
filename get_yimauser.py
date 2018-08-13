@@ -17,7 +17,8 @@ list = [{"name": "平阳", "username": "ye907182374", "password": "baobao1515"},
         {"name": "观山湖", "username": "guanshanhu", "password": "guanshanhu"},
         {"name": "江门", "username": "jiangmeng", "password": "jiangmeng"},
         {"name": "衢州", "username": "quzhou", "password": "quzhou"},
-        {"name": "北海", "username": "beihai1", "password": "beihai1"}]
+        {"name": "北海", "username": "beihai1", "password": "beihai1"},
+        {"name": "沈阳铁西", "username": "shenyangtiexi", "password": "shenyangtiexi"}]
 
 
 #         {"name": "漳州台商", "username": "zhangzhouts", "password": "zhangzhouts"},
