@@ -209,8 +209,8 @@ def get_product_info():
         ('plazaId', plazaId),
         ('channelId', '1003'),
         ('type', '1001'),
-        ('pageNum', '1'),
-        ('pageSize', '10'),
+        ('pageNum', '2'),
+        ('pageSize', '17'),
     )
 
     response = requests.get('https://api.ffan.com/wechatxmt/v5/plaza/coupons', headers=headers, params=params)
