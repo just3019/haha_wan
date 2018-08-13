@@ -56,7 +56,7 @@ if __name__ == '__main__':
             f.write('%s\n' % p)
         except RuntimeError as e:
             print(e)
-            pp = i['name'] + " 失效。"
+            pp = i['name'] + " " + i['username'] + " " + i['password'] + "  失效。"
             f.write('%s\n' % pp)
             continue
 
