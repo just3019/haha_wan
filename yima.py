@@ -42,6 +42,7 @@ def ym_phone(token, itemid, excludeno, province, city, mobile):
         ("mobile", mobile),
     }
     response = requests.get(url, params=param).text.split("|")
+    print(response)
     if response[0] == "success":
         return response[1]
     else:
@@ -62,10 +63,13 @@ def ym_sms(token, itemid, mobile, timeout):
     while True:
         response = requests.get(url, params=param).content.decode(encoding="utf-8")
         responses = response.split("|")
+        print(responses)
         if responses[0] == "success":
             return responses[1]
         end = time.time()
         if (end - start) > timeout:
+            # 获取不到释放
+            ym_release(token, itemid, mobile)
             raise RuntimeError("ym_sms获取不到短信")
         time.sleep(2)
 

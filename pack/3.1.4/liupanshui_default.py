@@ -16,12 +16,12 @@ headers = {
     'Accept-Language': 'zh-cn',
 }
 header_dict = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko'}
-TOKEN = '00707771d8232a2de49bb1a4189d57d7b5ea5b23'
-plazaId = '1102223'
+TOKEN = '007763861350c65a82c03579a25bb1bd0dee1ca4'
+plazaId = '1105208'
 ITEMID = '7982'
 count = 0
-province = '330000'
-place = '湖州新人礼'
+province = '520000'
+place = '六盘水'
 lock = threading.Lock()
 
 
@@ -295,6 +295,8 @@ def get_code_login(MOBILE, index):
     # 领取商品id的优惠券，生成订单号
     couponResult = json.loads(get_order_no(cookieStr))
     oid = couponResult['data'][0]['order']['orderNo']
+    # couponResult = json.loads(get_coupon(uid, productId, MOBILE, cookieStr, puid))
+    # oid = couponResult['orderNo']
     # 获取订单号下对应的优惠券信息
     couponInfoResult = json.loads(get_couponNo(cookieStr, oid))
     # 处理没有成功拿到优惠券操作
