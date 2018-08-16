@@ -1,24 +1,24 @@
-pyinstaller -F -w beihai.py -p yima.py
-pyinstaller -F -w chongqingbeibei.py -p yima.py
-pyinstaller -F -w chongzhou.py -p yima.py
-pyinstaller -F -w guanshanhu.py -p yima.py
-pyinstaller -F -w huimin.py -p yima.py
-pyinstaller -F -w huzhou.py -p yima.py
-pyinstaller -F -w huzhou_xinrenli.py -p yima.py
-pyinstaller -F -w jiangmen.py -p yima.py
-pyinstaller -F -w jinhua.py -p yima.py
-pyinstaller -F -w jixi.py -p yima.py
-pyinstaller -F -w liaoyang.py -p yima.py
-pyinstaller -F -w liupanshui.py -p yima.py
-pyinstaller -F -w liupanshui_xinrenli.py -p yima.py
-pyinstaller -F -w nanningjiangnan.py -p yima.py
-pyinstaller -F -w ningde.py -p yima.py
-pyinstaller -F -w pingyang.py -p yima.py
-pyinstaller -F -w pingyang_hui.py -p yima.py
-pyinstaller -F -w quzhou.py -p yima.py
-pyinstaller -F -w sanming.py -p yima.py
-pyinstaller -F -w shenyangtiexi.py -p yima.py
-pyinstaller -F -w shenyangtiexi_xinrenli.py -p yima.py
-pyinstaller -F -w taizhou.py -p yima.py
-pyinstaller -F -w xishuangbanna.py -p yima.py
-pyinstaller -F -w zhangzhoutaishang.py -p yima.py
+pyinstaller -F  beihai.py -p yima.py
+pyinstaller -F  chongqingbeibei.py -p yima.py
+pyinstaller -F  chongzhou.py -p yima.py
+pyinstaller -F  guanshanhu.py -p yima.py
+pyinstaller -F  huimin.py -p yima.py
+pyinstaller -F  huzhou.py -p yima.py
+pyinstaller -F  huzhou_xinrenli.py -p yima.py
+pyinstaller -F  jiangmen.py -p yima.py
+pyinstaller -F  jinhua.py -p yima.py
+pyinstaller -F  jixi.py -p yima.py
+pyinstaller -F  liaoyang.py -p yima.py
+pyinstaller -F  liupanshui.py -p yima.py
+pyinstaller -F  liupanshui_xinrenli.py -p yima.py
+pyinstaller -F  nanningjiangnan.py -p yima.py
+pyinstaller -F  ningde.py -p yima.py
+pyinstaller -F  pingyang.py -p yima.py
+pyinstaller -F  pingyang_hui.py -p yima.py
+pyinstaller -F  quzhou.py -p yima.py
+pyinstaller -F  sanming.py -p yima.py
+pyinstaller -F  shenyangtiexi.py -p yima.py
+pyinstaller -F  shenyangtiexi_xinrenli.py -p yima.py
+pyinstaller -F  taizhou.py -p yima.py
+pyinstaller -F  xishuangbanna.py -p yima.py
+pyinstaller -F  zhangzhoutaishang.py -p yima.py
