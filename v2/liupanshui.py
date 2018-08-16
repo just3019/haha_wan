@@ -106,6 +106,7 @@ def deal(num, index):
         log("请联系客服，再刷粉！")
         raise RuntimeError("请联系客服，再刷粉！")
     productId = get_product_info()['data']['resource'][index - 1]['couponNo']
+    print(productId)
     global COUNT
     while COUNT < num:
         try:
