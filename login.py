@@ -3,9 +3,9 @@ import random
 import requests
 
 # c57f13fb3b2e4b038b316bf4f0cd1e79
-# 6cc7fda5c8674951b446126226ac51ac
+# d4fae34b5c8147c695ed64b16981eede
 wxFfanToken = "c57f13fb3b2e4b038b316bf4f0cd1e79"
-cho = ["74ab910197474826b288edd65d74393c", "6cc7fda5c8674951b446126226ac51ac"]
+cho = ["74ab910197474826b288edd65d74393c", "d4fae34b5c8147c695ed64b16981eede"]
 wxFfanToken = random.choice(cho)
 print(wxFfanToken)
 
@@ -16,7 +16,7 @@ def wanda_login(mobile, code):
         ('verifyCode', code),
         ('plazaId', '1000770'),
         ('source', 'MINA'),
-        ('wxFfanToken', wxFfanToken),
+        ('wxFfanToken', "74ab910197474826b288edd65d74393c"),
     ]
     response = requests.post('https://api.ffan.com/microapp/v1/ffanLogin', data=data)
     result = response.text
@@ -25,7 +25,7 @@ def wanda_login(mobile, code):
 
 
 if __name__ == '__main__':
-    wanda_login('13843577074', '580232')
+    wanda_login('17194113887', '655801')
 
 #
 # import requests

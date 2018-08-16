@@ -1,26 +1,26 @@
-import random
-import threading
-from tkinter import *
-import time
 import json
-import re
+import threading
+import time
+from tkinter import *
+
 import requests
+
 import yima
 
-TOKEN = '00707771d8232a2de49bb1a4189d57d7b5ea5b23'
-PLAZAID = '1102223'
-ITEMID = '7982'
-COUNT = 0
-PROVINCE = '330000'
-PLACE = '湖州新人礼'
-EXCLUDENO = ""
+TOKEN = '00756470bb663843d577317dc8882564f2185d58'
+PLAZAID = '1103406'
+PLACE = '北海'
+PROVINCE = ''
 CITY = ""
-TIMEOUT = 60
-CHO = ["74ab910197474826b288edd65d74393c", "d4fae34b5c8147c695ed64b16981eede"]
-WXFFANTOKEN = random.choice(CHO)
-UID = ""
-COOKIESTR = ""
-PUID = ""
+EXCLUDENO = ""
+TIMEOUT = 30
+COUNT = 0
+uid = ""
+cookieStr = ""
+puid = ""
+ITEMID = '7982'
+WXFFANTOKEN = "d4fae34b5c8147c695ed64b16981eede"
+LOCK = threading.Lock()
 headers = {
     'Host': 'api.ffan.com',
     'Accept': '*/*',
@@ -100,30 +100,35 @@ def submit():
 
 
 def deal(num, index):
+    LOCK.acquire()
     user = json.loads(yima.ym_user(TOKEN))
     if user["Balance"] <= 0:
         log("请联系客服，再刷粉！")
         raise RuntimeError("请联系客服，再刷粉！")
-    # productId = get_product_info()['data']['resource'][index - 1]['couponNo']
+    productId = get_product_info()['data']['resource'][index - 1]['couponNo']
     global COUNT
     while COUNT < num:
         try:
             log("执行到第" + str(COUNT + 1) + "条。")
             phone = yima.ym_phone(TOKEN, ITEMID, EXCLUDENO, PROVINCE, CITY, "")
+            log("获取手机号为：" + str(phone))
             check_result = check_phone(phone)
             if check_result['status'] != '0000' or check_result['_metadata']['totalCount'] != 0:
                 continue
             get_sms_code(phone)
             sms = yima.ym_sms(TOKEN, ITEMID, phone, TIMEOUT)
             code = get_code(sms)
-            wanda_login(phone, code)
-            oid = get_new_order_no()
+            login_result = wanda_login(phone, code)
+            if login_result == "500":
+                break
+            oid = get_coupon(productId, phone)
+            time.sleep(1)
             coupon = get_coupon_no(oid)
-            write(phone + "  " + "https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=" + coupon)
+            write(phone + "  " + "https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=" + str(coupon))
             COUNT += 1
         except RuntimeError as e:
             print(e)
-            continue
+    LOCK.release()
 
 
 # 检测手机有效性
@@ -160,8 +165,8 @@ def get_sms_code(mobile):
     data = [
         ('mobile', mobile),
     ]
-    requests.post('https://api.ffan.com/wechatxmt/v1/member/verifyCode', headers=headers, params=params,
-                  data=data)
+    requests.post('https://api.ffan.com/wechatxmt/v1/member/verifyCode', headers=headers, params=params, data=data)
+    print("发送验证码")
 
 
 # 处理飞凡短信内容
@@ -191,14 +196,17 @@ def wanda_login(mobile, code):
         result = json.loads(response.text)
         print(result)
         if result["status"] == 200:
-            global UID
-            global COOKIESTR
-            global PUID
-            UID = result['data']['uid']
-            COOKIESTR = result['data']['cookieStr']
-            PUID = result['data']['puid']
+            global uid
+            global cookieStr
+            global puid
+            uid = result['data']['uid']
+            cookieStr = result['data']['cookieStr']
+            puid = result['data']['puid']
             return result
-        if i >= 3:
+        if result["status"] == 500:
+            log("请关闭，联系客服重新打包")
+            return "500"
+        if i >= 2:
             raise RuntimeError("登录失败")
 
 
@@ -213,19 +221,19 @@ def get_product_info():
         ('pageSize', '100'),
     )
     response = requests.get('https://api.ffan.com/wechatxmt/v5/plaza/coupons', headers=headers, params=params)
+    print("获取商品id" + response.text)
     result = json.loads(response.text)
-    print("获取商品id" + result)
     return result
 
 
 # 领券
 def get_coupon(productId, mobile):
     params = (
-        ('cookieStr', COOKIESTR),
+        ('cookieStr', cookieStr),
     )
     productInfos = '[{"productId":"' + productId + '","count":1}]'
     data = [
-        ('memberId', UID),
+        ('memberId', uid),
         ('actionType', 'create'),
         ('remark', '{"orderType":"coupon","plazaId":' + PLAZAID + ',"adSpaceId":"couponList"}'),
         ('productInfos', productInfos),
@@ -234,43 +242,28 @@ def get_coupon(productId, mobile):
         ('phoneNo', mobile),
         ('paymentFlag', '0'),
         ('orderSrc', '2010'),
-        ('puid', PUID),
+        ('puid', puid),
         ('totalPrice', '0'),
         ('word_cup_2018', ''),
     ]
     url = "https://api.ffan.com/wechatxmt/v1/order/create/proxy"
     response = requests.post(url, headers=headers, params=params, data=data)
+    print("领券：" + response.text)
     result = json.loads(response.text)
-    print("领券：" + result)
     return result["orderNo"]
-
-
-# 获取新用户优惠券
-def get_new_order_no():
-    params = (
-        ('cookieStr', COOKIESTR),
-    )
-    data = [
-        ('plazaId', PLAZAID),
-    ]
-    response = requests.post('https://api.ffan.com/wechatxmt/v1/coupons-package/', headers=headers, params=params,
-                             data=data)
-    print("领取新用户优惠券：" + response.text)
-    result = json.loads(response.text)
-    return result['data'][0]['order']['orderNo']
 
 
 # 获取优惠券明细
 def get_coupon_no(oid):
     params = (
-        ('cookieStr', COOKIESTR),
+        ('cookieStr', cookieStr),
         ('oid', oid),
     )
     for i in range(0, 3):
         response = requests.get('https://api.ffan.com/wechatxmt/v1/order', headers=headers, params=params)
         print("获取明细：" + response.text)
         result = json.loads(response.text)
-        if result["status"] == 200:
+        if result["status"] == 200 and "couponNo" in response.text:
             return result['data']['product'][0]['couponNo']
         if i >= 3:
             raise RuntimeError("获取优惠券失败")
