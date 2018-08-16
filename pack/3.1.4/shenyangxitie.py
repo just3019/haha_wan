@@ -17,7 +17,7 @@ headers = {
 }
 header_dict = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko'}
 TOKEN = '007711720862de70a346fc1788db353c18c5d478'
-plazaId = '1000266'
+plazaId = ''
 ITEMID = '7982'
 count = 0
 province = '210000'
