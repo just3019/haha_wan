@@ -182,7 +182,7 @@ def deal():
             scan(code)
             write(mystr)
             log(str(index) + "个核销成功。")
-            sleeptime = random.randint(10, 20)
+            sleeptime = random.randint(10, 180)
             log("本次停顿：" + str(sleeptime))
             time.sleep(sleeptime)
         except RuntimeError as e:
