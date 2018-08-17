@@ -112,6 +112,8 @@ def deal(num, index):
             phone = yima.ym_phone(TOKEN, ITEMID, EXCLUDENO, PROVINCE, CITY, "")
             check_result = check_phone(phone)
             if check_result['status'] != '0000' or check_result['_metadata']['totalCount'] != 0:
+                yima.ym_release(TOKEN, ITEMID, phone)
+                yima.ym_ignore(TOKEN, ITEMID, phone)
                 continue
             get_sms_code(phone)
             sms = yima.ym_sms(TOKEN, ITEMID, phone, TIMEOUT)

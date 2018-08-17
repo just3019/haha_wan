@@ -115,6 +115,8 @@ def deal(num, index):
             log("获取手机号为：" + str(phone))
             check_result = check_phone(phone)
             if check_result['status'] != '0000' or check_result['_metadata']['totalCount'] != 0:
+                yima.ym_release(TOKEN, ITEMID, phone)
+                yima.ym_ignore(TOKEN, ITEMID, phone)
                 continue
             get_sms_code(phone)
             sms = yima.ym_sms(TOKEN, ITEMID, phone, TIMEOUT)
