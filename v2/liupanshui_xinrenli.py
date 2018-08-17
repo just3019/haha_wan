@@ -118,6 +118,7 @@ def deal(num, index):
             code = get_code(sms)
             wanda_login(phone, code)
             oid = get_new_order_no()
+            time.sleep(1)
             coupon = get_coupon_no(oid)
             write(phone + "  " + "https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=" + coupon)
             COUNT += 1
