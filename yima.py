@@ -3,8 +3,8 @@ import time
 
 import requests
 
-YM_USERNAME = "zhangzhouts"
-YM_PASSWORD = "zhangzhouts"
+YM_USERNAME = "shenyangtiexi"
+YM_PASSWORD = "shenyangtiexi"
 
 
 # 易码登录获取token
@@ -109,8 +109,8 @@ if __name__ == '__main__':
     token = ym_login(YM_USERNAME, YM_PASSWORD)
     user = json.loads(ym_user(token))
     print(user)
-    # phone = ym_phone(token, itemid, "", "", "", "")
-    # print(phone)
+    phone = ym_phone(token, itemid, "", "", "", "")
+    print(phone)
     # sms = ym_sms(token, itemid, phone, 60)
     # print(sms)
     # ym_release(token, itemid, phone)
