@@ -135,7 +135,7 @@ def wanda_login(mobile, code):
         ('verifyCode', code),
         ('plazaId', plazaId),
         ('source', 'MINA'),
-        ('wxFfanToken', 'd4fae34b5c8147c695ed64b16981eede'),
+        ('wxFfanToken', '74ab910197474826b288edd65d74393c'),
         ('wandaUser', '[object Object]'),
         ('error', ''),
         ('downcount', '60'),

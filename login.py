@@ -3,9 +3,9 @@ import random
 import requests
 
 # c57f13fb3b2e4b038b316bf4f0cd1e79
-# d4fae34b5c8147c695ed64b16981eede
+# 74ab910197474826b288edd65d74393c
 wxFfanToken = "c57f13fb3b2e4b038b316bf4f0cd1e79"
-cho = ["74ab910197474826b288edd65d74393c", "d4fae34b5c8147c695ed64b16981eede"]
+cho = ["74ab910197474826b288edd65d74393c", "74ab910197474826b288edd65d74393c"]
 wxFfanToken = random.choice(cho)
 print(wxFfanToken)
 

@@ -19,7 +19,7 @@ uid = ""
 cookieStr = ""
 puid = ""
 ITEMID = '7982'
-WXFFANTOKEN = "d4fae34b5c8147c695ed64b16981eede"
+WXFFANTOKEN = "74ab910197474826b288edd65d74393c"
 LOCK = threading.Lock()
 headers = {
     'Host': 'api.ffan.com',
