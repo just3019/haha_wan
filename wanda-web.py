@@ -1,14 +1,11 @@
 import datetime
-import json
-import socket
-
-from bs4 import BeautifulSoup
-from flask import Flask, request
-import requests
 import sqlite3
 
+import requests
+from flask import Flask
+
 app = Flask(__name__)
-conn = sqlite3.connect('/Users/demon/Desktop/wanda.db')
+conn = sqlite3.connect('wanda.db')
 
 
 @app.route('/')
@@ -31,9 +28,13 @@ def login_wanda_guanli():
 
 @app.route('/getUserInfo')
 def get_user_info():
-    request.data
+    print("hahah")
 
 
 if __name__ == '__main__':
     print("开始")
 # app.run(port=8888)
+# 非凡管理后台登录记录用户
+# 非凡商家模拟登录记录用户
+# 提供万达广场id对照表
+# 微信客户端登录万达小程序的WXFFANTOKEN

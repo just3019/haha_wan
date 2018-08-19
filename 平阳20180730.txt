@@ -1,0 +1,3 @@
+17130023825  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=042404674820
+17189708256  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=003404796456
+18814863261  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=078804869344
