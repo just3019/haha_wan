@@ -40,26 +40,26 @@ def get_random():
 def scan(code):
     params = (
         ('', ''),
-        ('storeId', '10271340'),
+        ('storeId', '10377896'),
         ('clientType', 'iOS'),
-        ('uid', '436419'),
+        ('uid', '433857'),
         ('clientId', 'xapi_01'),
         ('version', '47'),
         ('_uni_source', '2.2'),
-        ('merchantId', '10079514'),
-        ('loginToken', 'e1f57d2b63107383d375577501456a90'),
+        ('merchantId', '10093430'),
+        ('loginToken', '1cd3936fde9eb09110b4c941ba98e95f'),
         ('deviceId', '184d19d52857d3628276407b946e367d208c7c5d'),
         ('appType', 'bpMobile'),
-        ('username', '\u5468\u661F\u661F'),
+        ('username', '18604733850'),
         ('serverVersion', '1'),
         ('clientAgent', 'iPhone9,2/iOS/11.4.1/1242*2208'),
-        ('telephone', '18899998888'),
+        ('telephone', '18604733850'),
     )
 
     data = [
         ('_uni_source', '2.2'),
         ('appType', 'bpMobile'),
-        ('app_time', '1004793832064'),
+        ('app_time', '3391545355957'),
         ('app_verification_native', get_random()),
         ('certificateno', code),
         ('checkDevice', '1'),
@@ -67,14 +67,14 @@ def scan(code):
         ('clientId', 'xapi_01'),
         ('clientType', 'iOS'),
         ('deviceId', '184d19d52857d3628276407b946e367d208c7c5d'),
-        ('loginToken', 'e1f57d2b63107383d375577501456a90'),
-        ('merchantId', '10079514'),
+        ('loginToken', '1cd3936fde9eb09110b4c941ba98e95f'),
+        ('merchantId', '10093430'),
         ('serverVersion', '1'),
-        ('sign', '017f043107d3f884306702d4f48d21de'),
-        ('storeId', '10271340'),
-        ('telephone', '18899998888'),
-        ('uid', '436419'),
-        ('username', '%E5%91%A8%E6%98%9F%E6%98%9F'),
+        ('sign', '6db48193c36755708801ba0e964cf081'),
+        ('storeId', '10377896'),
+        ('telephone', '18604733850'),
+        ('uid', '433857'),
+        ('username', '18604733850'),
         ('version', '47'),
     ]
 
@@ -83,42 +83,42 @@ def scan(code):
     print(response.text)
 
     params1 = (
-        ('storeId', '10271340'),
+        ('storeId', '10377896'),
         ('clientType', 'iOS'),
-        ('uid', '436419'),
+        ('uid', '433857'),
         ('clientId', 'xapi_01'),
         ('version', '47'),
         ('_uni_source', '2.2'),
-        ('merchantId', '10079514'),
-        ('loginToken', 'e1f57d2b63107383d375577501456a90'),
+        ('merchantId', '10093430'),
+        ('loginToken', '1cd3936fde9eb09110b4c941ba98e95f'),
         ('deviceId', '184d19d52857d3628276407b946e367d208c7c5d'),
         ('appType', 'bpMobile'),
-        ('username', '\u5468\u661F\u661F'),
+        ('username', '18604733850'),
         ('serverVersion', '1'),
         ('clientAgent', 'iPhone9,2/iOS/11.4.1/1242*2208'),
-        ('telephone', '18899998888'),
+        ('telephone', '18604733850'),
     )
 
     data1 = [
         ('_uni_source', '2.2'),
         ('appType', 'bpMobile'),
-        ('app_time', '1005042873894'),
+        ('app_time', '3393833397878'),
         ('app_verification_native', get_random()),
         ('certificateno', code),
         ('clientAgent', 'iPhone9,2/iOS/11.4.1/1242*2208'),
         ('clientId', 'xapi_01'),
         ('clientType', 'iOS'),
         ('deviceId', '184d19d52857d3628276407b946e367d208c7c5d'),
-        ('loginToken', 'e1f57d2b63107383d375577501456a90'),
-        ('memberId', '15000000373324593'),
-        ('merchantId', '10079514'),
+        ('loginToken', '1cd3936fde9eb09110b4c941ba98e95f'),
+        ('memberId', '15000000375688949'),
+        ('merchantId', '10093430'),
         ('serverVersion', '1'),
-        ('sign', 'cd8c4104f88a74af6dba5c36fe095c6d'),
-        ('storeId', '10271340'),
-        ('telephone', '18899998888'),
-        ('uid', '436419'),
-        ('userId', '436419'),
-        ('username', '%E5%91%A8%E6%98%9F%E6%98%9F'),
+        ('sign', 'ce3ddb89dae700fe256d1d4652f3de9b'),
+        ('storeId', '10377896'),
+        ('telephone', '18604733850'),
+        ('uid', '433857'),
+        ('userId', '433857'),
+        ('username', '18604733850'),
         ('version', '47'),
     ]
 
@@ -182,7 +182,7 @@ def deal():
             scan(code)
             write(mystr)
             log(str(index) + "个核销成功。")
-            sleeptime = random.randint(20, 180)
+            sleeptime = random.randint(10, 100)
             log("本次停顿：" + str(sleeptime))
             time.sleep(sleeptime)
         except RuntimeError as e:
