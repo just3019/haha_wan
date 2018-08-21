@@ -1,98 +1,29 @@
-# -*- coding: utf-8 -*-
-# python3.6
-from urllib import request
-import time
-import login
-import get_code
-import get_coupon
-import get_coupon_info
-import json
-import re
+import requests
 
-header_dict = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko'}
-TOKEN = '00499849cbf687835af75182698438eb3c2ccdf4'
-ITEMID = '7982'
-uid = ''
-cookieStr = ''
-puid = ''
+# 获取优惠券码
 
+headers = {
+    'Host': 'api.ffan.com',
+    'Content-Type': 'application/json',
+    'Accept': '*/*',
+    'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_4_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15G77 MicroMessenger/6.7.1 NetType/WIFI Language/zh_CN',
+    'Referer': 'https://servicewechat.com/wx07dfb5d79541eca9/83/page-frame.html',
+    'Accept-Language': 'zh-cn',
+}
 
-def get_phone():
-    EXCLUDENO = ''  # 排除号段170_171
-    url = 'http://api.fxhyd.cn/UserInterface.aspx?action=getmobile&token=' + TOKEN + '&itemid=' + ITEMID + '&excludeno=' + EXCLUDENO
-    MOBILE = request.urlopen(request.Request(url=url, headers=header_dict)).read().decode(encoding='utf-8')
-    if MOBILE.split('|')[0] == 'success':
-        MOBILE = MOBILE.split('|')[1]
-        # print('获取号码是:\n' + MOBILE)
-        return MOBILE
-    else:
-        # print('获取TOKEN错误,错误代码' + MOBILE)
-        return ''
+params = (
+    ('cookieStr', 'psid=b59def45289ca608e824c0343cce3957; puid=01D132E5F32343EEB9F7D08C1B400102; up=bup; sid=6c395e0d3184f3a7d1b2d30695cbaf3f; uid=15000000371775781; uniqkey2=RZhczLgfkoQJoTrJRhGcRs+uCdOz+AtZ29UP8LP8D1b11t5Znk7AQ2Nn+8jBUyzzmK7d4I8KAlNbEgSS9HMSwG7gWwdTxpyBCBxZcwkzeXb1Xz13f4tkjXHYigxXB2RqRJwgz29iHKqfT9xI6wHsYTiGBaDnKGf/pQzn8rg9y4qFHWn7cPoTW9+rqruUiKQbhdLw; puid=01D132E5F32343EEB9F7D08C1B400102; uid=15000000371775781; ploginToken=b59def45289ca608e824c0343cce3957; '),
+    ('plazaId', '1102223'),
+    ('memberId', '15000000371775781'),
+    ('status', '3'),
+    ('offset', '0'),
+    ('limit', '10'),
+)
 
+response = requests.get('https://api.ffan.com/wechatxmt/v1/member/coupons', headers=headers, params=params)
+print(response.text)
 
-def get_code_login(MOBILE, productId):
-    get_code.get_code(MOBILE)
-    WAIT = 100  # 接受短信时长60s
-    url = 'http://api.fxhyd.cn/UserInterface.aspx?action=getsms&token=' + TOKEN + '&itemid=' + ITEMID + '&mobile=' + MOBILE + '&release=1'
-    text1 = request.urlopen(request.Request(url=url, headers=header_dict)).read().decode(encoding='utf-8')
-    TIME1 = time.time()
-    TIME2 = time.time()
-    ROUND = 1
-    while (TIME2 - TIME1) < WAIT and not text1.split('|')[0] == "success":
-        time.sleep(5)
-        text1 = request.urlopen(request.Request(url=url, headers=header_dict)).read().decode(encoding='utf-8')
-        TIME2 = time.time()
-        ROUND = ROUND + 1
-
-    ROUND = str(ROUND)
-    text = ''
-    if text1.split('|')[0] == "success":
-        text = text1.split('|')[1]
-        TIME = str(round(TIME2 - TIME1, 1))
-        # print('短信内容是' + text + '\n耗费时长' + TIME + 's,循环数是' + ROUND)
-    # else:
-        # print('获取短信超时，错误代码是' + text1 + ',循环数是' + ROUND)
-
-    # 释放号码
-    # url = 'http://api.fxhyd.cn/UserInterface.aspx?action=release&token=' + TOKEN + '&itemid=' + ITEMID + '&mobile=' + MOBILE
-    # RELEASE = request.urlopen(request.Request(url=url, headers=header_dict)).read().decode(encoding='utf-8')
-    # if RELEASE == 'success':
-    #     print('号码没有成功释放')
-
-    # 拉黑号码
-    # url = 'http://api.fxhyd.cn/UserInterface.aspx?action=addignore&token=' + TOKEN + '&itemid=' + ITEMID + '&mobile=' + MOBILE
-    # BLACK = request.urlopen(request.Request(url=url, headers=header_dict)).read().decode(encoding='utf-8')
-    # if BLACK == 'success':
-    #     print('号码没有拉黑成功')
-
-    code = text[text.find('，') - 8: text.find('，')]
-    pat = "[0-9]+"
-    IC = 0
-    IC = re.search(pat, code)
-    if IC:
-        code = IC.group()
-    #     print("验证码是:\n" + code)
-    # else:
-    #     print("请重新设置表达式")
-    # print("验证码为：" + code)
-    result = json.loads(login.wanda_login(MOBILE, code))
-    uid = result['data']['uid']
-    cookieStr = result['data']['cookieStr']
-    puid = result['data']['puid']
-    couponResult = json.loads(get_coupon.get_coupon(uid, productId, MOBILE, cookieStr, puid))
-    oid = couponResult['orderNo']
-    couponInfoResult = json.loads(get_coupon_info.get_couponNo(cookieStr, oid))
-    couponNo = couponInfoResult['data']['product'][0]['couponNo']
-    print(MOBILE + "  " + "https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=" + couponNo)
-
-
-if __name__ == '__main__':
-    # print('开始')
-    for i in range(0, 1):
-        mobile = ''
-        try:
-            mobile = get_phone()
-            get_code_login(mobile, '20180713184317')
-        except:
-            print(mobile)
-            continue
+#NB. Original query string below. It seems impossible to parse and
+#reproduce query strings 100% accurately so the one below is given
+#in case the reproduced version is not "correct".
+# response = requests.get('https://api.ffan.com/wechatxmt/v1/member/coupons?cookieStr=psid%3Db59def45289ca608e824c0343cce3957%3B%20puid%3D01D132E5F32343EEB9F7D08C1B400102%3B%20up%3Dbup%3B%20sid%3D6c395e0d3184f3a7d1b2d30695cbaf3f%3B%20uid%3D15000000371775781%3B%20uniqkey2%3DRZhczLgfkoQJoTrJRhGcRs%2BuCdOz%2BAtZ29UP8LP8D1b11t5Znk7AQ2Nn%2B8jBUyzzmK7d4I8KAlNbEgSS9HMSwG7gWwdTxpyBCBxZcwkzeXb1Xz13f4tkjXHYigxXB2RqRJwgz29iHKqfT9xI6wHsYTiGBaDnKGf%2FpQzn8rg9y4qFHWn7cPoTW9%2BrqruUiKQbhdLw%3B%20puid%3D01D132E5F32343EEB9F7D08C1B400102%3B%20uid%3D15000000371775781%3B%20ploginToken%3Db59def45289ca608e824c0343cce3957%3B%20&plazaId=1102223&memberId=15000000371775781&status=3&offset=0&limit=10', headers=headers)

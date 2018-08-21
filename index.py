@@ -1,99 +1,25 @@
-# -*- coding: utf-8 -*-
-# python3.6
+import requests
 
-# 易码短信服务平台开放接口范例代码
-# 语言版本：python版
-# 官方网址：www.51ym.me
-# 技术支持QQ：2114927217
-# 发布时间：217-12-11
+headers = {
+    'Host': 'api.ffan.com',
+    'Accept': '*/*',
+    'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_4_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15G77 MicroMessenger/6.7.1 NetType/WIFI Language/zh_CN',
+    'Referer': 'https://servicewechat.com/wx07dfb5d79541eca9/83/page-frame.html',
+    'Accept-Language': 'zh-cn',
+}
 
-from urllib import parse, request
-import time
-import re
+params = (
+    ('cookieStr', 'psid=b59def45289ca608e824c0343cce3957; puid=01D132E5F32343EEB9F7D08C1B400102; up=bup; sid=6c395e0d3184f3a7d1b2d30695cbaf3f; uid=15000000371775781; uniqkey2=RZhczLgfkoQJoTrJRhGcRs+uCdOz+AtZ29UP8LP8D1b11t5Znk7AQ2Nn+8jBUyzzmK7d4I8KAlNbEgSS9HMSwG7gWwdTxpyBCBxZcwkzeXb1Xz13f4tkjXHYigxXB2RqRJwgz29iHKqfT9xI6wHsYTiGBaDnKGf/pQzn8rg9y4qFHWn7cPoTW9+rqruUiKQbhdLw; puid=01D132E5F32343EEB9F7D08C1B400102; uid=15000000371775781; ploginToken=b59def45289ca608e824c0343cce3957; '),
+)
 
-header_dict = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko'}
+data = [
+  ('plazaId', '1102223'),
+]
 
-# 登陆/获取TOKEN
-# username = 'ye907182374'  # 账号
-# password = 'baobao1515'  # 密码
-# url = 'http://api.fxhyd.cn/UserInterface.aspx?action=login&username=' + username + '&password=' + password
-# TOKEN1 = request.urlopen(request.Request(url=url, headers=header_dict)).read().decode(encoding='utf-8')
-# if TOKEN1.split('|')[0] == 'success':
-#     TOKEN = TOKEN1.split('|')[1]
-#     print('TOKEN是' + TOKEN)
-# else:
-#     print('获取TOKEN错误,错误代码' + TOKEN1 + '。代码释义：1001:参数token不能为空;1002:参数action不能为空;1003:参数action错误;
-# 1004:token失效;1005:用户名或密码错误;1006:用户名不能为空;1007:密码不能为空;1008:账户余额不足;1009:账户被禁用;1010:参数错误;1011:
-# 账户待审核;1012:登录数达到上限')
+response = requests.post('https://api.ffan.com/wechatxmt/v1/coupons-package/', headers=headers, params=params, data=data)
+print(response.text)
 
-TOKEN = '00499849cbf687835af75182698438eb3c2ccdf4'  # 输入TOKEN
-# 获取账户信息
-# url = 'http://api.fxhyd.cn/UserInterface.aspx?action=getaccountinfo&token=' + TOKEN + '&format=1'
-# ACCOUNT1 = request.urlopen(request.Request(url=url, headers=header_dict)).read().decode(encoding='utf-8')
-# if ACCOUNT1.split('|')[0] == 'success':
-#     ACCOUNT = ACCOUNT1.split('|')[1]
-#     print(ACCOUNT)
-# else:
-#     print('获取TOKEN错误,错误代码' + ACCOUNT1)
-
-# 获取手机号码
-# ITEMID = '7982'  # 项目编号
-# EXCLUDENO = ''  # 排除号段170_171
-# url = 'http://api.fxhyd.cn/UserInterface.aspx?action=getmobile&token=' + TOKEN + '&itemid=' + ITEMID + '&excludeno=' + EXCLUDENO
-# MOBILE1 = request.urlopen(request.Request(url=url, headers=header_dict)).read().decode(encoding='utf-8')
-# if MOBILE1.split('|')[0] == 'success':
-#     MOBILE = MOBILE1.split('|')[1]
-#     print('获取号码是:\n' + MOBILE)
-# else:
-#     print('获取TOKEN错误,错误代码' + MOBILE1)
-#
-# # 获取短信，注意线程挂起5秒钟，每次取短信最少间隔5秒
-# TOKEN = TOKEN  # TOKEN
-# ITEMID = ITEMID  # 项目id
-# MOBILE = MOBILE  # 手机号码
-# WAIT = 61  # 接受短信时长60s
-# url = 'http://api.fxhyd.cn/UserInterface.aspx?action=getsms&token=' + \
-#       TOKEN + '&itemid=' + ITEMID + '&mobile=' + MOBILE + '&release=1'
-# text1 = request.urlopen(request.Request(
-#     url=url, headers=header_dict)).read().decode(encoding='utf-8')
-# print('text1======>', text1)
-# TIME1 = time.time()
-# TIME2 = time.time()
-# ROUND = 1
-# while (TIME2 - TIME1) < WAIT and not text1.split('|')[0] == "success":
-#     time.sleep(5)
-#     text1 = request.urlopen(request.Request(
-#         url=url, headers=header_dict)).read().decode(encoding='utf-8')
-#     TIME2 = time.time()
-#     ROUND = ROUND + 1
-#
-# ROUND = str(ROUND)
-# if text1.split('|')[0] == "success":
-#     text = text1.split('|')[1]
-#     TIME = str(round(TIME2 - TIME1, 1))
-#     print('短信内容是' + text + '\n耗费时长' + TIME + 's,循环数是' + ROUND)
-# else:
-#     print('获取短信超时，错误代码是' + text1 + ',循环数是' + ROUND)
-#
-# # 释放号码
-# url = 'http://api.fxhyd.cn/UserInterface.aspx?action=release&token=' + TOKEN + '&itemid=' + ITEMID + '&mobile=' + MOBILE
-# RELEASE = request.urlopen(request.Request(url=url, headers=header_dict)).read().decode(encoding='utf-8')
-# if RELEASE == 'success':
-#     print('号码成功释放')
-#
-# # 拉黑号码
-# url = 'http://api.fxhyd.cn/UserInterface.aspx?action=addignore&token=' + TOKEN + '&itemid=' + ITEMID + '&mobile=' + MOBILE
-# BLACK = request.urlopen(request.Request(url=url, headers=header_dict)).read().decode(encoding='utf-8')
-# if BLACK == 'success':
-#     print('号码拉黑成功')
-
-str = '【飞凡】短信验证码 498820 ，欢迎注册飞凡会员。如需帮助，请关注微信号“飞凡逛街”联系在线客服。'
-print(str[str.find('，') - 8: str.find('，')])
-# 提取短信内容中的数字验证码
-pat = "[0-9]+"
-IC = 0
-IC = re.search(pat, str)
-if IC:
-    print("验证码是:\n" + IC.group())
-else:
-    print("请重新设置表达式")
+#NB. Original query string below. It seems impossible to parse and
+#reproduce query strings 100% accurately so the one below is given
+#in case the reproduced version is not "correct".
+# response = requests.post('https://api.ffan.com/wechatxmt/v1/coupons-package/?cookieStr=psid%3Db59def45289ca608e824c0343cce3957%3B%20puid%3D01D132E5F32343EEB9F7D08C1B400102%3B%20up%3Dbup%3B%20sid%3D6c395e0d3184f3a7d1b2d30695cbaf3f%3B%20uid%3D15000000371775781%3B%20uniqkey2%3DRZhczLgfkoQJoTrJRhGcRs%2BuCdOz%2BAtZ29UP8LP8D1b11t5Znk7AQ2Nn%2B8jBUyzzmK7d4I8KAlNbEgSS9HMSwG7gWwdTxpyBCBxZcwkzeXb1Xz13f4tkjXHYigxXB2RqRJwgz29iHKqfT9xI6wHsYTiGBaDnKGf%2FpQzn8rg9y4qFHWn7cPoTW9%2BrqruUiKQbhdLw%3B%20puid%3D01D132E5F32343EEB9F7D08C1B400102%3B%20uid%3D15000000371775781%3B%20ploginToken%3Db59def45289ca608e824c0343cce3957%3B%20', headers=headers, data=data)
