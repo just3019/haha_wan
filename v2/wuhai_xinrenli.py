@@ -273,15 +273,13 @@ def get_coupon_no(oid):
         response = requests.get('https://api.ffan.com/wechatxmt/v1/order', headers=headers, params=params)
         print("获取明细：" + response.text)
         result = json.loads(response.text)
-        if i >= 3:
+        if i >= 2:
             raise RuntimeError("获取优惠券失败")
         if result["status"] == 200:
             print("优惠券号为：" + str(result['data']['product'][0]['couponNo']))
             if result['data']['product'][0]['couponNo'] is None:
                 continue
             return result['data']['product'][0]['couponNo']
-        if i >= 3:
-            raise RuntimeError("获取优惠券失败")
 
 
 if __name__ == '__main__':
