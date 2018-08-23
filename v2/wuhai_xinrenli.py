@@ -274,6 +274,9 @@ def get_coupon_no(oid):
         print("获取明细：" + response.text)
         result = json.loads(response.text)
         if result["status"] == 200:
+            print("优惠券号为：" + str(result['data']['product'][0]['couponNo']))
+            if result['data']['product'][0]['couponNo'] is None:
+                continue
             return result['data']['product'][0]['couponNo']
         if i >= 3:
             raise RuntimeError("获取优惠券失败")
