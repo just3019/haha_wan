@@ -7,7 +7,7 @@ import re
 import requests
 import yima
 
-TOKEN = '007711720862de70a346fc1788db353c18c5d478'
+TOKEN = '00798999d856a74e9cd0b4257da5590a0a382712'
 PLAZAID = '1102461'
 ITEMID = '7982'
 COUNT = 0
