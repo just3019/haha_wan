@@ -40,41 +40,41 @@ def get_random():
 def scan(code):
     params = (
         ('', ''),
-        ('storeId', '10157953'),
-        ('uid', '349235'),
-        ('merchantId', '10069936'),
-        ('loginToken', 'f00eac6e6d964ae09f2c7e9da7b77ec4'),
-        ('deviceId', '184d19d52857d3628276407b946e367d208c7c5d'),
-        ('username', '17681697772'),
-        ('telephone', '17681697772'),
+        ('storeId', '10426732'),
         ('clientType', 'iOS'),
+        ('uid', '483634'),
         ('clientId', 'xapi_01'),
         ('version', '47'),
         ('_uni_source', '2.2'),
+        ('merchantId', '10112441'),
+        ('loginToken', 'ad0318ee0e84dbd02d7af6c4ac92dd69'),
+        ('deviceId', '184d19d52857d3628276407b946e367d208c7c5d'),
         ('appType', 'bpMobile'),
+        ('username', '18380479856'),
         ('serverVersion', '1'),
-        ('clientAgent', 'iPhone9,2/iOS/11.4/1242*2208'),
+        ('clientAgent', 'iPhone9,2/iOS/11.4.1/1242*2208'),
+        ('telephone', '18380479856'),
     )
 
     data = [
         ('_uni_source', '2.2'),
         ('appType', 'bpMobile'),
-        ('app_time', '225678871954'),
+        ('app_time', '3003129004234'),
         ('app_verification_native', get_random()),
         ('certificateno', code),
         ('checkDevice', '1'),
-        ('clientAgent', 'iPhone9,2/iOS/11.4/1242*2208'),
+        ('clientAgent', 'iPhone9,2/iOS/11.4.1/1242*2208'),
         ('clientId', 'xapi_01'),
         ('clientType', 'iOS'),
         ('deviceId', '184d19d52857d3628276407b946e367d208c7c5d'),
-        ('loginToken', 'f00eac6e6d964ae09f2c7e9da7b77ec4'),
-        ('merchantId', '10069936'),
+        ('loginToken', 'ad0318ee0e84dbd02d7af6c4ac92dd69'),
+        ('merchantId', '10112441'),
         ('serverVersion', '1'),
-        ('sign', 'd93ed5cce015bc859fadcf0856329194'),
-        ('storeId', '10157953'),
-        ('telephone', '17681697772'),
-        ('uid', '349235'),
-        ('username', '17681697772'),
+        ('sign', 'd093a89d1f7ac240c3ceba519f957961'),
+        ('storeId', '10426732'),
+        ('telephone', '18380479856'),
+        ('uid', '483634'),
+        ('username', '18380479856'),
         ('version', '47'),
     ]
 
@@ -87,42 +87,42 @@ def scan(code):
     }
 
     params1 = (
-        ('storeId', '10157953'),
+        ('storeId', '10426732'),
         ('clientType', 'iOS'),
-        ('uid', '349235'),
+        ('uid', '483634'),
         ('clientId', 'xapi_01'),
         ('version', '47'),
         ('_uni_source', '2.2'),
-        ('merchantId', '10069936'),
-        ('loginToken', 'f00eac6e6d964ae09f2c7e9da7b77ec4'),
+        ('merchantId', '10112441'),
+        ('loginToken', 'ad0318ee0e84dbd02d7af6c4ac92dd69'),
         ('deviceId', '184d19d52857d3628276407b946e367d208c7c5d'),
         ('appType', 'bpMobile'),
-        ('username', '17681697772'),
+        ('username', '18380479856'),
         ('serverVersion', '1'),
         ('clientAgent', 'iPhone9,2/iOS/11.4.1/1242*2208'),
-        ('telephone', '17681697772'),
+        ('telephone', '18380479856'),
     )
 
     data1 = [
         ('_uni_source', '2.2'),
         ('appType', 'bpMobile'),
-        ('app_time', '239664188372'),
+        ('app_time', '3004469456519'),
         ('app_verification_native', get_random()),
         ('certificateno', code),
         ('clientAgent', 'iPhone9,2/iOS/11.4.1/1242*2208'),
         ('clientId', 'xapi_01'),
         ('clientType', 'iOS'),
         ('deviceId', '184d19d52857d3628276407b946e367d208c7c5d'),
-        ('loginToken', 'f00eac6e6d964ae09f2c7e9da7b77ec4'),
-        ('memberId', '15000000371991724'),
-        ('merchantId', '10069936'),
+        ('loginToken', 'ad0318ee0e84dbd02d7af6c4ac92dd69'),
+        ('memberId', '15000000111042062'),
+        ('merchantId', '10112441'),
         ('serverVersion', '1'),
-        ('sign', '2f3c58a64f979908830fd91fa989f77e'),
-        ('storeId', '10157953'),
-        ('telephone', '17681697772'),
-        ('uid', '349235'),
-        ('userId', '349235'),
-        ('username', '17681697772'),
+        ('sign', '67d11de49e3356ee180a8b3234f14754'),
+        ('storeId', '10426732'),
+        ('telephone', '18380479856'),
+        ('uid', '483634'),
+        ('userId', '483634'),
+        ('username', '18380479856'),
         ('version', '47'),
     ]
 
@@ -143,7 +143,7 @@ def openfile():
 
 def ui():
     root = tkinter.Tk()
-    root.title('湖州核销工具')
+    root.title(place + '核销工具')
     root.geometry('600x600')
     global btn_file
     btn_file = Button(root, text='打开需要核销的文件', command=openfile)
@@ -186,7 +186,7 @@ def deal():
             scan(code)
             write(mystr)
             log(str(index) + "个核销成功。")
-            sleeptime = random.randint(20, 180)
+            sleeptime = random.randint(10, 20)
             log("本次停顿：" + str(sleeptime))
             time.sleep(sleeptime)
         except RuntimeError as e:
