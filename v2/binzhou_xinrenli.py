@@ -193,6 +193,8 @@ def wanda_login(mobile, code):
         response = requests.post('https://api.ffan.com/microapp/v1/ffanLogin', headers=headers, data=data)
         result = json.loads(response.text)
         print(result)
+        if i >= 2:
+            raise RuntimeError("登录失败")
         if result["status"] == 200:
             global UID
             global COOKIESTR
@@ -201,8 +203,6 @@ def wanda_login(mobile, code):
             COOKIESTR = result['data']['cookieStr']
             PUID = result['data']['puid']
             return result
-        if i >= 3:
-            raise RuntimeError("登录失败")
 
 
 # 获取商品的id,支持到100个商品
