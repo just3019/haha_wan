@@ -20,7 +20,7 @@ headers = {
     'orgcode': '1102566',
     'orgTypeCode': '10003',
     'workingOrgCode': '1102566',
-    'token': 'MjMwODMwNTA0MTc2MjU0OTc2',
+    'token': 'MjM1MDY0MDgxMjgxNzEyMTI4',
     'orgTypeName': '%E5%B9%BF%E5%9C%BA',
     'Referer': 'http://wanda.ffan.com/',
     'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8,zh-TW;q=0.7,ja;q=0.6',
@@ -31,12 +31,12 @@ def getUser(index):
     params = (
         ('pageIndex', index),
         ('pageSize', '100'),
-        ('scopes[]', '1102566'),
-        ('scope', '1102566'),
+        ('scopes[]', '1102223'),
+        ('scope', '1102223'),
         ('orgType', '10003'),
         ('date[]', ['2018-07-28T16:00:00.000Z', '2018-07-29T16:00:00.000Z']),
-        ('regStartTime', '2018-07-29'),
-        ('regEndTime', '2018-07-30'),
+        ('regStartTime', '2018-08-14'),
+        ('regEndTime', '2018-08-30'),
         ('wechatBind', '3'),
         ('drainageTypeshow', 'false'),
         ('drainagedateshow', 'false'),
@@ -50,9 +50,13 @@ def getUser(index):
 
 
 if __name__ == '__main__':
-    for i in range(1, 6):
+    for i in range(1, 100):
         result = json.loads(getUser(i))
         list_data = result['data']
+
         count = len(list_data)
         for j in range(0, count):
-            print(list_data[j]['mobileNo'])
+            timeStamp = list_data[j]["regTime"]
+            timeArray = time.localtime(timeStamp / 1000)
+            otherStyleTime = time.strftime("%Y--%m--%d %H:%M:%S", timeArray)
+            print(list_data[j]['mobileNo'] + "  " + otherStyleTime)
