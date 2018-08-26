@@ -44,9 +44,8 @@ def init(place, token, province, plazaid):
     PROVINCE = province
     global PLAZAID
     PLAZAID = plazaid
-    global FILE_PATH
-    FILE_PATH = place + "%s.txt" % time.strftime("%Y%m%d")
-    print("初始化值：" + TOKEN + " " + PLACE + " " + PROVINCE + " " + PLAZAID + " " + FILE_PATH)
+
+    print("初始化值：" + TOKEN + " " + PLACE + " " + PROVINCE + " " + PLAZAID)
 
 
 def check_phone(phone):
@@ -232,10 +231,15 @@ def ui():
     s1.config(command=textView.yview)
     btn = Button(root, text='开始', command=submit)
     btn.pack(expand=YES, fill=X)
+    btn1 = Button(root, text='新人礼开始', command=xinren_submit)
+    btn1.pack(expand=YES, fill=X)
     root.mainloop()  # 进入消息循环
 
 
 def submit():
+    LOCK.acquire()
+    global FILE_PATH
+    FILE_PATH = PLACE + "%s.txt" % time.strftime("%Y%m%d")
     fans = entry1.get()
     index = entry2.get()
     if fans == '' or index == '':
@@ -255,10 +259,10 @@ def submit():
     except RuntimeError as e:
         print(e)
         log('获取失败，请确保输入参数都是整数')
+    LOCK.release()
 
 
 def deal(num, index):
-    LOCK.acquire()
     user = json.loads(yima.ym_user(TOKEN))
     if user["Balance"] <= 0:
         log("请联系客服，再刷粉！")
@@ -306,41 +310,12 @@ def deal(num, index):
         except RuntimeError as e:
             print(e)
     xunma.xm_logout(token)
-    LOCK.release()
-
-
-# 客户端规划
-def xinren_ui():
-    root = Tk()  # 创建窗口对象的背景色
-    # 创建两个列表
-    root.title('飞凡刷粉工具-' + PLACE + '万达版')
-    root.geometry('600x600')
-    label1 = Label(root, text='生成粉丝数量：')
-    global entry1
-    entry1 = Entry(root, width=100)
-    label2 = Label(root, text='第一页第几个商品：')
-    global entry2
-    entry2 = Entry(root, width=100)
-    label1.pack(expand=YES, fill=X)
-    entry1.pack()
-    label2.pack(expand=YES, fill=X)
-    entry2.pack()
-    global s1
-    s1 = Scrollbar(root)
-    s1.pack(side=RIGHT, fill=Y)
-    global textView
-    textView = Text(root, width=400, height=20, yscrollcommand=s1.set)
-
-    label3 = Label(root, text='日志输出：')  # '
-    label3.pack()
-    textView.pack(expand=YES, fill=X)
-    s1.config(command=textView.yview)
-    btn = Button(root, text='开始', command=xinren_submit)
-    btn.pack(expand=YES, fill=X)
-    root.mainloop()  # 进入消息循环
 
 
 def xinren_submit():
+    LOCK.acquire()
+    global FILE_PATH
+    FILE_PATH = PLACE + "新人礼%s.txt" % time.strftime("%Y%m%d")
     fans = entry1.get()
     index = entry2.get()
     if fans == '' or index == '':
@@ -350,21 +325,16 @@ def xinren_submit():
         num = int(entry1.get())
         if num == '' and num < 0:
             num = 0
-        index = int(entry2.get())
-        if index == '' and index < 0:
-            index = 0
-
         th = threading.Thread(target=xinren_deal, args=(num,))
         th.setDaemon(True)  # 守护线程
         th.start()
-        # deal(num, index)
     except RuntimeError as e:
         print(e)
         log('获取失败，请确保输入参数都是整数')
+    LOCK.release()
 
 
 def xinren_deal(num):
-    LOCK.acquire()
     user = json.loads(yima.ym_user(TOKEN))
     if user["Balance"] <= 0:
         log("请联系客服，再刷粉！")
@@ -411,7 +381,6 @@ def xinren_deal(num):
             print(e)
             continue
     xunma.xm_logout(token)
-    LOCK.release()
 
 
 # 获取新用户优惠券
