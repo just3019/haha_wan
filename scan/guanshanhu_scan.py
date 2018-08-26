@@ -144,10 +144,20 @@ def openfile():
 def ui():
     root = tkinter.Tk()
     root.title(place + '核销工具')
-    root.geometry('600x600')
+    root.geometry('600x800')
     global btn_file
     btn_file = Button(root, text='打开需要核销的文件', command=openfile)
     btn_file.pack()
+    label1 = Label(root, text='最少间隔时间：')
+    global entry1
+    entry1 = Entry(root, width=100)
+    label2 = Label(root, text='最大间隔时间：')
+    global entry2
+    entry2 = Entry(root, width=100)
+    label1.pack(expand=YES, fill=X)
+    entry1.pack()
+    label2.pack(expand=YES, fill=X)
+    entry2.pack()
     global s1
     s1 = Scrollbar(root)
     s1.pack(side=RIGHT, fill=Y)
@@ -176,6 +186,11 @@ def deal():
     t1 = time.time()
     while True:
         try:
+            minTime = entry1.get()
+            maxTime = entry2.get()
+            if minTime == "" or maxTime == "":
+                minTime = 10
+                maxTime = 180
             index += 1
             mystr = file.readline()
             if not mystr:
@@ -186,7 +201,9 @@ def deal():
             scan(code)
             write(mystr)
             log(str(index) + "个核销成功。")
-            sleeptime = random.randint(10, 150)
+            print(minTime)
+            print(maxTime)
+            sleeptime = random.randint(int(minTime), int(maxTime))
             log("本次停顿：" + str(sleeptime))
             time.sleep(sleeptime)
         except RuntimeError as e:
