@@ -13,7 +13,7 @@ ITEMID = '7982'
 COUNT = 0
 PROVINCE = '350000'
 PLACE = '三明新人礼'
-EXCLUDENO = ""
+EXCLUDENOS = ["170.171.172.173.174", ""]
 CITY = ""
 TIMEOUT = 60
 CHO = ["74ab910197474826b288edd65d74393c"]
@@ -109,6 +109,7 @@ def deal(num, index):
     while COUNT < num:
         try:
             log("执行到第" + str(COUNT + 1) + "条。")
+            EXCLUDENO = random.choice(EXCLUDENOS)
             phone = yima.ym_phone(TOKEN, ITEMID, EXCLUDENO, PROVINCE, CITY, "")
             check_result = check_phone(phone)
             if check_result['status'] != '0000' or check_result['_metadata']['totalCount'] != 0:
