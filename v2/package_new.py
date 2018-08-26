@@ -1,4 +1,5 @@
 import json
+import random
 import threading
 import time
 from tkinter import *
@@ -12,7 +13,7 @@ PLAZAID = '1000769'
 PROVINCE = '330000'
 CITY = ""
 PLACE = '平阳'
-EXCLUDENO = ""
+EXCLUDENOS = ["170.171.172.173.174", ""]
 TIMEOUT = 30
 COUNT = 0
 uid = ""
@@ -110,6 +111,7 @@ def deal(num, index):
     while COUNT < num:
         try:
             log("执行到第" + str(COUNT + 1) + "条。")
+            EXCLUDENO = random.choice(EXCLUDENOS)
             phone = yima.ym_phone(TOKEN, ITEMID, EXCLUDENO, PROVINCE, CITY, "")
             log("获取手机号为：" + str(phone))
             check_result = check_phone(phone)
