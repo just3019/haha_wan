@@ -3,8 +3,6 @@ import time
 
 import requests
 
-import get_code
-
 ITEMID = "3410"  # 飞凡网
 
 
@@ -105,7 +103,7 @@ if __name__ == '__main__':
     print(token)
     phone = xm_get_phone(token)
     print(phone)
-    get_code.get_code(phone)
+    # get_code.get_code(phone)
     time.sleep(2)
     sms = xm_sms(token, phone, 60)
     print(sms)

@@ -2,12 +2,12 @@ import threading
 
 import wanda_utils
 
-TOKEN = '0078671539735bcd879c4febe26fa8d2a888002b'
-PLAZAID = '1100754'
+TOKEN = '007064165942ad7749271ead0a851d4ebefc0fb3'
+PLAZAID = '1104483'
 PROVINCE = ''
-PLACE = '乌海新人礼'
+PLACE = '回民区'
 LOCK = threading.Lock()
 
 if __name__ == '__main__':
     wanda_utils.init(PLACE, TOKEN, PROVINCE, PLAZAID)
-    wanda_utils.xinren_ui()
+    wanda_utils.ui()
