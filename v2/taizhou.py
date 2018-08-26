@@ -254,7 +254,10 @@ def get_coupon(productId, mobile):
     response = requests.post(url, headers=headers, params=params, data=data)
     print("领券：" + response.text)
     result = json.loads(response.text)
-    return result["orderNo"]
+    if result["status"] == 200:
+        return result["orderNo"]
+    else:
+        raise RuntimeError("领券失败。")
 
 
 # 获取优惠券明细

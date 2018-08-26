@@ -8,12 +8,12 @@ import requests
 
 import yima
 
-TOKEN = '00747256bbf22fef15006339d1d5d412681dd763'
+TOKEN = '00499849cbf687835af75182698438eb3c2ccdf4'
 PLAZAID = '1102432'
 PROVINCE = ''
 CITY = ""
 PLACE = '成都青羊'
-EXCLUDENOS = ["170.171.172.173.174", ""]
+EXCLUDENOS = ["170", ""]
 TIMEOUT = 30
 COUNT = 0
 uid = ""

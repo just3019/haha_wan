@@ -170,6 +170,8 @@ def get_sms_code(mobile):
 
 # 处理飞凡短信内容
 def get_code(sms):
+    if "您已经是飞凡会员" in sms:
+        raise RuntimeError("手机号已使用过")
     code = sms[sms.find('，') - 8: sms.find('，')]
     pat = "[0-9]+"
     IC = re.search(pat, code)
