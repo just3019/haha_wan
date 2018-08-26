@@ -1,0 +1,11 @@
+pyinstaller -F binzhou_scan.py
+pyinstaller -F dalianganjingzi_scan.py
+pyinstaller -F guanshanhu_scan.py
+pyinstaller -F huzhou_scan.py
+pyinstaller -F liupanshui_scan.py
+pyinstaller -F pingyang_scan.py
+pyinstaller -F quzhou_scan.py
+pyinstaller -F sanming_scan.py
+pyinstaller -F shenyangtiexi_scan.py
+pyinstaller -F taizhou_scan.py
+pyinstaller -F wuhai_scan.py
