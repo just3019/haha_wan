@@ -170,6 +170,8 @@ def get_coupon(productId, mobile):
     response = requests.post(url, headers=headers, params=params, data=data)
     print("领券：" + response.text)
     result = json.loads(response.text)
+    if result["status"] == 5001:
+        raise RuntimeError(result["message"])
     return result["orderNo"]
 
 
@@ -278,7 +280,9 @@ def deal(num, index):
             # 当为1的时候从易码获取，当为其他的时候从讯码获取
             if random.randint(1, 2) == 1:
                 phone = yima.ym_phone(TOKEN, ITEMID, EXCLUDENO, PROVINCE, CITY, "")
-                log("获取手机号为：" + str(phone))
+                if phone is None:
+                    log("获取手机号为：" + str(phone))
+                    raise RuntimeError("手机号获取不到")
                 check_result = check_phone(phone)
                 if check_result['status'] != '0000' or check_result['_metadata']['totalCount'] != 0:
                     yima.ym_release(TOKEN, ITEMID, phone)
@@ -288,6 +292,9 @@ def deal(num, index):
                 sms = yima.ym_sms(TOKEN, ITEMID, phone, TIMEOUT)
             else:
                 phone = xunma.xm_get_phone(token)
+                if phone is None:
+                    log("获取手机号为：" + str(phone))
+                    raise RuntimeError("手机号获取不到")
                 check_result = check_phone(phone)
                 if check_result['status'] != '0000' or check_result['_metadata']['totalCount'] != 0:
                     yima.ym_release(TOKEN, ITEMID, phone)

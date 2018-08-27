@@ -25,18 +25,21 @@ def xm_login(username, password, developer):
 
 
 def xm_get_phone(token):
-    url = "http://xapi.xunma.net/getPhone"
-    params = {
-        ("ItemId", ITEMID),
-        ("token", token),
-        ("PhoneType", random.randint(0, 3)),
-        ("Code", "UTF8"),
-    }
-    response = requests.get(url, params=params).text.split(";")
-    print("讯码获取手机号：" + str(response))
-    if "False" in response[0]:
-        raise RuntimeError("获取号码失败")
-    return response[0]
+    try:
+        url = "http://xapi.xunma.net/getPhone"
+        params = {
+            ("ItemId", ITEMID),
+            ("token", token),
+            ("PhoneType", random.randint(0, 3)),
+            ("Code", "UTF8"),
+        }
+        response = requests.get(url, params=params).text.split(";")
+        print("讯码获取手机号：" + str(response))
+        if "False:暂时没有此项目号码，请等会试试..." == response[0]:
+            raise RuntimeError("获取号码失败")
+        return response[0]
+    except RuntimeError as e:
+        print(e)
 
 
 def xm_sms(token, phone, timeout):
