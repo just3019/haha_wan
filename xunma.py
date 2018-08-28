@@ -105,13 +105,13 @@ if __name__ == '__main__':
     login_result = xm_login("demon3019", "12345678", "wdVJ21MmabfWT72lAxf3JA==")
     token = login_result[0]
     print(token)
-    phone = xm_get_phone(token)
-    print(phone)
-    # get_code.get_code(phone)
-    time.sleep(2)
-    sms = xm_sms(token, phone, 60)
-    print(sms)
-    phone_list = phone + "-" + ITEMID + ";"
-    xm_relese(token, phone_list)
-    xm_black(token, phone_list)
+    # phone = xm_get_phone(token)
+    # print(phone)
+    # # get_code.get_code(phone)
+    # time.sleep(2)
+    # sms = xm_sms(token, phone, 60)
+    # print(sms)
+    # phone_list = phone + "-" + ITEMID + ";"
+    # xm_relese(token, phone_list)
+    # xm_black(token, phone_list)
     xm_logout(token)

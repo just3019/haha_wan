@@ -1,3 +1,4 @@
+import json
 import time
 
 import requests
@@ -52,13 +53,13 @@ def hm_black(phone):
 
 
 if __name__ == '__main__':
-    # login_result = json.loads(hm_login())
-    # print(str(login_result["Uid"]) + " " + login_result["Token"] + " " + str(login_result["Balance"]) + " " + str(
-    #     login_result["UsedMax"]))
+    login_result = json.loads(hm_login())
+    print(str(login_result["Uid"]) + " " + login_result["Token"] + " " + str(login_result["Balance"]) + " " + str(
+        login_result["UsedMax"]))
     # uid = login_result["Uid"]
     # token = login_result["Token"]
     # print(token)
-    phone_result = hm_phone("", "")
-    # get_code.get_code(phone_result)
-    sms_result = hm_sms(phone_result, 60)
-    hm_black(phone_result)
+    # phone_result = hm_phone("", "")
+    # # get_code.get_code(phone_result)
+    # sms_result = hm_sms(phone_result, 60)
+    # hm_black(phone_result)

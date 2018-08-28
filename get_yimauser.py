@@ -1,6 +1,9 @@
 import json
 from urllib import request
 
+import haima
+import xunma
+
 list = [{"name": "平阳", "username": "ye907182374", "password": "baobao1515"},
         {"name": "鸡西", "username": "9879870", "password": "a123123"},
         {"name": "台州", "username": "demon3019", "password": "123456"},
@@ -64,4 +67,12 @@ if __name__ == '__main__':
             f.write('%s\n' % pp)
             continue
 
+    f.write("\n")
+    r = xunma.xm_login("demon3019", "12345678", "wdVJ21MmabfWT72lAxf3JA==")
+    p = "讯码 demon3019 12345678 " + str(r[1]) + "http://www.xunma.net/userManage/index.aspx\n"
+    xunma.xm_logout(r[0])
+    f.write("%s\n" % p)
+    r = json.loads(haima.hm_login())
+    p = "海码 demon3019 123456 " + str(r["Balance"])
+    f.write("%s" % p)
     f.close()

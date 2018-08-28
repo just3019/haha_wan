@@ -1,10 +1,10 @@
-平阳 ye907182374 baobao1515 122.3元
+平阳 ye907182374 baobao1515 119.8元
 鸡西 9879870 a123123 0.8元
-台州 demon3019 123456 136.1元
+台州 demon3019 123456 136.0元
 回民区 aq123123123 a123123 5.7元
 湖州 huzhou huzhou 0.0元
-金华 ye907182374 baobao1515 122.3元
-三明 sanming1 sanming1 241.0元
+金华 ye907182374 baobao1515 119.8元
+三明 sanming1 sanming1 232.1元
 辽阳 chongzhou chongzhou 9.0元
 崇州 chongzhou chongzhou 9.0元
 宁德 ningde ningde 9.7元
@@ -18,5 +18,9 @@
 沈阳铁西 shenyangtiexi shenyangtiexi 3.5元
 六盘水 liupanshui liupanshui 15.5元
 南宁江南 nanningjiangnan nanningjiangnan 9.3元
-乌海 wuhaiwanda wuhaiwanda 4.6元
+乌海 wuhaiwanda wuhaiwanda 9.4元
 滨州 binzhou binzhou 4.2元
+
+讯码 demon3019 12345678 112.736http://www.xunma.net/userManage/index.aspx
+
+海码 demon3019 123456 3.7
