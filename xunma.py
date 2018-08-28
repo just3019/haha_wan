@@ -5,6 +5,8 @@ import requests
 
 ITEMID = "3410"  # 飞凡网
 
+header_dict = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko'}
+
 
 # 地区：吉林 四川 江苏 湖南 北京 辽宁 浙江 云南 黑龙江 陕西 广东
 
@@ -17,7 +19,7 @@ def xm_login(username, password, developer):
             ("Developer", developer),
             ("Code", "UTF8"),
         }
-        response = requests.get(url, params=params).text.split("&")
+        response = requests.get(url, params=params, headers=header_dict).text.split("&")
         print("讯码登录：" + str(response))
         return response
     except RuntimeError as e:
@@ -33,7 +35,7 @@ def xm_get_phone(token):
             ("PhoneType", random.randint(0, 3)),
             ("Code", "UTF8"),
         }
-        response = requests.get(url, params=params).text.split(";")
+        response = requests.get(url, params=params, headers=header_dict).text.split(";")
         time.sleep(1)
         print("讯码获取手机号：" + str(response))
         if "False:暂时没有此项目号码，请等会试试..." == response[0]:
@@ -56,7 +58,7 @@ def xm_sms(token, phone, timeout):
         }
         start = time.time()
         while True:
-            response = requests.get(url, params=params).text.split("&")
+            response = requests.get(url, params=params, headers=header_dict).text.split("&")
             print(response)
             end = time.time()
             if (end - start) > timeout:
@@ -77,7 +79,7 @@ def xm_relese(token, phoneList):
         ("phoneList", phoneList),
         ("Code", "UTF8"),
     }
-    response = requests.get(url, params=params).text
+    response = requests.get(url, params=params, headers=header_dict).text
     print("释放号码：" + response)
 
 
@@ -88,7 +90,7 @@ def xm_black(token, phoneList):
         ("phoneList", phoneList),
         ("Code", "UTF8"),
     }
-    response = requests.get(url, params=params).text
+    response = requests.get(url, params=params, headers=header_dict).text
     print("拉黑号码：" + response)
 
 
@@ -99,7 +101,7 @@ def xm_logout(token):
             ("token", token),
             ("Code", "UTF8"),
         }
-        response = requests.get(url, params=params).text
+        response = requests.get(url, params=params, headers=header_dict).text
         print("登出：" + response)
     except RuntimeError as e:
         print(e)
