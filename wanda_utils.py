@@ -7,10 +7,11 @@ from tkinter import *
 
 import requests
 
+import haima
 import xunma
 import yima
 
-TOKEN = ""
+TOKEN = '00499849cbf687835af75182698438eb3c2ccdf4'
 PLAZAID = ""
 PROVINCE = ""
 CITY = ""
@@ -37,8 +38,6 @@ headers = {
 
 
 def init(place, token, province, plazaid):
-    global TOKEN
-    TOKEN = token
     global PLACE
     PLACE = place
     global PROVINCE
@@ -196,6 +195,7 @@ def get_coupon_no(oid):
 
 # 易码获取手机号和短信 phone|sms
 def ym_result():
+    log("从易码获取")
     EXCLUDENO = random.choice(EXCLUDENOS)
     phone = yima.ym_phone(TOKEN, ITEMID, EXCLUDENO, PROVINCE, CITY, "")
     if phone is None:
@@ -213,6 +213,7 @@ def ym_result():
 
 # 讯码获取手机号和短信 phone|sms
 def xm_result(token):
+    log("从讯码获取")
     phone = xunma.xm_get_phone(token)
     if phone == "release":
         xunma.xm_logout(token)
@@ -231,6 +232,33 @@ def xm_result(token):
     time.sleep(2)
     sms = xunma.xm_sms(token, phone, TIMEOUT)
     return phone + "|" + sms
+
+
+def hm_result():
+    log("从海码获取")
+    phone = haima.hm_phone("", "")
+    if phone is None:
+        raise RuntimeError("手机号获取不到")
+    check_result = check_phone(phone)
+    if check_result['status'] != '0000' or check_result['_metadata']['totalCount'] != 0:
+        haima.hm_black(phone)
+        raise RuntimeError("手机号已注册过")
+    get_sms_code(phone)
+    time.sleep(2)
+    sms = haima.hm_sms(phone, TIMEOUT)
+    return phone + "|" + sms
+
+
+def phone_sms():
+    # 当为1的时候从易码获取，当为其他的时候从讯码获取
+    num = random.randint(1, 3)
+    if num == 1:
+        phone_sms_result = ym_result()
+    elif num == 2:
+        phone_sms_result = xm_result(xmtoken)
+    else:
+        phone_sms_result = hm_result()
+    return phone_sms_result
 
 
 def log(s):
@@ -316,12 +344,8 @@ def deal(num, index):
     while COUNT < num:
         try:
             log("执行到第" + str(COUNT + 1) + "条。")
-            # 当为1的时候从易码获取，当为其他的时候从讯码获取
-            if random.randint(1, 2) == 1:
-                phone_sms = ym_result()
-            else:
-                phone_sms = xm_result(xmtoken)
-            phone_smss = phone_sms.split("|")
+            phone_sms_result = phone_sms()
+            phone_smss = phone_sms_result.split("|")
             phone = phone_smss[0]
             sms = phone_smss[1]
             code = get_code(sms)
@@ -370,12 +394,8 @@ def xinren_deal(num):
     while COUNT < num:
         try:
             log("执行到第" + str(COUNT + 1) + "条。")
-            # 当为1的时候从易码获取，当为其他的时候从讯码获取
-            if random.randint(1, 2) == 1:
-                phone_sms = ym_result()
-            else:
-                phone_sms = xm_result(xmtoken)
-            phone_smss = phone_sms.split("|")
+            phone_sms_result = phone_sms()
+            phone_smss = phone_sms_result.split("|")
             phone = phone_smss[0]
             sms = phone_smss[1]
             code = get_code(sms)

@@ -31,26 +31,23 @@ def ym_user(token):
 
 # 易码获取手机号
 def ym_phone(token, itemid, excludeno, province, city, mobile):
-    try:
-        url = "http://api.fxhyd.cn/UserInterface.aspx"
-        param = {
-            ("action", "getmobile"),
-            ("token", token),
-            ("itemid", itemid),
-            ("excludeno", excludeno),
-            ("isp", ""),
-            ("province", province),
-            ("city", city),
-            ("mobile", mobile),
-        }
-        response = requests.get(url, params=param, headers=header_dict).text.split("|")
-        print(response)
-        if response[0] == "success":
-            return response[1]
-        else:
-            raise RuntimeError("ym_phone方法没有获取到手机号")
-    except RuntimeError as e:
-        print(e)
+    url = "http://api.fxhyd.cn/UserInterface.aspx"
+    param = {
+        ("action", "getmobile"),
+        ("token", token),
+        ("itemid", itemid),
+        ("excludeno", excludeno),
+        ("isp", ""),
+        ("province", province),
+        ("city", city),
+        ("mobile", mobile),
+    }
+    response = requests.get(url, params=param, headers=header_dict).text.split("|")
+    print(response)
+    if response[0] == "success":
+        return response[1]
+    else:
+        raise RuntimeError("ym_phone方法没有获取到手机号")
 
 
 # 获取该手机号的短信
