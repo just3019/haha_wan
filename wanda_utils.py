@@ -292,19 +292,21 @@ def deal(num, index):
                 sms = yima.ym_sms(TOKEN, ITEMID, phone, TIMEOUT)
             else:
                 phone = xunma.xm_get_phone(token)
+                if phone == "release":
+                    xunma.xm_logout(token)
+                    login_result = xunma.xm_login("demon3019", "12345678", "wdVJ21MmabfWT72lAxf3JA==")
+                    token = login_result[0]
                 if phone is None:
                     log("获取手机号为：" + str(phone))
                     raise RuntimeError("手机号获取不到")
                 check_result = check_phone(phone)
+                phone_list = phone + "-" + ITEMID + ";"
                 if check_result['status'] != '0000' or check_result['_metadata']['totalCount'] != 0:
-                    yima.ym_release(TOKEN, ITEMID, phone)
-                    yima.ym_ignore(TOKEN, ITEMID, phone)
+                    xunma.xm_relese(token, phone_list)
                     continue
                 get_sms_code(phone)
                 time.sleep(2)
                 sms = xunma.xm_sms(token, phone, TIMEOUT)
-                phone_list = phone + "-" + ITEMID + ";"
-                xunma.xm_relese(token, phone_list)
             code = get_code(sms)
             login_result = wanda_login(phone, code)
             if login_result == "500":
@@ -314,6 +316,7 @@ def deal(num, index):
             coupon = get_coupon_no(oid)
             write(phone + "  " + "https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=" + str(coupon))
             COUNT += 1
+            time.sleep(2)
         except RuntimeError as e:
             print(e)
     xunma.xm_logout(token)
@@ -366,17 +369,21 @@ def xinren_deal(num):
                 sms = yima.ym_sms(TOKEN, ITEMID, phone, TIMEOUT)
             else:
                 phone = xunma.xm_get_phone(token)
+                if phone == "release":
+                    xunma.xm_logout(token)
+                    login_result = xunma.xm_login("demon3019", "12345678", "wdVJ21MmabfWT72lAxf3JA==")
+                    token = login_result[0]
+                if phone is None:
+                    log("获取手机号为：" + str(phone))
+                    raise RuntimeError("手机号获取不到")
                 check_result = check_phone(phone)
+                phone_list = phone + "-" + ITEMID + ";"
                 if check_result['status'] != '0000' or check_result['_metadata']['totalCount'] != 0:
-                    yima.ym_release(TOKEN, ITEMID, phone)
-                    yima.ym_ignore(TOKEN, ITEMID, phone)
+                    xunma.xm_relese(token, phone_list)
                     continue
                 get_sms_code(phone)
                 time.sleep(2)
                 sms = xunma.xm_sms(token, phone, TIMEOUT)
-                phone_list = phone + "-" + ITEMID + ";"
-                xunma.xm_relese(token, phone_list)
-
             code = get_code(sms)
             wanda_login(phone, code)
             oid = get_new_order_no()

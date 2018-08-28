@@ -34,9 +34,12 @@ def xm_get_phone(token):
             ("Code", "UTF8"),
         }
         response = requests.get(url, params=params).text.split(";")
+        time.sleep(1)
         print("讯码获取手机号：" + str(response))
         if "False:暂时没有此项目号码，请等会试试..." == response[0]:
             raise RuntimeError("获取号码失败")
+        if "False:单个用户获取数量不足" == response[0]:
+            return "release"
         return response[0]
     except RuntimeError as e:
         print(e)
@@ -57,6 +60,8 @@ def xm_sms(token, phone, timeout):
             print(response)
             end = time.time()
             if (end - start) > timeout:
+                phone_list = phone + "-" + ITEMID + ";"
+                xm_relese(token, phone_list)
                 raise RuntimeError("xm_sms获取不到短信")
             if "MSG" in response:
                 return response[3]
