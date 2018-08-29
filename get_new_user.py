@@ -91,5 +91,5 @@ if __name__ == '__main__':
                 p = list_data[j]['mobileNo'] + "  " + otherStyleTime
                 print(p)
                 file_write.write('%s\n' % p)
-            time.sleep(random.randint(0, 1))
+            # time.sleep(random.randint(0, 1))
         file_write.close()
