@@ -6,14 +6,14 @@ import requests
 headers = {
     'tenantId': '2017092600001',
     'Accept': 'application/json, text/plain, */*',
-    'orgcode': '1104483',
+    'orgcode': '1105208',
     'orgTypeCode': '10003',
-    'token': 'MjM1MDY0MDgxMjgxNzEyMTI4',
+    'token': 'MjQxNDc1MzIxMzI3NTE3Njk2',
 }
-file = "滨州新人礼20180827"
+file = "六盘水新人礼20180827"
 file_write = "/Users/demon/Desktop/1/" + file + "校验号码.txt"
 file_read = "/Users/demon/Desktop/1/" + file + ".txt"
-name = "滨州万达广场"
+name = "六盘水万达广场"
 # 非该广场名
 notequal = ""
 # 非该广场数

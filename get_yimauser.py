@@ -34,6 +34,7 @@ list = [{"name": "平阳", "username": "ye907182374", "password": "baobao1515"},
 def get_user(username, password):
     header_dict = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko'}
     # 登陆/获取TOKEN
+    global TOKEN
     TOKEN = ''
     url = 'http://api.fxhyd.cn/UserInterface.aspx?action=login&username=' + username + '&password=' + password
     TOKEN1 = request.urlopen(request.Request(url=url, headers=header_dict)).read().decode(encoding='utf-8')
@@ -58,7 +59,7 @@ if __name__ == '__main__':
     for i in list:
         try:
             result = json.loads(get_user(i['username'], i['password']))
-            p = i['name'] + " " + i['username'] + " " + i['password'] + " " + str(result['Balance']) + "元"
+            p = i['name'] + " " + i['username'] + " " + i['password'] + " " + str(result['Balance']) + "元 " + TOKEN
             print(p)
             f.write('%s\n' % p)
         except RuntimeError as e:
@@ -69,7 +70,7 @@ if __name__ == '__main__':
 
     f.write("\n")
     r = xunma.xm_login("demon3019", "12345678", "wdVJ21MmabfWT72lAxf3JA==")
-    p = "讯码 demon3019 12345678 " + str(r[1]) + "http://www.xunma.net/userManage/index.aspx\n"
+    p = "讯码 demon3019 12345678 " + str(r[1]) + " http://www.xunma.net/userManage/index.aspx\n"
     xunma.xm_logout(r[0])
     f.write("%s\n" % p)
     r = json.loads(haima.hm_login())

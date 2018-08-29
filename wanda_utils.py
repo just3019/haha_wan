@@ -11,7 +11,8 @@ import haima
 import xunma
 import yima
 
-TOKEN = '00499849cbf687835af75182698438eb3c2ccdf4'
+# 易码token
+TOKEN = '0070559089f4587e40104e6768bd06ebebb4202b'
 PLAZAID = ""
 PROVINCE = ""
 CITY = ""
@@ -215,11 +216,12 @@ def ym_result():
 def xm_result(token):
     log("从讯码获取")
     phone = xunma.xm_get_phone(token)
-    if phone == "release":
+    if phone == "release" or phone == "timeout":
         xunma.xm_logout(token)
         login_result = xunma.xm_login("demon3019", "12345678", "wdVJ21MmabfWT72lAxf3JA==")
         global xmtoken
         xmtoken = login_result[0]
+        raise RuntimeError("讯码重新登录")
     if phone is None:
         log("获取手机号为：" + str(phone))
         raise RuntimeError("手机号获取不到")

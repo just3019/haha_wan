@@ -41,6 +41,8 @@ def xm_get_phone(token):
         raise RuntimeError("获取号码失败")
     if "False:单个用户获取数量不足" == response[0]:
         return "release"
+    if "False" in response[0]:
+        return "timeout"
     return response[0]
 
 
