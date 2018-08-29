@@ -75,13 +75,13 @@ if __name__ == '__main__':
             break
         result = mystr.split(" ")
         org_id = result[0]
-        place_name = result[1] + ".txt"
+        place_name = "815/" + result[1] + ".txt"
         file_write = open(place_name, "a")
         for i in range(1, 99):
             result = json.loads(getUser(i, org_id))
             list_data = result['data']
             count = len(list_data)
-            if (count == 0):
+            if count == 0:
                 break
             for j in range(0, count):
                 timeStamp = list_data[j]["regTime"]
@@ -91,5 +91,5 @@ if __name__ == '__main__':
                 p = list_data[j]['mobileNo'] + "  " + otherStyleTime
                 print(p)
                 file_write.write('%s\n' % p)
-            time.sleep(random.randint(0, 5))
+            time.sleep(random.randint(0, 1))
         file_write.close()
