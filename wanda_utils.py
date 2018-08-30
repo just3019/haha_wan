@@ -27,6 +27,7 @@ ITEMID = '7982'
 WXFFANTOKEN = "74ab910197474826b288edd65d74393c"
 xmtoken = ""
 LOCK = threading.Lock()
+WANDA_LOGIN_500 = 0
 
 headers = {
     'Host': 'api.ffan.com',
@@ -127,10 +128,14 @@ def wanda_login(mobile, code):
             PUID = result['data']['puid']
             return result
         if result["status"] == 500:
-            log("请关闭，联系客服重新打包")
-            return "500"
+            global WANDA_LOGIN_500
+            WANDA_LOGIN_500 += 1
+            if WANDA_LOGIN_500 > 50:
+                WANDA_LOGIN_500 = 0
+                raise RuntimeError("飞凡小程序登录接口有问题，请稍等一会儿再刷")
         if i >= 2:
             raise RuntimeError("登录失败")
+        time.sleep(1)
 
 
 # 获取商品的id,支持到100个商品
@@ -189,6 +194,9 @@ def get_coupon_no(oid):
         print("获取明细：" + response.text)
         result = json.loads(response.text)
         if result["status"] == 200 and "couponNo" in response.text:
+            if result['data']['product'][0]['couponNo'] is None:
+                log("订单状态：" + result['data']['status'])
+                raise RuntimeError("订单未付款或者")
             return result['data']['product'][0]['couponNo']
         if i >= 2:
             raise RuntimeError("获取优惠券失败")
@@ -253,10 +261,10 @@ def hm_result():
 
 def phone_sms():
     # 当为1的时候从易码获取，当为其他的时候从讯码获取
-    num = random.randint(1, 3)
+    num = random.randint(1, 4)
     if num == 1:
         phone_sms_result = ym_result()
-    elif num == 2:
+    elif num == 2 or num == 3:
         phone_sms_result = xm_result(xmtoken)
     else:
         phone_sms_result = hm_result()
@@ -351,9 +359,7 @@ def deal(num, index):
             phone = phone_smss[0]
             sms = phone_smss[1]
             code = get_code(sms)
-            login_result = wanda_login(phone, code)
-            if login_result == "500":
-                break
+            wanda_login(phone, code)
             oid = get_coupon(productId, phone)
             time.sleep(1)
             coupon = get_coupon_no(oid)

@@ -27,45 +27,53 @@ def xm_login(username, password, developer):
 
 
 def xm_get_phone(token):
-    url = "http://xapi.xunma.net/getPhone"
-    params = {
-        ("ItemId", ITEMID),
-        ("token", token),
-        ("PhoneType", random.randint(0, 3)),
-        ("Code", "UTF8"),
-    }
-    response = requests.get(url, params=params, headers=header_dict).text.split(";")
-    time.sleep(1)
-    print("讯码获取手机号：" + str(response))
-    if "False:暂时没有此项目号码，请等会试试..." == response[0]:
-        raise RuntimeError("获取号码失败")
-    if "False:单个用户获取数量不足" == response[0]:
-        return "release"
-    if "False" in response[0]:
-        return "timeout"
-    return response[0]
+    try:
+        url = "http://xapi.xunma.net/getPhone"
+        params = {
+            ("ItemId", ITEMID),
+            ("token", token),
+            ("PhoneType", random.randint(0, 3)),
+            ("Code", "UTF8"),
+        }
+        response = requests.get(url, params=params, headers=header_dict).text.split(";")
+        time.sleep(1)
+        print("讯码获取手机号：" + str(response))
+        if "False:暂时没有此项目号码，请等会试试..." == response[0]:
+            raise RuntimeError("获取号码失败")
+        if "False:单个用户获取数量不足" == response[0]:
+            return "release"
+        if "False" in response[0]:
+            return "timeout"
+        return response[0]
+    except RuntimeError as e:
+        print("讯码平台问题phone")
+        raise RuntimeError(e)
 
 
 def xm_sms(token, phone, timeout):
-    url = "http://xapi.xunma.net/getMessage"
-    params = {
-        ("token", token),
-        ("itemId", ITEMID),
-        ("phone", phone),
-        ("Code", "UTF8"),
-    }
-    start = time.time()
-    while True:
-        response = requests.get(url, params=params, headers=header_dict).text.split("&")
-        print(response)
-        end = time.time()
-        if (end - start) > timeout:
-            phone_list = phone + "-" + ITEMID + ";"
-            xm_relese(token, phone_list)
-            raise RuntimeError("xm_sms获取不到短信")
-        if "MSG" in response:
-            return response[3]
-        time.sleep(5)
+    try:
+        url = "http://xapi.xunma.net/getMessage"
+        params = {
+            ("token", token),
+            ("itemId", ITEMID),
+            ("phone", phone),
+            ("Code", "UTF8"),
+        }
+        start = time.time()
+        while True:
+            response = requests.get(url, params=params, headers=header_dict).text.split("&")
+            print(response)
+            end = time.time()
+            if (end - start) > timeout:
+                phone_list = phone + "-" + ITEMID + ";"
+                xm_relese(token, phone_list)
+                raise RuntimeError("xm_sms获取不到短信")
+            if "MSG" in response:
+                return response[3]
+            time.sleep(5)
+    except RuntimeError as e:
+        print("讯码平台问题sms")
+        raise RuntimeError(e)
 
 
 def xm_relese(token, phoneList):
