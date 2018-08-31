@@ -65,6 +65,8 @@ def ym_sms(token, itemid, mobile, timeout):
         response = requests.get(url, params=param, headers=header_dict).content.decode(encoding="utf-8")
         responses = response.split("|")
         print(responses)
+        if responses[0] == "2008":
+            raise RuntimeError("号码已离线")
         if responses[0] == "success":
             return responses[1]
         end = time.time()

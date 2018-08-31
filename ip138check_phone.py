@@ -4,8 +4,8 @@ import time
 import requests
 from bs4 import BeautifulSoup
 
-local_name = "上饶"
-name = "上饶万达广场.txt"
+local_name = "大同"
+name = "大同万达广场.txt"
 file_read = "815/" + name
 file_write = "ip138check/" + name
 # 不是当地的号码
@@ -48,7 +48,7 @@ def check(phone):
             headers = header_dict4
         else:
             headers = header_dict5
-        response = requests.get(url, headers=headers)
+        response = requests.get(url, headers=headers, timeout=10)
         response.encoding = 'gb2312'
         html = BeautifulSoup(response.text, 'lxml')
         # for row in html.find_all("table")[1].find_all("td"):
@@ -71,6 +71,7 @@ def check(phone):
         return result
     except RuntimeError as e:
         time.sleep(1)
+        print("被拦截")
         raise RuntimeError("请求失败")
 
 

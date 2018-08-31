@@ -12,7 +12,7 @@ import xunma
 import yima
 
 # 易码token
-TOKEN = '0070559089f4587e40104e6768bd06ebebb4202b'
+TOKEN = '00747450004457336e169d24663545ec91402703'
 PLAZAID = ""
 PROVINCE = ""
 CITY = ""
@@ -40,6 +40,9 @@ headers = {
 
 
 def init(place, token, province, plazaid):
+    if token != "":
+        print("易码token：" + token)
+        TOKEN = token
     global PLACE
     PLACE = place
     global PROVINCE
@@ -179,6 +182,10 @@ def get_coupon(productId, mobile):
     print("领券：" + response.text)
     result = json.loads(response.text)
     if result["status"] == 5001:
+        raise RuntimeError(result["message"])
+    if result["status"] == 521:
+        print("服务器太火爆")
+        time.sleep(5)
         raise RuntimeError(result["message"])
     return result["orderNo"]
 
@@ -408,6 +415,7 @@ def xinren_deal(num):
             sms = phone_smss[1]
             code = get_code(sms)
             wanda_login(phone, code)
+            time.sleep(1)
             oid = get_new_order_no()
             time.sleep(1)
             coupon = get_coupon_no(oid)
@@ -432,5 +440,7 @@ def get_new_order_no():
     print("领取新用户优惠券：" + response.text)
     if ":5001" in response.text:
         raise RuntimeError("该用户已领取过")
+    if "CURLE_OPERATION_TIMEDOUT" in response.text:
+        raise RuntimeError("领券超时")
     result = json.loads(response.text)
     return result['data'][0]['order']['orderNo']

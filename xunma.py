@@ -29,10 +29,10 @@ def xm_login(username, password, developer):
 def xm_get_phone(token):
     try:
         url = "http://xapi.xunma.net/getPhone"
+        # ("PhoneType", random.randint(0, 3)),
         params = {
             ("ItemId", ITEMID),
             ("token", token),
-            ("PhoneType", random.randint(0, 3)),
             ("Code", "UTF8"),
         }
         response = requests.get(url, params=params, headers=header_dict).text.split(";")
@@ -61,30 +61,36 @@ def xm_sms(token, phone, timeout):
         }
         start = time.time()
         while True:
-            response = requests.get(url, params=params, headers=header_dict).text.split("&")
+            response = requests.get(url, params=params, headers=header_dict).text
+            if "飞凡" in response:
+                return response
+            response = response.split("&")
             print(response)
             end = time.time()
             if (end - start) > timeout:
                 phone_list = phone + "-" + ITEMID + ";"
                 xm_relese(token, phone_list)
                 raise RuntimeError("xm_sms获取不到短信")
-            if "MSG" in response:
+            if "MSG" in response or "飞凡" in response:
                 return response[3]
-            time.sleep(5)
+            time.sleep(2)
     except RuntimeError as e:
         print("讯码平台问题sms")
         raise RuntimeError(e)
 
 
 def xm_relese(token, phoneList):
-    url = "http://xapi.xunma.net/releasePhone"
-    params = {
-        ("token", token),
-        ("phoneList", phoneList),
-        ("Code", "UTF8"),
-    }
-    response = requests.get(url, params=params, headers=header_dict).text
-    print("释放号码：" + response)
+    try:
+        url = "http://xapi.xunma.net/releasePhone"
+        params = {
+            ("token", token),
+            ("phoneList", phoneList),
+            ("Code", "UTF8"),
+        }
+        response = requests.get(url, params=params, headers=header_dict).text
+        print("释放号码：" + response)
+    except RuntimeError as e:
+        raise RuntimeError("释放失败")
 
 
 def xm_black(token, phoneList):
