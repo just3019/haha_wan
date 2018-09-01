@@ -46,8 +46,8 @@ params = (
 
 def getUser(index, scope):
     params = (
-        ('regStartTime', '2018-08-15'),
-        ('regEndTime', '2018-08-30'),
+        ('regStartTime', '2018-08-26'),
+        ('regEndTime', '2018-08-31'),
         ('pageIndex', index),
         ('pageSize', '100'),
         ('scopes/[/]', scope),
@@ -66,6 +66,7 @@ def getUser(index, scope):
 
 
 if __name__ == '__main__':
+    # getUser(1, "1000907")
     file_read = open("广场id.txt", "r")
     index = 0
     while True:
@@ -75,9 +76,9 @@ if __name__ == '__main__':
             break
         result = mystr.split(" ")
         org_id = result[0]
-        place_name = "815/" + result[1] + ".txt"
+        place_name = "831/" + result[1] + ".txt"
         file_write = open(place_name, "a")
-        for i in range(1, 99):
+        for i in range(1, 100):
             result = json.loads(getUser(i, org_id))
             list_data = result['data']
             count = len(list_data)
@@ -88,7 +89,7 @@ if __name__ == '__main__':
                 timeArray = time.localtime(timeStamp / 1000)
                 fromOrg = list_data[j]["fromOrg"]
                 otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
-                p = list_data[j]['mobileNo'] + "  " + otherStyleTime
+                p = list_data[j]['mobileNo'] + "  " + otherStyleTime + " " + fromOrg
                 print(p)
                 file_write.write('%s\n' % p)
             # time.sleep(random.randint(0, 1))
