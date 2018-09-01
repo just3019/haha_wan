@@ -2,7 +2,7 @@ import threading
 
 import wanda_utils
 
-TOKEN = '0070559089f4587e40104e6768bd06ebebb4202b'
+TOKEN = '007711720862de70a346fc1788db353c18c5d478'
 PLAZAID = '1000744'
 PROVINCE = ''
 PLACE = '昆明西山'
