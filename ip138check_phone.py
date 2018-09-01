@@ -57,7 +57,8 @@ def check(phone):
         type = html.find_all("table")[1].find_all("td")[6].text
         # print(local)
         # print(type)
-        result = phone
+        # result = phone
+        result = " "
         if local_name not in local:
             # print(local)
             global not_local
@@ -73,6 +74,24 @@ def check(phone):
         time.sleep(1)
         print("被拦截")
         raise RuntimeError("请求失败")
+
+
+def init(name):
+    global local_name
+    local_name = name
+    global not_local
+    not_local = 0
+    global virtual
+    virtual = 0
+    print(local_name + " " + str(not_local) + " " + str(virtual))
+
+
+def get_not_local():
+    return not_local
+
+
+def get_virtual():
+    return virtual
 
 
 def write(s):

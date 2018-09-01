@@ -4,6 +4,8 @@ import time
 
 import requests
 
+import ip138check_phone
+
 cookies = {
     'CITY_ID': '110100',
     'SESSIONID': '8402089fb985f3a007cd7e6091b02d28',
@@ -46,7 +48,7 @@ params = (
 
 def getUser(index, scope):
     params = (
-        ('regStartTime', '2018-08-26'),
+        ('regStartTime', '2018-08-28'),
         ('regEndTime', '2018-08-31'),
         ('pageIndex', index),
         ('pageSize', '100'),
@@ -66,8 +68,8 @@ def getUser(index, scope):
 
 
 if __name__ == '__main__':
-    # getUser(1, "1000907")
-    file_read = open("广场id.txt", "r")
+    # getUser(50, "1000583")
+    file_read = open("广场信息.txt", "r")
     index = 0
     while True:
         index += 1
@@ -75,22 +77,33 @@ if __name__ == '__main__':
         if not mystr:
             break
         result = mystr.split(" ")
+        print(result)
         org_id = result[0]
-        place_name = "831/" + result[1] + ".txt"
+        place_name = "830/" + result[1] + ".txt"
         file_write = open(place_name, "a")
+        total_count = 0
+        ip138check_phone.init(result[2].strip())
         for i in range(1, 100):
             result = json.loads(getUser(i, org_id))
             list_data = result['data']
             count = len(list_data)
             if count == 0:
+                total_count = result["_metadata"]["totalCount"]
                 break
+            # 遍历查询出来的所有手机号 检验手机号
             for j in range(0, count):
                 timeStamp = list_data[j]["regTime"]
                 timeArray = time.localtime(timeStamp / 1000)
                 fromOrg = list_data[j]["fromOrg"]
                 otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
-                p = list_data[j]['mobileNo'] + "  " + otherStyleTime + " " + fromOrg
+                phone = list_data[j]['mobileNo']
+                # 获取手机号地区
+                ip138_result = ip138check_phone.check(phone)
+                p = list_data[j]['mobileNo'] + "  " + otherStyleTime + ip138_result
                 print(p)
                 file_write.write('%s\n' % p)
-            # time.sleep(random.randint(0, 1))
+                # time.sleep(random.randint(0, 1))
+        r = "总量：" + str(total_count) + " 非本地号：" + str(ip138check_phone.get_not_local()) + " 虚拟号：" + str(
+            ip138check_phone.get_virtual())
+        file_write.write("%s \n" % r)
         file_write.close()

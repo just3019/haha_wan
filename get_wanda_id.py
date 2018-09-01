@@ -1,6 +1,7 @@
 import json
 
 import requests
+import time
 
 headers = {
     'Host': 'api.ffan.com',
@@ -17,9 +18,15 @@ def get_park(cityId):
         ('cityId', cityId),
     )
 
-    response = requests.get('https://api.ffan.com/wechatxmt/v1/plazas', headers=headers, params=params)
-    print(response.text)
-    return response.text
+    while True:
+        response = requests.get('https://api.ffan.com/wechatxmt/v1/plazas', headers=headers, params=params)
+        print(response.text)
+        result = json.loads(response.text)
+        if result["status"] != 200:
+            print("请求错误，等待5s重试")
+            time.sleep(5)
+            continue
+        return response.text
 
 
 def get_cities():
@@ -30,13 +37,13 @@ def get_cities():
 
 if __name__ == '__main__':
 
-    f = open("广场id.txt", "w")
+    f = open("广场信息.txt", "w")
 
     cities = json.loads(get_cities())
     for c in cities['data']:
         park = json.loads(get_park(c['cityId']))
         for pp in park['data']:
-            p = str(pp['plazaId']) + " " + pp['plazaName'] + " " + str(pp['longitude']) + " " + str(pp['latitude'])
+            p = str(pp['plazaId']) + " " + pp['plazaName'] + " " + c["cityName"]
             print(p)
             f.write('%s\n' % p)
 
