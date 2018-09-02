@@ -26,7 +26,7 @@ def xm_login(username, password, developer):
         print(e)
 
 
-def xm_get_phone(token):
+def xm_get_phone(token, PhoneType):
     try:
         url = "http://xapi.xunma.net/getPhone"
         # ("PhoneType", random.randint(0, 3)),
@@ -34,6 +34,7 @@ def xm_get_phone(token):
             ("ItemId", ITEMID),
             ("token", token),
             ("Code", "UTF8"),
+            ("PhoneType", PhoneType),
         }
         response = requests.get(url, params=params, headers=header_dict).text.split(";")
         time.sleep(1)

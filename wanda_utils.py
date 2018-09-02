@@ -28,6 +28,7 @@ WXFFANTOKEN = "74ab910197474826b288edd65d74393c"
 xmtoken = ""
 LOCK = threading.Lock()
 WANDA_LOGIN_500 = 0
+xm_local = ""
 
 headers = {
     'Host': 'api.ffan.com',
@@ -39,7 +40,7 @@ headers = {
 }
 
 
-def init(place, token, province, plazaid):
+def init(place, token, province, plazaid, xmlocal):
     if token != "":
         print("易码token：" + token)
         TOKEN = token
@@ -52,7 +53,9 @@ def init(place, token, province, plazaid):
     login_result = xunma.xm_login("demon3019", "12345678", "wdVJ21MmabfWT72lAxf3JA==")
     global xmtoken
     xmtoken = login_result[0]
-    print("初始化值：" + TOKEN + " " + PLACE + " " + PROVINCE + " " + PLAZAID + " " + xmtoken)
+    global xm_local
+    xm_local = xmlocal
+    print("初始化值：" + TOKEN + " " + PLACE + " " + PROVINCE + " " + PLAZAID + " " + xmtoken + " " + xmlocal)
 
 
 def check_phone(phone):
@@ -230,7 +233,7 @@ def ym_result():
 # 讯码获取手机号和短信 phone|sms
 def xm_result(token):
     log("从讯码获取")
-    phone = xunma.xm_get_phone(token)
+    phone = xunma.xm_get_phone(token, xm_local)
     if phone == "release" or phone == "timeout":
         xunma.xm_logout(token)
         login_result = xunma.xm_login("demon3019", "12345678", "wdVJ21MmabfWT72lAxf3JA==")

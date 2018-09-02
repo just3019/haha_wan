@@ -1,7 +1,0 @@
-17185299072  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=025604666756
-13658161534  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=090305209872
-13668300141  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=069905101936
-15144149724  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=059005253700
-13241670105  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=085504930280
-15652892332  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=019805379078
-15117095378  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=021205087930

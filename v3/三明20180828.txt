@@ -1,1 +1,0 @@
-17172639646  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=018105193870
