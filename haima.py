@@ -24,7 +24,8 @@ def hm_login():
 
 
 def hm_phone(hm_type, province):
-    url = URL + "getMobilenum?uid=%s&pid=%s&token=%s&type=%s&province=%s" % (UID, PID, TOKEN, hm_type, province)
+    url = URL + "getMobilenum?uid=%s&pid=%s&token=%s&type=%s&province=%s&nonVirtual=true" % (
+    UID, PID, TOKEN, hm_type, province,)
     response = requests.post(url, headers=header_dict).text
     print("获取手机号：" + response)
     if "余额不足，请充值" == response:
