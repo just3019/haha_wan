@@ -40,7 +40,7 @@ headers = {
 }
 
 
-def init(place, token, province, plazaid, xmlocal):
+def init(place, token, province, plazaid):
     if token != "":
         print("易码token：" + token)
         TOKEN = token
@@ -53,9 +53,7 @@ def init(place, token, province, plazaid, xmlocal):
     login_result = xunma.xm_login("demon3019", "12345678", "wdVJ21MmabfWT72lAxf3JA==")
     global xmtoken
     xmtoken = login_result[0]
-    global xm_local
-    xm_local = xmlocal
-    print("初始化值：" + TOKEN + " " + PLACE + " " + PROVINCE + " " + PLAZAID + " " + xmtoken + " " + xmlocal)
+    print("初始化值：" + TOKEN + " " + PLACE + " " + PROVINCE + " " + PLAZAID + " " + xmtoken)
 
 
 def check_phone(phone):
