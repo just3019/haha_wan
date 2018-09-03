@@ -48,7 +48,7 @@ params = (
 
 def getUser(index, scope):
     params = (
-        ('regStartTime', '2018-08-28'),
+        ('regStartTime', '2018-08-01'),
         ('regEndTime', '2018-08-31'),
         ('pageIndex', index),
         ('pageSize', '100'),
@@ -111,3 +111,4 @@ def get_all_guangchang():
 if __name__ == '__main__':
     # getUser(50, "1000583")
     print("开始main方法")
+    getUser(1, "1000544")

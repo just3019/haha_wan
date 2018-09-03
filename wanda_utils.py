@@ -277,7 +277,7 @@ def hm_result():
 
 def phone_sms():
     # 当为1的时候从易码获取，当为其他的时候从讯码获取
-    num = random.randint(1, 4)
+    num = random.randint(1, 6)
     if num == 1:
         phone_sms_result = ym_result()
     elif num == 2:
