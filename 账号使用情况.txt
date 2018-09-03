@@ -12,9 +12,8 @@
 沈阳铁西 shenyangtiexi shenyangtiexi 3.2元 007711720862de70a346fc1788db353c18c5d478
 六盘水 liupanshui liupanshui 15.5元 007763861350c65a82c03579a25bb1bd0dee1ca4
 南宁江南 nanningjiangnan nanningjiangnan 9.3元 00779411d6db9499b1193cc842046c128bc6d298
-乌海 wuhaiwanda wuhaiwanda 0.0元 0078671539735bcd879c4febe26fa8d2a888002b
 滨州 binzhou binzhou 4.0元 00798999d856a74e9cd0b4257da5590a0a382712
 
-讯码 demon3019 12345678 135.4 http://www.xunma.net/userManage/index.aspx
+讯码 demon3019 12345678 135.306 http://www.xunma.net/userManage/index.aspx
 
-海码 demon3019 123456 13.9
+海码 demon3019 123456 13.516
