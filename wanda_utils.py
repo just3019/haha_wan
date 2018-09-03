@@ -158,7 +158,7 @@ def get_product_info():
         ('channelId', '1003'),
         ('type', '1001'),
         ('pageNum', '1'),
-        ('pageSize', '100'),
+        ('pageSize', '10'),
     )
     response = requests.get('https://api.ffan.com/wechatxmt/v5/plaza/coupons', headers=headers, params=params)
     print("获取商品id" + response.text)
