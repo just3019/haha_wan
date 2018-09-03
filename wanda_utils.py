@@ -17,7 +17,7 @@ PLAZAID = ""
 PROVINCE = ""
 CITY = ""
 PLACE = ""
-EXCLUDENOS = ["", ""]
+EXCLUDENOS = ["170.171.172"]
 TIMEOUT = 30
 COUNT = 0
 UID = ""
@@ -28,7 +28,8 @@ WXFFANTOKEN = "74ab910197474826b288edd65d74393c"
 xmtoken = ""
 LOCK = threading.Lock()
 WANDA_LOGIN_500 = 0
-xm_local = ""
+XM_LOCAL = ""
+HM_PROVINCE = ""
 
 headers = {
     'Host': 'api.ffan.com',
@@ -40,7 +41,7 @@ headers = {
 }
 
 
-def init(place, token, province, plazaid):
+def init(place, token, province, plazaid, hm_province, xm_local):
     if token != "":
         print("易码token：" + token)
         TOKEN = token
@@ -48,12 +49,19 @@ def init(place, token, province, plazaid):
     PLACE = place
     global PROVINCE
     PROVINCE = province
+    if hm_province != "":
+        global HM_PROVINCE
+        HM_PROVINCE = hm_province
+    if xm_local != "":
+        global XM_LOCAL
+        XM_LOCAL = xm_local
     global PLAZAID
     PLAZAID = plazaid
     login_result = xunma.xm_login("demon3019", "12345678", "wdVJ21MmabfWT72lAxf3JA==")
     global xmtoken
     xmtoken = login_result[0]
-    print("初始化值：" + TOKEN + " " + PLACE + " " + PROVINCE + " " + PLAZAID + " " + xmtoken)
+    print(
+        "初始化值：" + TOKEN + " " + PLACE + " " + PROVINCE + " " + PLAZAID + " " + xmtoken + " " + HM_PROVINCE + " " + XM_LOCAL)
 
 
 def check_phone(phone):
@@ -231,7 +239,7 @@ def ym_result():
 # 讯码获取手机号和短信 phone|sms
 def xm_result(token):
     log("从讯码获取")
-    phone = xunma.xm_get_phone(token, xm_local)
+    phone = xunma.xm_get_phone(token, XM_LOCAL, random.randint(1, 3))
     if phone == "release" or phone == "timeout":
         xunma.xm_logout(token)
         login_result = xunma.xm_login("demon3019", "12345678", "wdVJ21MmabfWT72lAxf3JA==")
@@ -254,7 +262,7 @@ def xm_result(token):
 
 def hm_result():
     log("从海码获取")
-    phone = haima.hm_phone("", "")
+    phone = haima.hm_phone("", HM_PROVINCE)
     if phone is None:
         raise RuntimeError("手机号获取不到")
     check_result = check_phone(phone)
@@ -272,7 +280,7 @@ def phone_sms():
     num = random.randint(1, 4)
     if num == 1:
         phone_sms_result = ym_result()
-    elif num == 2 or num == 3:
+    elif num == 2:
         phone_sms_result = xm_result(xmtoken)
     else:
         phone_sms_result = hm_result()

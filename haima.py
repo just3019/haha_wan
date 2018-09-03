@@ -25,7 +25,7 @@ def hm_login():
 
 def hm_phone(hm_type, province):
     url = URL + "getMobilenum?uid=%s&pid=%s&token=%s&type=%s&province=%s&nonVirtual=true" % (
-    UID, PID, TOKEN, hm_type, province,)
+        UID, PID, TOKEN, hm_type, province)
     response = requests.post(url, headers=header_dict).text
     print("获取手机号：" + response)
     if "余额不足，请充值" == response:
@@ -59,10 +59,11 @@ if __name__ == '__main__':
     login_result = json.loads(hm_login())
     print(str(login_result["Uid"]) + " " + login_result["Token"] + " " + str(login_result["Balance"]) + " " + str(
         login_result["UsedMax"]))
-    # uid = login_result["Uid"]
-    # token = login_result["Token"]
-    # print(token)
-    # phone_result = hm_phone("", "")
+    uid = login_result["Uid"]
+    token = login_result["Token"]
+    print(token)
+    phone_result = hm_phone("", "辽宁")
+    print(phone_result)
     # # get_code.get_code(phone_result)
     # sms_result = hm_sms(phone_result, 60)
-    # hm_black(phone_result)
+    hm_black(phone_result)

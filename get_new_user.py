@@ -67,8 +67,7 @@ def getUser(index, scope):
     return result
 
 
-if __name__ == '__main__':
-    # getUser(50, "1000583")
+def get_all_guangchang():
     file_read = open("广场信息.txt", "r")
     index = 0
     while True:
@@ -94,7 +93,7 @@ if __name__ == '__main__':
             for j in range(0, count):
                 timeStamp = list_data[j]["regTime"]
                 timeArray = time.localtime(timeStamp / 1000)
-                fromOrg = list_data[j]["fromOrg"]
+                # fromOrg = list_data[j]["fromOrg"]
                 otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
                 phone = list_data[j]['mobileNo']
                 # 获取手机号地区
@@ -107,3 +106,8 @@ if __name__ == '__main__':
             ip138check_phone.get_virtual())
         file_write.write("%s \n" % r)
         file_write.close()
+
+
+if __name__ == '__main__':
+    # getUser(50, "1000583")
+    print("开始main方法")
