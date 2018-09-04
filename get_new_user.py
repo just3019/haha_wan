@@ -48,10 +48,10 @@ params = (
 
 def getUser(index, scope):
     params = (
-        ('regStartTime', '2018-08-01'),
-        ('regEndTime', '2018-08-31'),
+        ('regStartTime', '2018-09-01'),
+        ('regEndTime', '2018-09-31'),
         ('pageIndex', index),
-        ('pageSize', '100'),
+        ('pageSize', '1000'),
         ('scopes/[/]', scope),
         ('scope', scope),
         ('orgType', '10003'),
@@ -78,7 +78,7 @@ def get_all_guangchang():
         result = mystr.split(" ")
         print(result)
         org_id = result[0]
-        place_name = "830/" + result[1] + ".txt"
+        place_name = "904/" + result[1] + ".txt"
         file_write = open(place_name, "a")
         total_count = 0
         ip138check_phone.init(result[2].strip())
@@ -111,4 +111,5 @@ def get_all_guangchang():
 if __name__ == '__main__':
     # getUser(50, "1000583")
     print("开始main方法")
-    getUser(1, "1000544")
+    # getUser(1, "1000544")
+    get_all_guangchang()
