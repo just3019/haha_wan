@@ -17,7 +17,7 @@ PLAZAID = ""
 PROVINCE = ""
 CITY = ""
 PLACE = ""
-EXCLUDENOS = ["170.171.172", "170.171.172", "170.171.172", "", ""]
+EXCLUDENOS = ["170.171.172", ""]
 TIMEOUT = 30
 COUNT = 0
 UID = ""
@@ -395,8 +395,9 @@ def deal(num, index):
 
 def get_interval_time():
     interval_time = interval.get()
+    print(interval_time)
     if interval_time.isdigit():
-        return int(interval_time)
+        return random.randint(0, int(interval_time))
     return 0
 
 
@@ -443,6 +444,7 @@ def xinren_deal(num):
             coupon = get_coupon_no(oid)
             write(phone + "  " + "https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=" + coupon)
             COUNT += 1
+            time.sleep(get_interval_time())
         except RuntimeError as e:
             print(e)
             continue
