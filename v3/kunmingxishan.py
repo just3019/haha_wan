@@ -1,11 +1,12 @@
 import wanda_utils
 
-TOKEN = '007711720862de70a346fc1788db353c18c5d478'
+TOKEN = ''
 PLAZAID = '1000744'
 PROVINCE = ''
 PLACE = '昆明西山'
-
+XM_LOCAL = ""
+HM_PROVINCE = ""
 
 if __name__ == '__main__':
-    wanda_utils.init(PLACE, TOKEN, PROVINCE, PLAZAID)
+    wanda_utils.init(PLACE, TOKEN, PROVINCE, PLAZAID, HM_PROVINCE, XM_LOCAL)
     wanda_utils.ui()

@@ -17,7 +17,7 @@ PLAZAID = ""
 PROVINCE = ""
 CITY = ""
 PLACE = ""
-EXCLUDENOS = ["170.171.172"]
+EXCLUDENOS = ["170.171.172", "170.171.172", "170.171.172", "", ""]
 TIMEOUT = 30
 COUNT = 0
 UID = ""
@@ -277,7 +277,7 @@ def hm_result():
 
 def phone_sms():
     # 当为1的时候从易码获取，当为其他的时候从讯码获取
-    num = random.randint(1, 6)
+    num = random.randint(1, 3)
     if num == 1:
         phone_sms_result = ym_result()
     elif num == 2:
@@ -313,10 +313,15 @@ def ui():
     label2 = Label(root, text='第一页第几个商品：')
     global entry2
     entry2 = Entry(root, width=100)
+    interval_label = Label(root, text="间隔时间")
+    global interval
+    interval = Entry(root, width=100)
     label1.pack(expand=YES, fill=X)
     entry1.pack()
     label2.pack(expand=YES, fill=X)
     entry2.pack()
+    interval_label.pack(expand=YES, fill=X)
+    interval.pack()
     global s1
     s1 = Scrollbar(root)
     s1.pack(side=RIGHT, fill=Y)
@@ -381,10 +386,17 @@ def deal(num, index):
             coupon = get_coupon_no(oid)
             write(phone + "  " + "https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=" + str(coupon))
             COUNT += 1
-            time.sleep(2)
+            time.sleep(get_interval_time())
         except RuntimeError as e:
             print(e)
     xunma.xm_logout(xmtoken)
+
+
+def get_interval_time():
+    interval_time = interval.get()
+    if interval_time.isdigit():
+        return int(interval_time)
+    return 0
 
 
 def xinren_submit():

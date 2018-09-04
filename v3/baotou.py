@@ -1,6 +1,6 @@
 import wanda_utils
 
-TOKEN = '00499849cbf687835af75182698438eb3c2ccdf4'
+TOKEN = ''
 PLAZAID = '1000302'
 PROVINCE = ''
 PLACE = '包头'
