@@ -12,7 +12,7 @@ import xunma
 import yima
 
 # 易码token
-TOKEN = '00747450004457336e169d24663545ec91402703'
+TOKEN = '00499849cbf687835af75182698438eb3c2ccdf4'
 PLAZAID = ""
 PROVINCE = ""
 CITY = ""
