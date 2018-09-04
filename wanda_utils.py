@@ -42,6 +42,7 @@ headers = {
 
 
 def init(place, token, province, plazaid, hm_province, xm_local):
+    global TOKEN
     if token != "":
         print("易码token：" + token)
         TOKEN = token
