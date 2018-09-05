@@ -439,7 +439,7 @@ def xinren_deal(num):
             code = get_code(sms)
             wanda_login(phone, code)
             time.sleep(1)
-            oid = get_new_order_no()
+            oid = get_new_order_no(2)
             time.sleep(1)
             coupon = get_coupon_no(oid)
             write(phone + "  " + "https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=" + coupon)
@@ -452,7 +452,7 @@ def xinren_deal(num):
 
 
 # 获取新用户优惠券
-def get_new_order_no():
+def get_new_order_no(index):
     params = (
         ('cookieStr', COOKIESTR),
     )
@@ -467,4 +467,4 @@ def get_new_order_no():
     if "CURLE_OPERATION_TIMEDOUT" in response.text:
         raise RuntimeError("领券超时")
     result = json.loads(response.text)
-    return result['data'][0]['order']['orderNo']
+    return result['data'][index]['order']['orderNo']
