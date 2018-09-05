@@ -82,7 +82,7 @@ def scan(code):
                              data=data)
     print(response.text)
 
-    params = (
+    params1 = (
         ('storeId', '2064039'),
         ('clientType', 'iOS'),
         ('uid', '479566'),
@@ -99,7 +99,7 @@ def scan(code):
         ('telephone', '18153203501'),
     )
 
-    data = [
+    data1 = [
         ('_uni_source', '2.2'),
         ('appType', 'bpMobile'),
         ('app_time', '8475113541209'),
