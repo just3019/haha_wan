@@ -24,7 +24,7 @@ no_num = 0
 
 def write(s):
     f = open(file_write, "a")
-    f.write('%s\n' % s)
+    f.write('%s\n' % s.strip())
     f.close()
 
 

@@ -97,7 +97,7 @@ def get_virtual():
 def write(s):
     print(s)
     f = open(file_write, "a")
-    f.write('%s\n' % s)
+    f.write('%s\n' % s.strip())
     f.close()
 
 

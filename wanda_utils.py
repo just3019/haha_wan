@@ -298,7 +298,7 @@ def log(s):
 def write(s):
     log(s)
     f = open(FILE_PATH, "a")
-    f.write('%s\n' % s)
+    f.write('%s\n' % s.strip())
     f.close()
 
 

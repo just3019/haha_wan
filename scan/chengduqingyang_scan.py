@@ -28,7 +28,7 @@ def log(s):
 
 def write(s):
     f = open(log_path, "a")
-    f.write('%s\n' % s)
+    f.write('%s\n' % s.strip())
     f.close()
 
 
