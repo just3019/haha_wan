@@ -414,7 +414,7 @@ def xinren_submit():
         num = int(entry1.get())
         if num == '' and num < 0:
             num = 0
-        th = threading.Thread(target=xinren_deal, args=(num,))
+        th = threading.Thread(target=xinren_deal, args=(num, index,))
         th.setDaemon(True)  # 守护线程
         th.start()
     except RuntimeError as e:
@@ -423,7 +423,7 @@ def xinren_submit():
     LOCK.release()
 
 
-def xinren_deal(num):
+def xinren_deal(num, index):
     user = json.loads(yima.ym_user(TOKEN))
     if user["Balance"] <= 0:
         log("请联系客服，再刷粉！")
@@ -439,7 +439,7 @@ def xinren_deal(num):
             code = get_code(sms)
             wanda_login(phone, code)
             time.sleep(1)
-            oid = get_new_order_no(2)
+            oid = get_new_order_no(int(index))
             time.sleep(1)
             coupon = get_coupon_no(oid)
             write(phone + "  " + "https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=" + coupon)
