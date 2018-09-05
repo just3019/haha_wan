@@ -6,7 +6,7 @@ import xunma
 
 list = [{"name": "平阳", "username": "ye907182374", "password": "baobao1515"},
         # {"name": "鸡西", "username": "9879870", "password": "a123123"},
-        # {"name": "台州", "username": "demon3019", "password": "123456"},
+        {"name": "台州", "username": "taizhouwanda", "password": "taizhouwanda"},
         {"name": "回民区", "username": "aq123123123", "password": "a123123"},
         # {"name": "湖州", "username": "huzhou", "password": "huzhou"},
         # {"name": "金华", "username": "ye907182374", "password": "baobao1515"},
