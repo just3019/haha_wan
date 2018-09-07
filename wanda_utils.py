@@ -113,7 +113,7 @@ def get_code(sms):
     IC = re.search(pat, code)
     if IC:
         code = IC.group()
-    log("验证码为：" + code)
+    print("验证码为：" + code)
     if code is None:
         raise RuntimeError('验证码为空')
     return code
@@ -221,7 +221,7 @@ def get_coupon_no(oid):
 
 # 易码获取手机号和短信 phone|sms
 def ym_result():
-    log("从易码获取")
+    # log("从易码获取")
     EXCLUDENO = random.choice(EXCLUDENOS)
     phone = yima.ym_phone(TOKEN, ITEMID, EXCLUDENO, PROVINCE, CITY, "")
     if phone is None:
@@ -239,7 +239,7 @@ def ym_result():
 
 # 讯码获取手机号和短信 phone|sms
 def xm_result(token):
-    log("从讯码获取")
+    # log("从讯码获取")
     phone = xunma.xm_get_phone(token, XM_LOCAL, random.randint(0, 4))
     if phone == "release" or phone == "timeout":
         xunma.xm_logout(token)
@@ -262,7 +262,7 @@ def xm_result(token):
 
 
 def hm_result():
-    log("从海码获取")
+    # log("从海码获取")
     phone = haima.hm_phone("", HM_PROVINCE)
     if phone is None:
         raise RuntimeError("手机号获取不到")
@@ -296,7 +296,7 @@ def log(s):
 
 
 def write(s):
-    log(s)
+    # log(s)
     f = open(FILE_PATH, "a")
     f.write('%s\n' % s.strip())
     f.close()
@@ -308,35 +308,45 @@ def ui():
     # 创建两个列表
     root.title('飞凡刷粉工具-' + PLACE + '万达版')
     root.geometry('600x600')
-    label1 = Label(root, text='生成粉丝数量：')
+    fm1 = Frame(root)
+    fm1.pack(fill=X)
+
+    label1 = Label(fm1, text='生成数量：')
     global entry1
-    entry1 = Entry(root, width=100)
-    label2 = Label(root, text='第一页第几个商品：')
+    entry1 = Entry(fm1, width=10)
+
+    label2 = Label(fm1, text='第几个商品：')
     global entry2
-    entry2 = Entry(root, width=100)
-    interval_label = Label(root, text="间隔时间")
+    entry2 = Entry(fm1, width=10)
+    label1.pack(side=LEFT)
+    entry1.pack(side=LEFT)
+    label2.pack(side=LEFT)
+    entry2.pack(side=LEFT)
+
+    interval_label = Label(fm1, text="间隔时间")
     global interval
-    interval = Entry(root, width=100)
-    label1.pack(expand=YES, fill=X)
-    entry1.pack()
-    label2.pack(expand=YES, fill=X)
-    entry2.pack()
-    interval_label.pack(expand=YES, fill=X)
-    interval.pack()
+    interval = Entry(fm1, width=10)
+    interval_label.pack(side=LEFT)
+    interval.pack(side=LEFT)
+
     global s1
     s1 = Scrollbar(root)
     s1.pack(side=RIGHT, fill=Y)
     global textView
-    textView = Text(root, width=400, height=20, yscrollcommand=s1.set)
+    textView = Text(root, height=34, yscrollcommand=s1.set)
 
     label3 = Label(root, text='日志输出：')  # '
     label3.pack()
     textView.pack(expand=YES, fill=X)
     s1.config(command=textView.yview)
-    btn = Button(root, text='开始', command=submit)
-    btn.pack(expand=YES, fill=X)
-    btn1 = Button(root, text='新人礼开始', command=xinren_submit)
-    btn1.pack(expand=YES, fill=X)
+
+    fm2 = Frame(root)
+    fm2.pack()
+    btn = Button(fm2, text='开始', command=submit)
+    btn.pack(side=LEFT)
+    btn1 = Button(fm2, text='新人礼开始', command=xinren_submit)
+    btn1.pack(side=LEFT)
+
     root.mainloop()  # 进入消息循环
 
 
@@ -385,6 +395,7 @@ def deal(num, index):
             oid = get_coupon(productId, phone)
             time.sleep(1)
             coupon = get_coupon_no(oid)
+            log("第" + str(COUNT + 1) + "条成功。")
             write(phone + "  " + "https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=" + str(coupon))
             COUNT += 1
             time.sleep(get_interval_time())
@@ -423,9 +434,7 @@ def xinren_submit():
     LOCK.release()
 
 
-def xinren_deal(num, index):
-    if index == "":
-        index = "0"
+def xinren_deal(num):
     user = json.loads(yima.ym_user(TOKEN))
     if user["Balance"] <= 0:
         log("请联系客服，再刷粉！")
@@ -441,9 +450,11 @@ def xinren_deal(num, index):
             code = get_code(sms)
             wanda_login(phone, code)
             time.sleep(1)
-            oid = get_new_order_no(int(index))
+            # oid = get_new_order_no(int(index))
+            oid = get_new_order_no()
             time.sleep(1)
             coupon = get_coupon_no(oid)
+            log("第" + str(COUNT + 1) + "条成功。")
             write(phone + "  " + "https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=" + coupon)
             COUNT += 1
             time.sleep(get_interval_time())
@@ -454,7 +465,7 @@ def xinren_deal(num, index):
 
 
 # 获取新用户优惠券
-def get_new_order_no(index):
+def get_new_order_no():
     params = (
         ('cookieStr', COOKIESTR),
     )
@@ -469,4 +480,4 @@ def get_new_order_no(index):
     if "CURLE_OPERATION_TIMEDOUT" in response.text:
         raise RuntimeError("领券超时")
     result = json.loads(response.text)
-    return result['data'][index]['order']['orderNo']
+    return result['data'][0]['order']['orderNo']

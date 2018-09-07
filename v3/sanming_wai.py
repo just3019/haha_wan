@@ -209,30 +209,45 @@ def ui():
     # 创建两个列表
     root.title('飞凡刷粉工具-' + PLACE + '万达版')
     root.geometry('600x600')
-    label1 = Label(root, text='生成粉丝数量：')
+    fm1 = Frame(root)
+    fm1.pack(fill=X)
+
+    label1 = Label(fm1, text='生成数量：')
     global entry1
-    entry1 = Entry(root, width=100)
-    label2 = Label(root, text='第一页第几个商品：')
+    entry1 = Entry(fm1, width=10)
+
+    label2 = Label(fm1, text='第几个商品：')
     global entry2
-    entry2 = Entry(root, width=100)
-    label1.pack(expand=YES, fill=X)
-    entry1.pack()
-    label2.pack(expand=YES, fill=X)
-    entry2.pack()
+    entry2 = Entry(fm1, width=10)
+    label1.pack(side=LEFT)
+    entry1.pack(side=LEFT)
+    label2.pack(side=LEFT)
+    entry2.pack(side=LEFT)
+
+    interval_label = Label(fm1, text="间隔时间")
+    global interval
+    interval = Entry(fm1, width=10)
+    interval_label.pack(side=LEFT)
+    interval.pack(side=LEFT)
+
     global s1
     s1 = Scrollbar(root)
     s1.pack(side=RIGHT, fill=Y)
     global textView
-    textView = Text(root, width=400, height=20, yscrollcommand=s1.set)
+    textView = Text(root, height=34, yscrollcommand=s1.set)
 
     label3 = Label(root, text='日志输出：')  # '
     label3.pack()
     textView.pack(expand=YES, fill=X)
     s1.config(command=textView.yview)
-    btn = Button(root, text='开始', command=submit)
-    btn.pack(expand=YES, fill=X)
-    btn1 = Button(root, text='新人礼开始', command=xinren_submit)
-    btn1.pack(expand=YES, fill=X)
+
+    fm2 = Frame(root)
+    fm2.pack()
+    btn = Button(fm2, text='开始', command=submit)
+    btn.pack(side=LEFT)
+    btn1 = Button(fm2, text='新人礼开始', command=xinren_submit)
+    btn1.pack(side=LEFT)
+
     root.mainloop()  # 进入消息循环
 
 
