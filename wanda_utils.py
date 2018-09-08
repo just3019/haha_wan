@@ -425,7 +425,7 @@ def xinren_submit():
         num = int(entry1.get())
         if num == '' and num < 0:
             num = 0
-        th = threading.Thread(target=xinren_deal, args=(num, index,))
+        th = threading.Thread(target=xinren_deal, args=(num,))
         th.setDaemon(True)  # 守护线程
         th.start()
     except RuntimeError as e:
