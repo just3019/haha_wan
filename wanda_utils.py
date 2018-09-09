@@ -278,10 +278,10 @@ def hm_result():
 
 def phone_sms():
     # 当为1的时候从易码获取，当为其他的时候从讯码获取
-    num = random.randint(1, 3)
+    num = random.randint(1, 5)
     if num == 1:
         phone_sms_result = ym_result()
-    elif num == 2:
+    elif num == 2 or num == 3 or num == 4:
         phone_sms_result = xm_result(xmtoken)
     else:
         phone_sms_result = hm_result()
