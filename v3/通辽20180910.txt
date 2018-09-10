@@ -1,0 +1,1 @@
+15243864589  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=062804439492

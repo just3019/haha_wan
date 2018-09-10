@@ -31,7 +31,7 @@ def get_park(cityId):
 
 def get_cities():
     response = requests.get('https://api.ffan.com/wechatxmt/v1/cities', headers=headers)
-    print("==" + response.text)
+    # print("==" + response.text)
     return response.text
 
 
