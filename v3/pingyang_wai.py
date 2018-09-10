@@ -308,7 +308,7 @@ def deal(num, index):
             coupon = get_coupon_no(oid)
             write(phone + "  " + "https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=" + str(coupon))
             COUNT += 1
-            time.sleep(2)
+            time.sleep(get_interval_time())
         except RuntimeError as e:
             print(e)
 
@@ -361,6 +361,7 @@ def xinren_deal(num):
             coupon = get_coupon_no(oid)
             write(phone + "  " + "https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=" + coupon)
             COUNT += 1
+            time.sleep(get_interval_time())
         except RuntimeError as e:
             print(e)
             continue
@@ -381,6 +382,14 @@ def get_new_order_no():
         raise RuntimeError("该用户已领取过")
     result = json.loads(response.text)
     return result['data'][0]['order']['orderNo']
+
+
+def get_interval_time():
+    interval_time = interval.get()
+    print(interval_time)
+    if interval_time.isdigit():
+        return random.randint(0, int(interval_time))
+    return 0
 
 
 if __name__ == '__main__':
