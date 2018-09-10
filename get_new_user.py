@@ -44,12 +44,14 @@ params = (
     ('drainagedateshow', 'false'),
     ('timestr', '1535505355760'),
 )
+proxy1 = {'http': 'http://115.219.72.29:2316',
+          'https': 'http://115.219.72.29:2316'}
 
 
 def getUser(index, scope):
     params = (
-        ('regStartTime', '2018-09-09'),
-        ('regEndTime', '2018-09-09'),
+        ('regStartTime', '2018-09-10'),
+        ('regEndTime', '2018-09-10'),
         ('pageIndex', index),
         ('pageSize', '1000'),
         ('scopes/[/]', scope),
@@ -109,7 +111,7 @@ def get_all_guangchang():
         result = mystr.split(" ")
         print(result)
         org_id = result[0]
-        place_name = "908/" + result[1] + ".txt"
+        place_name = "910/" + result[1] + ".txt"
         file_write = open(place_name, "a")
         total_count = 0
         ip138check_phone.init(result[2].strip())
@@ -140,7 +142,7 @@ def get_all_guangchang():
 
 
 if __name__ == '__main__':
-    # getUser(1, "1102213")
+    # getUser(1, "1000625")
     print("开始main方法")
-    # get_all_guangchang()
-    get_one_guangchang("1100808", "梅州万达广场", "梅州")
+    get_all_guangchang()
+    # get_one_guangchang("1100808", "梅州万达广场", "梅州")
