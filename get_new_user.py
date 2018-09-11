@@ -1,5 +1,6 @@
 import json
 import random
+import re
 import time
 
 import requests
@@ -50,7 +51,7 @@ proxy1 = {'http': 'http://115.219.72.29:2316',
 
 def getUser(index, scope):
     params = (
-        ('regStartTime', '2018-09-10'),
+        ('regStartTime', '2018-09-01'),
         ('regEndTime', '2018-09-10'),
         ('pageIndex', index),
         ('pageSize', '1000'),
@@ -67,6 +68,25 @@ def getUser(index, scope):
     result = response.text
     print("====>" + result)
     return result
+
+
+def init():
+    global not_local
+    not_local = 0
+    global virtual
+    virtual = 0
+    print(" " + str(not_local) + " " + str(virtual))
+
+
+def check_phone(phone):
+    pat = "^1[7]\d{9}$"
+    IC = re.search(pat, phone)
+    if IC:
+        print(IC.group())
+        global virtual
+        virtual += 1
+        return " 虚拟 "
+    return " "
 
 
 def get_one_guangchang(id, guangchangname, localname):
@@ -93,7 +113,7 @@ def get_one_guangchang(id, guangchangname, localname):
             p = list_data[j]['mobileNo'] + "  " + otherStyleTime + ip138_result
             print(p)
             file_write.write('%s\n' % p)
-            # time.sleep(random.randint(0, 1))
+            time.sleep(random.randint(0, 1))
     r = "总量：" + str(total_count) + " 非本地号：" + str(ip138check_phone.get_not_local()) + " 虚拟号：" + str(
         ip138check_phone.get_virtual())
     file_write.write("%s \n" % r)
@@ -111,11 +131,11 @@ def get_all_guangchang():
         result = mystr.split(" ")
         print(result)
         org_id = result[0]
-        place_name = "910/" + result[1] + ".txt"
+        place_name = "908/" + result[1] + ".txt"
         file_write = open(place_name, "a")
         total_count = 0
-        ip138check_phone.init(result[2].strip())
-        for i in range(1, 10):
+        init()
+        for i in range(1, 9):
             result = json.loads(getUser(i, org_id))
             list_data = result['data']
             count = len(list_data)
@@ -130,13 +150,12 @@ def get_all_guangchang():
                 otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
                 phone = list_data[j]['mobileNo']
                 # 获取手机号地区
-                ip138_result = ip138check_phone.check(phone)
-                p = list_data[j]['mobileNo'] + "  " + otherStyleTime + ip138_result
+                # ip138_result = ip138check_phone.check(phone)
+                p = list_data[j]['mobileNo'] + "  " + otherStyleTime + check_phone(phone)
                 print(p)
                 file_write.write('%s\n' % p)
                 # time.sleep(random.randint(0, 1))
-        r = "总量：" + str(total_count) + " 非本地号：" + str(ip138check_phone.get_not_local()) + " 虚拟号：" + str(
-            ip138check_phone.get_virtual())
+        r = "总量：" + str(total_count) + " 虚拟号：" + str(virtual)
         file_write.write("%s \n" % r)
         file_write.close()
 
@@ -144,5 +163,5 @@ def get_all_guangchang():
 if __name__ == '__main__':
     # getUser(1, "1000625")
     print("开始main方法")
-    get_all_guangchang()
-    # get_one_guangchang("1100808", "梅州万达广场", "梅州")
+    # get_all_guangchang()
+    get_one_guangchang("1102588", "北京丰台万达广场", "北京")
