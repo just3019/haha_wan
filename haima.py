@@ -30,6 +30,8 @@ def hm_phone(hm_type, province):
     print("获取手机号：" + response)
     if "余额不足，请充值" == response:
         raise RuntimeError("海码余额不足，请充值")
+    if "No_Data" == response:
+        raise RuntimeError("没有合适号码")
     return response
 
 

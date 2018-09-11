@@ -240,7 +240,7 @@ def ym_result():
 # 讯码获取手机号和短信 phone|sms
 def xm_result(token):
     # log("从讯码获取")
-    phone = xunma.xm_get_phone(token, XM_LOCAL, random.randint(0, 4))
+    phone = xunma.xm_get_phone(token, XM_LOCAL, random.randint(1, 3))
     if phone == "release" or phone == "timeout":
         xunma.xm_logout(token)
         login_result = xunma.xm_login("demon3019", "12345678", "wdVJ21MmabfWT72lAxf3JA==")
@@ -480,4 +480,4 @@ def get_new_order_no():
     if "CURLE_OPERATION_TIMEDOUT" in response.text:
         raise RuntimeError("领券超时")
     result = json.loads(response.text)
-    return result['data'][0]['order']['orderNo']
+    return result['data'][1]['order']['orderNo']

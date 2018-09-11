@@ -63,12 +63,14 @@ def check(phone):
             # print(local)
             global not_local
             not_local += 1
-            result += (" " + local)
+            # result += (" " + local)
         if "虚拟" in type:
             # print(type)
             global virtual
             virtual += 1
             result += (" " + type)
+        else:
+            result += (" 非虚拟号 " + type)
         return result
     except RuntimeError as e:
         time.sleep(1)
