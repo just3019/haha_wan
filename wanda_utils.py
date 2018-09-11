@@ -281,7 +281,7 @@ def phone_sms():
     num = random.randint(1, 5)
     if num == 1:
         phone_sms_result = ym_result()
-    elif num == 2 or num == 3 or num == 4:
+    elif num == 2 or num == 3:
         phone_sms_result = xm_result(xmtoken)
     else:
         phone_sms_result = hm_result()
