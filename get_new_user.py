@@ -51,7 +51,7 @@ proxy1 = {'http': 'http://115.219.72.29:2316',
 
 def getUser(index, scope):
     params = (
-        ('regStartTime', '2018-08-01'),
+        ('regStartTime', '2018-09-11'),
         ('regEndTime', '2018-09-11'),
         ('pageIndex', index),
         ('pageSize', '1000'),
@@ -86,7 +86,7 @@ def check_phone(phone):
         global virtual
         virtual += 1
         return " 虚拟 "
-    return " 非虚拟号 "
+    return " "
 
 
 def get_one_guangchang(id, guangchangname, localname):
@@ -131,7 +131,7 @@ def get_all_guangchang():
         result = mystr.split(" ")
         print(result)
         org_id = result[0]
-        place_name = "908/" + result[1] + ".txt"
+        place_name = "911/" + result[1] + ".txt"
         file_write = open(place_name, "a")
         total_count = 0
         init()
@@ -180,9 +180,9 @@ def get_and_check_local_phone(local_file, write_file):
 
 
 if __name__ == '__main__':
-    getUser(1, "1000645")
+    # getUser(1, "1000645")
     print("开始main方法")
-    # get_all_guangchang()
+    get_all_guangchang()
     # get_one_guangchang("1000645", "满洲里万达广场", "呼伦贝尔")
     # local_file = "/Users/demon/PycharmProjects/wanda/v3song/丹东新人礼20180911-check.txt"
     # write_file = "/Users/demon/PycharmProjects/wanda/v3song/丹东新人礼20180911-check-result.txt"
