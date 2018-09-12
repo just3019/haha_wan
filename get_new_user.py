@@ -49,10 +49,10 @@ proxy1 = {'http': 'http://115.219.72.29:2316',
           'https': 'http://115.219.72.29:2316'}
 
 
-def getUser(index, scope):
+def getUser(index, scope, start, end):
     params = (
-        ('regStartTime', '2018-09-11'),
-        ('regEndTime', '2018-09-11'),
+        ('regStartTime', start),
+        ('regEndTime', end),
         ('pageIndex', index),
         ('pageSize', '1000'),
         ('scopes/[/]', scope),
@@ -90,7 +90,7 @@ def check_phone(phone):
 
 
 def get_one_guangchang(id, guangchangname, localname):
-    place_name = "911/" + guangchangname + ".txt"
+    place_name = "912/" + guangchangname + ".txt"
     file_write = open(place_name, "a")
     total_count = 0
     ip138check_phone.init(localname)
@@ -120,7 +120,7 @@ def get_one_guangchang(id, guangchangname, localname):
     file_write.close()
 
 
-def get_all_guangchang():
+def get_all_guangchang(start, end):
     file_read = open("广场信息.txt", "r")
     index = 0
     while True:
@@ -131,12 +131,12 @@ def get_all_guangchang():
         result = mystr.split(" ")
         print(result)
         org_id = result[0]
-        place_name = "911/" + result[1] + ".txt"
+        place_name = "912/" + result[1] + ".txt"
         file_write = open(place_name, "a")
         total_count = 0
         init()
         for i in range(1, 9):
-            result = json.loads(getUser(i, org_id))
+            result = json.loads(getUser(i, org_id, start, end))
             list_data = result['data']
             count = len(list_data)
             if count == 0:
@@ -180,10 +180,12 @@ def get_and_check_local_phone(local_file, write_file):
 
 
 if __name__ == '__main__':
-    # getUser(1, "1000645")
+    start = '2018-09-12'
+    end = '2018-09-12'
+    # getUser(1, "1102588", start, end)
     print("开始main方法")
-    get_all_guangchang()
-    # get_one_guangchang("1000645", "满洲里万达广场", "呼伦贝尔")
+    get_all_guangchang(start, end)
+    # get_one_guangchang("1102588", "北京丰台万达广场", "北京")
     # local_file = "/Users/demon/PycharmProjects/wanda/v3song/丹东新人礼20180911-check.txt"
     # write_file = "/Users/demon/PycharmProjects/wanda/v3song/丹东新人礼20180911-check-result.txt"
     # get_and_check_local_phone(local_file, write_file)

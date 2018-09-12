@@ -5,7 +5,7 @@ import requests
 from bs4 import BeautifulSoup
 
 local_name = "大同"
-name = "大同万达广场.txt"
+name = ""
 file_read = "815/" + name
 file_write = "ip138check/" + name
 # 不是当地的号码

@@ -30,6 +30,7 @@ LOCK = threading.Lock()
 WANDA_LOGIN_500 = 0
 XM_LOCAL = ""
 HM_PROVINCE = ""
+not_eq = 0
 
 headers = {
     'Host': 'api.ffan.com',
@@ -278,13 +279,22 @@ def hm_result():
 
 def phone_sms():
     # 当为1的时候从易码获取，当为其他的时候从讯码获取
-    num = random.randint(1, 5)
-    if num == 1:
+    global not_eq
+    num = random.randint(1, 3)
+    if num == 1 and num != not_eq:
         phone_sms_result = ym_result()
-    elif num == 2 or num == 3:
+        print("本次易码获取号码")
+        not_eq = 1
+    elif num == 2 and num != not_eq:
         phone_sms_result = xm_result(xmtoken)
-    else:
+        print("本次讯码获取号码")
+        not_eq = 2
+    elif num == 3 and num != not_eq:
         phone_sms_result = hm_result()
+        print("本次海码获取号码")
+        not_eq = 3
+    else:
+        raise RuntimeError("重新选平台")
     return phone_sms_result
 
 
@@ -406,9 +416,10 @@ def deal(num, index):
 
 def get_interval_time():
     interval_time = interval.get()
-    print(interval_time)
+    slep = random.randint(0, int(interval_time))
+    print(slep)
     if interval_time.isdigit():
-        return random.randint(0, int(interval_time))
+        return slep
     return 0
 
 
