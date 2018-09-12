@@ -45,8 +45,8 @@ params = (
     ('drainagedateshow', 'false'),
     ('timestr', '1535505355760'),
 )
-proxy1 = {'http': 'http://115.219.72.29:2316',
-          'https': 'http://115.219.72.29:2316'}
+proxy1 = {'http': 'http://60.13.50.195:3012',
+          'https': 'http://60.13.50.195:3012'}
 
 
 def getUser(index, scope, start, end):
@@ -64,7 +64,7 @@ def getUser(index, scope, start, end):
         ('timestr', time.time()),
     )
 
-    response = requests.get('http://wanda.ffan.com/sail/member/list', headers=headers, params=params, cookies=cookies)
+    response = requests.get('http://wanda.ffan.com/sail/member/list', headers=headers, params=params, cookies=cookies, proxies=proxy1)
     result = response.text
     print("====>" + result)
     return result
@@ -89,13 +89,14 @@ def check_phone(phone):
     return " "
 
 
-def get_one_guangchang(id, guangchangname, localname):
+def get_one_guangchang(id, guangchangname, localname, start, end):
     place_name = "912/" + guangchangname + ".txt"
     file_write = open(place_name, "a")
     total_count = 0
     ip138check_phone.init(localname)
+    # init()
     for i in range(1, 100):
-        result = json.loads(getUser(i, id))
+        result = json.loads(getUser(i, id, start, end))
         list_data = result['data']
         count = len(list_data)
         if count == 0:
@@ -111,9 +112,10 @@ def get_one_guangchang(id, guangchangname, localname):
             # 获取手机号地区
             ip138_result = ip138check_phone.check(phone)
             p = list_data[j]['mobileNo'] + "  " + otherStyleTime + ip138_result
+            # p = list_data[j]['mobileNo'] + "  " + otherStyleTime + check_phone(phone)
             print(p)
             file_write.write('%s\n' % p)
-            time.sleep(random.randint(0, 1))
+            # time.sleep(random.randint(0, 1))
     r = "总量：" + str(total_count) + " 非本地号：" + str(ip138check_phone.get_not_local()) + " 虚拟号：" + str(
         ip138check_phone.get_virtual())
     file_write.write("%s \n" % r)
@@ -184,8 +186,8 @@ if __name__ == '__main__':
     end = '2018-09-12'
     # getUser(1, "1102588", start, end)
     print("开始main方法")
-    get_all_guangchang(start, end)
-    # get_one_guangchang("1102588", "北京丰台万达广场", "北京")
+    # get_all_guangchang(start, end)
+    get_one_guangchang("1102588", "北京丰台万达广场", "北京", start, end)
     # local_file = "/Users/demon/PycharmProjects/wanda/v3song/丹东新人礼20180911-check.txt"
     # write_file = "/Users/demon/PycharmProjects/wanda/v3song/丹东新人礼20180911-check-result.txt"
     # get_and_check_local_phone(local_file, write_file)
