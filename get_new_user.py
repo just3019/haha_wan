@@ -64,7 +64,7 @@ def getUser(index, scope, start, end):
         ('timestr', time.time()),
     )
 
-    response = requests.get('http://wanda.ffan.com/sail/member/list', headers=headers, params=params, cookies=cookies, proxies=proxy1)
+    response = requests.get('http://wanda.ffan.com/sail/member/list', headers=headers, params=params, cookies=cookies)
     result = response.text
     print("====>" + result)
     return result
@@ -186,8 +186,8 @@ if __name__ == '__main__':
     end = '2018-09-12'
     # getUser(1, "1102588", start, end)
     print("开始main方法")
-    # get_all_guangchang(start, end)
-    get_one_guangchang("1102588", "北京丰台万达广场", "北京", start, end)
+    get_all_guangchang(start, end)
+    # get_one_guangchang("1102588", "北京丰台万达广场", "北京", start, end)
     # local_file = "/Users/demon/PycharmProjects/wanda/v3song/丹东新人礼20180911-check.txt"
     # write_file = "/Users/demon/PycharmProjects/wanda/v3song/丹东新人礼20180911-check-result.txt"
     # get_and_check_local_phone(local_file, write_file)
