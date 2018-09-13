@@ -491,4 +491,4 @@ def get_new_order_no():
     if "CURLE_OPERATION_TIMEDOUT" in response.text:
         raise RuntimeError("领券超时")
     result = json.loads(response.text)
-    return result['data'][0]['order']['orderNo']
+    return result['data'][1]['order']['orderNo']
