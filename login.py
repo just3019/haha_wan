@@ -25,7 +25,7 @@ def wanda_login(mobile, code):
 
 
 if __name__ == '__main__':
-    wanda_login('13675822154', '573544')
+    wanda_login('18842682580', '426599')
 
 #
 # import requests

@@ -133,7 +133,7 @@ def get_all_guangchang(start, end):
         result = mystr.split(" ")
         print(result)
         org_id = result[0]
-        place_name = "912/" + result[1] + ".txt"
+        place_name = "914/" + result[1] + ".txt"
         file_write = open(place_name, "a")
         total_count = 0
         init()
@@ -182,12 +182,12 @@ def get_and_check_local_phone(local_file, write_file):
 
 
 if __name__ == '__main__':
-    start = '2018-09-01'
-    end = '2018-09-13'
+    start = '2018-09-14'
+    end = '2018-09-14'
     # getUser(1, "1102588", start, end)
     print("开始main方法")
-    # get_all_guangchang(start, end)
-    get_one_guangchang("1000985", "东营万达广场", "东营", start, end)
+    get_all_guangchang(start, end)
+    # get_one_guangchang("1000985", "东营万达广场", "东营", start, end)
     # local_file = "/Users/demon/PycharmProjects/wanda/v3song/丹东新人礼20180911-check.txt"
     # write_file = "/Users/demon/PycharmProjects/wanda/v3song/丹东新人礼20180911-check-result.txt"
     # get_and_check_local_phone(local_file, write_file)
