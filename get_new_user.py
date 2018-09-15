@@ -133,7 +133,7 @@ def get_all_guangchang(start, end):
         result = mystr.split(" ")
         print(result)
         org_id = result[0]
-        place_name = "914/" + result[1] + ".txt"
+        place_name = "915/" + result[1] + ".txt"
         file_write = open(place_name, "a")
         total_count = 0
         init()
@@ -182,8 +182,8 @@ def get_and_check_local_phone(local_file, write_file):
 
 
 if __name__ == '__main__':
-    start = '2018-09-14'
-    end = '2018-09-14'
+    start = '2018-09-15'
+    end = '2018-09-15'
     # getUser(1, "1102588", start, end)
     print("开始main方法")
     get_all_guangchang(start, end)
