@@ -54,7 +54,7 @@ def getUser(index, scope, start, end):
         ('regStartTime', start),
         ('regEndTime', end),
         ('pageIndex', index),
-        ('pageSize', '1000'),
+        ('pageSize', '10'),
         ('scopes/[/]', scope),
         ('scope', scope),
         ('orgType', '10003'),
@@ -133,7 +133,7 @@ def get_all_guangchang(start, end):
         result = mystr.split(" ")
         print(result)
         org_id = result[0]
-        place_name = "915/" + result[1] + ".txt"
+        place_name = "916/" + result[1] + ".txt"
         file_write = open(place_name, "a")
         total_count = 0
         init()
@@ -181,12 +181,50 @@ def get_and_check_local_phone(local_file, write_file):
     write.close()
 
 
+def get_no_done_user_count(start1, end1, start2, end2):
+    file_read = open("广场信息.txt", "r")
+    index = 0
+    while True:
+        try:
+            index += 1
+            mystr = file_read.readline()
+            if not mystr:
+                break
+            result = mystr.split(" ")
+            print(result)
+            org_id = result[0]
+            total_count1 = json.loads(getUser(1, org_id, start1, end1))["_metadata"]["totalCount"]
+            if total_count1 == 0:
+                raise RuntimeError("1为0")
+            total_count2 = json.loads(getUser(1, org_id, start2, end2))["_metadata"]["totalCount"]
+            if total_count2 == 0:
+                raise RuntimeError("2为0")
+            p = result[1] + " " + str(total_count1) + " " + str(total_count2) + " 完成：" + str(total_count2 / total_count1)
+            write(p)
+        except RuntimeError as e:
+            print(e)
+
+
+def write(s):
+    f = open("广场完成情况.txt", "a")
+    f.write('%s\n' % s.strip())
+    f.close()
+
+
 if __name__ == '__main__':
-    start = '2018-09-15'
-    end = '2018-09-15'
-    # getUser(1, "1102588", start, end)
+    start1 = '2018-08-01'
+    end1 = '2018-09-01'
+    orgId = "1000389"
+    # getUser(1, orgId, start1, end1)
+
+    start2 = '2018-09-01'
+    end2 = '2018-10-01'
+    # getUser(1, orgId, start2, end2)
+
     print("开始main方法")
-    get_all_guangchang(start, end)
+
+    get_no_done_user_count(start1, end1, start2, end2)
+    # get_all_guangchang(start, end)
     # get_one_guangchang("1000985", "东营万达广场", "东营", start, end)
     # local_file = "/Users/demon/PycharmProjects/wanda/v3song/丹东新人礼20180911-check.txt"
     # write_file = "/Users/demon/PycharmProjects/wanda/v3song/丹东新人礼20180911-check-result.txt"
