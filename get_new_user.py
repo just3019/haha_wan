@@ -54,7 +54,7 @@ def getUser(index, scope, start, end):
         ('regStartTime', start),
         ('regEndTime', end),
         ('pageIndex', index),
-        ('pageSize', '1000'),
+        ('pageSize', '10'),
         ('scopes/[/]', scope),
         ('scope', scope),
         ('orgType', '10003'),
@@ -206,26 +206,26 @@ def get_no_done_user_count(start1, end1, start2, end2):
 
 
 def write(s):
-    f = open("广场完成情况.txt", "a")
+    f = open("广场完成情况2.txt", "a")
     f.write('%s\n' % s.strip())
     f.close()
 
 
 if __name__ == '__main__':
-    start1 = '2018-09-01'
-    end1 = '2018-10-01'
+    start1 = '2018-07-01'
+    end1 = '2018-08-01'
     orgId = "1000389"
     # getUser(1, orgId, start1, end1)
 
-    start2 = '2018-09-01'
-    end2 = '2018-10-01'
+    start2 = '2018-08-01'
+    end2 = '2018-09-01'
     # getUser(1, orgId, start2, end2)
 
     print("开始main方法")
 
-    # get_no_done_user_count(start1, end1, start2, end2)
+    get_no_done_user_count(start1, end1, start2, end2)
     # get_all_guangchang(start, end)
-    get_one_guangchang("1102461", "滨州万达广场", "滨州", start1, end1)
+    # get_one_guangchang("1100650", "台州万达广场", "台州", start1, end1)
     # local_file = "/Users/demon/PycharmProjects/wanda/v3song/丹东新人礼20180911-check.txt"
     # write_file = "/Users/demon/PycharmProjects/wanda/v3song/丹东新人礼20180911-check-result.txt"
     # get_and_check_local_phone(local_file, write_file)
