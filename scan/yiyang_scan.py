@@ -1,12 +1,12 @@
 import json
 import random
 import threading
+import time
 import tkinter
 from tkinter import *
 from tkinter import filedialog
 
 import requests
-import time
 
 lock = threading.Lock()
 place = '益阳'
@@ -47,36 +47,36 @@ def scan(code):
         ('version', '47'),
         ('_uni_source', '2.2'),
         ('merchantId', '10078556'),
-        ('loginToken', '0f159b3825ed1d40834317240ca0ca1d'),
+        ('loginToken', '87c29de5f81bc1bd05038e76730e0779'),
         ('deviceId', '184d19d52857d3628276407b946e367d208c7c5d'),
         ('appType', 'bpMobile'),
         ('username', '\u5468\u601D\u73B2'),
         ('serverVersion', '1'),
-        ('clientAgent', 'iPhone9,2/iOS/11.4.1/1242*2208'),
+        ('clientAgent', 'iPhone9,2/iOS/12.0/1242*2208'),
         ('telephone', '15973700520'),
     )
 
-    data = [
-        ('_uni_source', '2.2'),
-        ('appType', 'bpMobile'),
-        ('app_time', '2812438663717'),
-        ('app_verification_native', get_random()),
-        ('certificateno', code),
-        ('checkDevice', '1'),
-        ('clientAgent', 'iPhone9,2/iOS/11.4.1/1242*2208'),
-        ('clientId', 'xapi_01'),
-        ('clientType', 'iOS'),
-        ('deviceId', '184d19d52857d3628276407b946e367d208c7c5d'),
-        ('loginToken', '0f159b3825ed1d40834317240ca0ca1d'),
-        ('merchantId', '10078556'),
-        ('serverVersion', '1'),
-        ('sign', '70ba845edf2985daa5701afbb3c6dabe'),
-        ('storeId', '10269075'),
-        ('telephone', '15973700520'),
-        ('uid', '466514'),
-        ('username', '%E5%91%A8%E6%80%9D%E7%8E%B2'),
-        ('version', '47'),
-    ]
+    data = {
+        '_uni_source': '2.2',
+        'appType': 'bpMobile',
+        'app_time': '3476003148864',
+        'app_verification_native': get_random(),
+        'certificateno': code,
+        'checkDevice': '1',
+        'clientAgent': 'iPhone9,2/iOS/12.0/1242*2208',
+        'clientId': 'xapi_01',
+        'clientType': 'iOS',
+        'deviceId': '184d19d52857d3628276407b946e367d208c7c5d',
+        'loginToken': '87c29de5f81bc1bd05038e76730e0779',
+        'merchantId': '10078556',
+        'serverVersion': '1',
+        'sign': 'aedfc8aa34e795bf99fbb676ed0d9f2c',
+        'storeId': '10269075',
+        'telephone': '15973700520',
+        'uid': '466514',
+        'username': '%E5%91%A8%E6%80%9D%E7%8E%B2',
+        'version': '47'
+    }
 
     response = requests.post('https://sop.ffan.com/goods/coupon/queryUnusedCoupons', headers=headers, params=params,
                              data=data)
@@ -94,37 +94,37 @@ def scan(code):
         ('version', '47'),
         ('_uni_source', '2.2'),
         ('merchantId', '10078556'),
-        ('loginToken', '0f159b3825ed1d40834317240ca0ca1d'),
+        ('loginToken', '87c29de5f81bc1bd05038e76730e0779'),
         ('deviceId', '184d19d52857d3628276407b946e367d208c7c5d'),
         ('appType', 'bpMobile'),
         ('username', '\u5468\u601D\u73B2'),
         ('serverVersion', '1'),
-        ('clientAgent', 'iPhone9,2/iOS/11.4.1/1242*2208'),
+        ('clientAgent', 'iPhone9,2/iOS/12.0/1242*2208'),
         ('telephone', '15973700520'),
     )
 
-    data1 = [
-        ('_uni_source', '2.2'),
-        ('appType', 'bpMobile'),
-        ('app_time', '2822479295066'),
-        ('app_verification_native', get_random()),
-        ('certificateno', code),
-        ('clientAgent', 'iPhone9,2/iOS/11.4.1/1242*2208'),
-        ('clientId', 'xapi_01'),
-        ('clientType', 'iOS'),
-        ('deviceId', '184d19d52857d3628276407b946e367d208c7c5d'),
-        ('loginToken', '0f159b3825ed1d40834317240ca0ca1d'),
-        ('memberId', '15000000377966708'),
-        ('merchantId', '10078556'),
-        ('serverVersion', '1'),
-        ('sign', '4f61981cad2e8e17f480dae8c2bc9cbe'),
-        ('storeId', '10269075'),
-        ('telephone', '15973700520'),
-        ('uid', '466514'),
-        ('userId', '466514'),
-        ('username', '%E5%91%A8%E6%80%9D%E7%8E%B2'),
-        ('version', '47'),
-    ]
+    data1 = {
+        '_uni_source': '2.2',
+        'appType': 'bpMobile',
+        'app_time': '3477336457602',
+        'app_verification_native': get_random(),
+        'certificateno': code,
+        'clientAgent': 'iPhone9,2/iOS/12.0/1242*2208',
+        'clientId': 'xapi_01',
+        'clientType': 'iOS',
+        'deviceId': '184d19d52857d3628276407b946e367d208c7c5d',
+        'loginToken': '87c29de5f81bc1bd05038e76730e0779',
+        'memberId': '15000000381254843',
+        'merchantId': '10078556',
+        'serverVersion': '1',
+        'sign': '0a3857866902b3a0d423fabaa26066ee',
+        'storeId': '10269075',
+        'telephone': '15973700520',
+        'uid': '466514',
+        'userId': '466514',
+        'username': '%E5%91%A8%E6%80%9D%E7%8E%B2',
+        'version': '47'
+    }
 
     response = requests.post('https://sop.ffan.com/goods/coupon/checkCoupon', headers=headers, params=params1,
                              cookies=cookies1, data=data1)
