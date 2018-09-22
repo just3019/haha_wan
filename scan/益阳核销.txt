@@ -1,1 +1,3 @@
 18380439758  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=022704277104
+13409808503  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=060105232384
+18349181106  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=009805279632
