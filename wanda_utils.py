@@ -485,7 +485,7 @@ def xinren_submit():
         num = int(entry1.get())
         if num == '' and num < 0:
             num = 0
-        th = threading.Thread(target=xinren_deal, args=(num,))
+        th = threading.Thread(target=xinren_deal, args=(num, index))
         th.setDaemon(True)  # 守护线程
         th.start()
     except RuntimeError as e:
@@ -494,7 +494,7 @@ def xinren_submit():
     LOCK.release()
 
 
-def xinren_deal(num):
+def xinren_deal(num, index):
     user = json.loads(yima.ym_user(TOKEN))
     if user["Balance"] <= 0:
         log("请联系客服，再刷粉！")
@@ -510,8 +510,8 @@ def xinren_deal(num):
             code = get_code(sms)
             wanda_login(phone, code)
             time.sleep(1)
-            # oid = get_new_order_no(int(index))
-            oid = get_new_order_no()
+            oid = get_new_order_no(int(index))
+            # oid = get_new_order_no()
             time.sleep(1)
             coupon = get_coupon_no(oid)
             log("第" + str(COUNT + 1) + "条成功。")
@@ -525,7 +525,7 @@ def xinren_deal(num):
 
 
 # 获取新用户优惠券
-def get_new_order_no():
+def get_new_order_no(index):
     params = (
         ('cookieStr', COOKIESTR),
     )
@@ -540,4 +540,4 @@ def get_new_order_no():
     if "CURLE_OPERATION_TIMEDOUT" in response.text:
         raise RuntimeError("领券超时")
     result = json.loads(response.text)
-    return result['data'][0]['order']['orderNo']
+    return result['data'][index]['order']['orderNo']
