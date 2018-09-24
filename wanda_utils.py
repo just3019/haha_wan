@@ -358,8 +358,59 @@ def ui():
     btn1.pack(side=LEFT)
     btn2 = Button(fm2, text="只注册用户", command=user_submit)
     btn2.pack(side=LEFT)
+    btn3 = Button(fm2, text='大连特定二维码', command=dalian_submit)
+    btn3.pack(side=LEFT)
 
     root.mainloop()  # 进入消息循环
+
+
+def dalian_submit():
+    LOCK.acquire()
+    global FILE_PATH
+    FILE_PATH = PLACE + "%s.txt" % time.strftime("%Y%m%d")
+    fans = entry1.get()
+    if fans == '':
+        log('参数不能为空')
+        raise RuntimeError('参数不能为空')
+    try:
+        num = int(entry1.get())
+        if num == '' and num < 0:
+            num = 0
+        th = threading.Thread(target=dalian_deal, args=(num,))
+        th.setDaemon(True)  # 守护线程
+        th.start()
+    except RuntimeError as e:
+        print(e)
+        log('获取失败，请确保输入参数都是整数')
+    LOCK.release()
+
+
+def dalian_deal(num):
+    user = json.loads(yima.ym_user(TOKEN))
+    if user["Balance"] <= 0:
+        log("请联系客服，再刷粉！")
+        raise RuntimeError("请联系客服，再刷粉！")
+    productId = "20180918231027"
+    global COUNT
+    while COUNT < num:
+        try:
+            log("执行到第" + str(COUNT + 1) + "条。")
+            phone_sms_result = phone_sms()
+            phone_smss = phone_sms_result.split("|")
+            phone = phone_smss[0]
+            sms = phone_smss[1]
+            code = get_code(sms)
+            wanda_login(phone, code)
+            oid = get_coupon(productId, phone)
+            time.sleep(1)
+            coupon = get_coupon_no(oid)
+            log("第" + str(COUNT + 1) + "条成功。")
+            write(phone + "  " + "https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=" + str(coupon))
+            COUNT += 1
+            time.sleep(get_interval_time())
+        except RuntimeError as e:
+            print(e)
+    xunma.xm_logout(xmtoken)
 
 
 def user_submit():
