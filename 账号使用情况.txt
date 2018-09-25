@@ -1,9 +1,9 @@
-平阳 ye907182374 baobao1515 12.7元 00499849cbf687835af75182698438eb3c2ccdf4
+平阳 ye907182374 baobao1515 93.3元 00499849cbf687835af75182698438eb3c2ccdf4
 台州 taizhouwanda taizhouwanda 50.0元 00834560f398869f8049d9ffe89e1910e03c8d8e
 回民区 aq123123123 a123123 5.7元 007064165942ad7749271ead0a851d4ebefc0fb3
-三明 sanming1 sanming1 33.1元 0072891891c7981d81cb2918b3b22a879064d4af
-辽阳 chongzhou chongzhou 9.0元 007373010e787df886c6a246f5877fec161a9316
-崇州 chongzhou chongzhou 9.0元 007373010e787df886c6a246f5877fec161a9316
+三明 sanming1 sanming1 110.0元 0072891891c7981d81cb2918b3b22a879064d4af
+辽阳 chongzhou chongzhou 8.9元 007373010e787df886c6a246f5877fec161a9316
+崇州 chongzhou chongzhou 8.9元 007373010e787df886c6a246f5877fec161a9316
 宁德 ningde ningde 9.7元 007460976176bc2fbf1946043accf467d2fc4516
 西双版纳 xishuangbanna xishuangbanna 9.6元 00747188e73e086af1e854f98992bfd2eb1fa4e6
 漳州台商 zhangzhouts1 zhangzhouts1 8.8元 00753103e21ff2b50ebdac2ddf45040cd97db172
@@ -13,10 +13,10 @@
 沈阳铁西 shenyangtiexi shenyangtiexi 2.8元 007711720862de70a346fc1788db353c18c5d478
 六盘水 liupanshui liupanshui 15.5元 007763861350c65a82c03579a25bb1bd0dee1ca4
 南宁江南 nanningjiangnan nanningjiangnan 9.3元 00779411d6db9499b1193cc842046c128bc6d298
-滨州 binzhou binzhou 4.0元 00798999d856a74e9cd0b4257da5590a0a382712
-通辽万达 tongliao tongliao 146.8元 0084696343c4148ee25d8d446e969709b2422b49
+滨州 binzhou binzhou 3.8元 00798999d856a74e9cd0b4257da5590a0a382712
+通辽万达 tongliao tongliao 91.9元 0084696343c4148ee25d8d446e969709b2422b49
 回民区 huiminqu huiminqu 29.4元 008551770945711a87b4c9ac66927e3ec0a0a3e5
 
-讯码 demon3019 12345678 27.206 http://www.xunma.net/userManage/index.aspx
+讯码 demon3019 12345678 25.608 http://www.xunma.net/userManage/index.aspx
 
-海码 demon3019 123456 34.096
+海码 demon3019 123456 16.524
