@@ -4,16 +4,27 @@ import time
 import requests
 
 headers = {
+    'orgname': '%E6%98%86%E6%98%8E%E8%A5%BF%E5%B1%B1%E4%B8%87%E8%BE%BE%E5%B9%BF%E5%9C%BA',
+    'Accept-Encoding': 'gzip, deflate',
+    'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8,zh-TW;q=0.7,ja;q=0.6',
+    'orgTypeName': '%E5%B9%BF%E5%9C%BA',
+    'userid': '124184006076923904',
+    'orgcode': '1000744',
+    'orgTypeCode': '10003',
+    'Connection': 'keep-alive',
+    'workingOrgCode': '1000744',
+    'code': '1000744',
+    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.92 Safari/537.36',
     'tenantId': '2017092600001',
     'Accept': 'application/json, text/plain, */*',
-    'orgcode': '1105208',
-    'orgTypeCode': '10003',
-    'token': 'MjQxNDc1MzIxMzI3NTE3Njk2',
+    'username': '%E6%98%86%E6%98%8E%E8%A5%BF%E5%B1%B1%E4%B8%87%E8%BE%BE%E5%B9%BF%E5%9C%BA%E7%AE%A1%E7%90%86%E5%91%98',
+    'Referer': 'http://wanda.ffan.com/',
+    'token': 'MjUxNzcwNDk1MTQ0Mjk2NDQ4',
 }
-file = "六盘水新人礼20180827"
+file = "丹东新人礼20180925"
 file_write = "/Users/demon/Desktop/1/" + file + "校验号码.txt"
 file_read = "/Users/demon/Desktop/1/" + file + ".txt"
-name = "六盘水万达广场"
+name = "丹东万达广场"
 # 非该广场名
 notequal = ""
 # 非该广场数
@@ -32,12 +43,13 @@ def check(phone):
     params = (
         ('pageIndex', '1'),
         ('pageSize', '10'),
-        ('scopes[]', 'DQFquanjituan'),
+        ('scopes/[/]', 'DQFquanjituan'),
         ('scope', 'DQFquanjituan'),
         ('orgType', '10001'),
         ('mobileNo', phone),
-        ('drainageTypeshow', 'true'),
-        ('drainagedateshow', 'true'),
+        ('wechatBind', '3'),
+        ('drainageTypeshow', 'false'),
+        ('drainagedateshow', 'false'),
         ('timestr', time.time()),
     )
     response = requests.get('http://wanda.ffan.com/sail/member/list', headers=headers, params=params)
