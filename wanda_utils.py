@@ -241,7 +241,7 @@ def ym_result():
 # 讯码获取手机号和短信 phone|sms
 def xm_result(token):
     # log("从讯码获取")
-    phone = xunma.xm_get_phone(token, XM_LOCAL, random.randint(1, 3))
+    phone = xunma.xm_get_phone(token, XM_LOCAL, 0)
     if phone == "release" or phone == "timeout":
         xunma.xm_logout(token)
         login_result = xunma.xm_login("demon3019", "12345678", "wdVJ21MmabfWT72lAxf3JA==")
@@ -390,7 +390,7 @@ def dalian_deal(num):
     if user["Balance"] <= 0:
         log("请联系客服，再刷粉！")
         raise RuntimeError("请联系客服，再刷粉！")
-    productId = "20180918231027"
+    productId = "20180822171513"
     global COUNT
     while COUNT < num:
         try:
