@@ -17,19 +17,8 @@ XMID = "5681"
 
 
 def yx_phone():
-    params = (
-        ('token', TOKEN),
-        ('xmid', XMID),
-        ('sl', '1'),
-        ('lx', '6'),
-        ('a1', ''),
-        ('a2', ''),
-        ('pk', ''),
-        ('ks', '0'),
-        ('rj', 'demon3018'),
-    )
-    response = requests.get('http://47.97.118.96:9180/service.asmx/GetHM2Str', headers=headers,
-                            params=params).text.split("=")
+    url = "http://47.97.118.96:9180/service.asmx/GetHM2Str?token=%s&xmid=%s&sl=1&lx=6&ks=0&rj=demon3018&a1=&a2=&pk=" % (TOKEN, XMID)
+    response = requests.get(url, headers=headers).text.split("=")
     print(response)
     if response[0] == '-3':
         raise RuntimeError("需要释放号码")
@@ -39,57 +28,47 @@ def yx_phone():
 
 
 def yx_sms(phone, timeout):
-    params = (
-        ('token', TOKEN),
-        ('xmid', XMID),
-        ('hm', phone),
-        ('sf', '1'),
-    )
+    url = "http://47.97.118.96:9180/service.asmx/GetYzm2Str?token=%s&xmid=%s&hm=%s&sf=1" % (TOKEN, XMID, phone)
     start = time.time()
     while True:
-        response = requests.get('http://47.97.118.96:9180/service.asmx/GetYzm2Str', headers=headers, params=params)
+        response = requests.get(url, headers=headers)
         print(response.text)
         if len(response.text) > 4:
+            yx_black(phone)
             return response.text
         if response.text == "-1":
-            yx_relese(phone)
+            yx_black(phone)
             raise RuntimeError("yx_sms号码已经被释放")
         end = time.time()
         if (end - start) > timeout:
             # 获取不到释放
-            yx_relese(phone)
+            yx_black(phone)
             raise RuntimeError("yx_sms获取不到短信")
         time.sleep(5)
 
 
 def yx_relese(phone):
-    params = (
-        ('token', TOKEN),
-        ('hm', phone),
-    )
-    response = requests.get('http://47.97.118.96:9180/service.asmx/sfHmStr', headers=headers, params=params)
+    url = "http://47.97.118.96:9180/service.asmx/sfHmStr?token=%s&hm=%s" % (TOKEN, phone)
+    response = requests.get(url, headers=headers)
     print(response.text)
 
 
 def yx_release_all():
-    params = (
-        ('token', TOKEN),
-    )
-    requests.get("http://47.97.118.96:9180/service.asmx/sfAllStr", headers=headers, params=params)
+    requests.get("http://47.97.118.96:9180/service.asmx/sfAllStr?token=7920047BF00ED99E20CCCF859E648FA0",
+                 headers=headers)
 
 
 def yx_black(phone):
-    params = (
-        ('token', TOKEN),
-        ('xmid', XMID),
-        ('hm', phone),
-        ('sf', '1'),
-    )
-    response = requests.get('http://47.97.118.96:9180/service.asmx/Hmd2Str', headers=headers, params=params)
+    url = "http://47.97.118.96:9180/service.asmx/Hmd2Str?token=%s&xmid=%s&hm=%s&sf=1" % (TOKEN, XMID, phone)
+    response = requests.get(url, headers=headers)
     print(response.text)
 
 
 if __name__ == '__main__':
-    phone = yx_phone()
+    # phone = yx_phone()
     # get_code.get_code(phone)
-    yx_sms(phone, 60)
+    # yx_sms(phone, 60)
+    # yx_release_all()
+    yx_relese("13894530425")
+    yx_relese("18374111413")
+    yx_relese("18380405428")
