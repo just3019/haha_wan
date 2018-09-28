@@ -45,8 +45,10 @@ def hm_sms(phone, timeout):
         responses = response.split("|")
         end = time.time()
         if (end - start) > timeout:
+            hm_black(phone)
             raise RuntimeError("hm_sms获取不到短信")
         if phone in responses:
+            hm_black(phone)
             return responses[1]
         time.sleep(5)
 

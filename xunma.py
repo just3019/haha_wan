@@ -76,6 +76,8 @@ def xm_sms(token, phone, timeout):
                 xm_relese(token, phone_list)
                 raise RuntimeError("xm_sms获取不到短信")
             if "MSG" in response or "飞凡" in response:
+                black_phone_list = ITEMID + "-" + phone + ";"
+                xm_black(token, black_phone_list)
                 return response[3]
             time.sleep(2)
     except RuntimeError as e:

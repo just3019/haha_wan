@@ -68,6 +68,7 @@ def ym_sms(token, itemid, mobile, timeout):
         if responses[0] == "2008":
             raise RuntimeError("号码已离线")
         if responses[0] == "success":
+            ym_ignore(token, itemid, mobile)
             return responses[1]
         end = time.time()
         if (end - start) > timeout:

@@ -17,10 +17,12 @@ XMID = "5681"
 
 
 def yx_phone():
-    url = "http://47.97.118.96:9180/service.asmx/GetHM2Str?token=%s&xmid=%s&sl=1&lx=6&ks=0&rj=demon3018&a1=&a2=&pk=" % (TOKEN, XMID)
+    url = "http://47.97.118.96:9180/service.asmx/GetHM2Str?token=%s&xmid=%s&sl=1&lx=6&ks=0&rj=demon3018&a1=&a2=&pk=" % (
+    TOKEN, XMID)
     response = requests.get(url, headers=headers).text.split("=")
     print(response)
     if response[0] == '-3':
+        yx_release_all()
         raise RuntimeError("需要释放号码")
     if len(response) > 1:
         return response[1]
