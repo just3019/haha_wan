@@ -61,6 +61,7 @@ def yx_release_all():
 def yx_black(phone):
     url = "http://47.97.118.96:9180/service.asmx/Hmd2Str?token=%s&xmid=%s&hm=%s&sf=1" % (TOKEN, XMID, phone)
     response = requests.get(url, headers=headers)
+    print("yx拉黑")
     print(response.text)
 
 
@@ -68,7 +69,7 @@ if __name__ == '__main__':
     # phone = yx_phone()
     # get_code.get_code(phone)
     # yx_sms(phone, 60)
-    # yx_release_all()
-    yx_relese("13894530425")
-    yx_relese("18374111413")
-    yx_relese("18380405428")
+    yx_release_all()
+    # yx_relese("13894530425")
+    # yx_relese("18374111413")
+    # yx_relese("18380405428")
