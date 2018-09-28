@@ -74,7 +74,7 @@ def ym_sms(token, itemid, mobile, timeout):
             # 获取不到释放
             ym_release(token, itemid, mobile)
             raise RuntimeError("ym_sms获取不到短信")
-        time.sleep(2)
+        time.sleep(5)
 
 
 # 释放号码

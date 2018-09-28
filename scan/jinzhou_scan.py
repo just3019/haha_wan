@@ -1,15 +1,15 @@
 import json
 import random
 import threading
+import time
 import tkinter
 from tkinter import *
 from tkinter import filedialog
 
 import requests
-import time
 
 lock = threading.Lock()
-place = '鸡西'
+place = '锦州'
 
 headers = {
     'Host': 'sop.ffan.com',
@@ -40,26 +40,26 @@ def get_random():
 def scan(code):
     params = (
         ('', ''),
-        ('storeId', '10249638'),
+        ('storeId', '10359817'),
         ('clientType', 'iOS'),
-        ('uid', '403504'),
+        ('uid', '424393'),
         ('clientId', 'xapi_01'),
         ('version', '47'),
         ('_uni_source', '2.2'),
-        ('merchantId', '10077248'),
-        ('loginToken', '0278977c13b85edd7a08bd670db7b008'),
+        ('merchantId', '10089673'),
+        ('loginToken', '6e92cd007920148ae4de4d297c343e41'),
         ('deviceId', '184d19d52857d3628276407b946e367d208c7c5d'),
         ('appType', 'bpMobile'),
-        ('username', '\u738B\u8D85'),
+        ('username', '13840078001'),
         ('serverVersion', '1'),
         ('clientAgent', 'iPhone9,2/iOS/12.0/1242*2208'),
-        ('telephone', '18888888888'),
+        ('telephone', '13840078001'),
     )
 
     data = {
         '_uni_source': '2.2',
         'appType': 'bpMobile',
-        'app_time': '197581111689',
+        'app_time': '336367742223',
         'app_verification_native': get_random(),
         'certificateno': code,
         'checkDevice': '1',
@@ -67,14 +67,14 @@ def scan(code):
         'clientId': 'xapi_01',
         'clientType': 'iOS',
         'deviceId': '184d19d52857d3628276407b946e367d208c7c5d',
-        'loginToken': '0278977c13b85edd7a08bd670db7b008',
-        'merchantId': '10077248',
+        'loginToken': '6e92cd007920148ae4de4d297c343e41',
+        'merchantId': '10089673',
         'serverVersion': '1',
-        'sign': '52f4025cb5449637215652938aa6d5e0',
-        'storeId': '10249638',
-        'telephone': '18888888888',
-        'uid': '403504',
-        'username': '%E7%8E%8B%E8%B6%85',
+        'sign': '078fb1627c41269fab2ee049e070313f',
+        'storeId': '10359817',
+        'telephone': '13840078001',
+        'uid': '424393',
+        'username': '13840078001',
         'version': '47'
     }
 
@@ -83,42 +83,42 @@ def scan(code):
     print(response.text)
 
     params1 = (
-        ('storeId', '10249638'),
+        ('storeId', '10359817'),
         ('clientType', 'iOS'),
-        ('uid', '403504'),
+        ('uid', '424393'),
         ('clientId', 'xapi_01'),
         ('version', '47'),
         ('_uni_source', '2.2'),
-        ('merchantId', '10077248'),
-        ('loginToken', '0278977c13b85edd7a08bd670db7b008'),
+        ('merchantId', '10089673'),
+        ('loginToken', '6e92cd007920148ae4de4d297c343e41'),
         ('deviceId', '184d19d52857d3628276407b946e367d208c7c5d'),
         ('appType', 'bpMobile'),
-        ('username', '\u738B\u8D85'),
+        ('username', '13840078001'),
         ('serverVersion', '1'),
         ('clientAgent', 'iPhone9,2/iOS/12.0/1242*2208'),
-        ('telephone', '18888888888'),
+        ('telephone', '13840078001'),
     )
 
     data1 = {
         '_uni_source': '2.2',
         'appType': 'bpMobile',
-        'app_time': '198290822744',
+        'app_time': '338647602141',
         'app_verification_native': get_random(),
         'certificateno': code,
         'clientAgent': 'iPhone9,2/iOS/12.0/1242*2208',
         'clientId': 'xapi_01',
         'clientType': 'iOS',
         'deviceId': '184d19d52857d3628276407b946e367d208c7c5d',
-        'loginToken': '0278977c13b85edd7a08bd670db7b008',
-        'memberId': '15000000382358525',
-        'merchantId': '10077248',
+        'loginToken': '6e92cd007920148ae4de4d297c343e41',
+        'memberId': '15000000300878217',
+        'merchantId': '10089673',
         'serverVersion': '1',
-        'sign': '31532e493bff83731bd1be4c35c71c21',
-        'storeId': '10249638',
-        'telephone': '18888888888',
-        'uid': '403504',
-        'userId': '403504',
-        'username': '%E7%8E%8B%E8%B6%85',
+        'sign': '26e99d5c7525f38f6050544645c20cca',
+        'storeId': '10359817',
+        'telephone': '13840078001',
+        'uid': '424393',
+        'userId': '424393',
+        'username': '13840078001',
         'version': '47'
     }
 

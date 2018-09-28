@@ -10,15 +10,16 @@ import requests
 import haima
 import xunma
 import yima
-
 # 易码token
+import yunxiang
+
 TOKEN = '00499849cbf687835af75182698438eb3c2ccdf4'
 PLAZAID = ""
 PROVINCE = ""
 CITY = ""
 PLACE = ""
 EXCLUDENOS = ["170.171.172"]
-TIMEOUT = 30
+TIMEOUT = 40
 COUNT = 0
 UID = ""
 COOKIESTR = ""
@@ -253,8 +254,10 @@ def xm_result(token):
         raise RuntimeError("手机号获取不到")
     check_result = check_phone(phone)
     phone_list = phone + "-" + ITEMID + ";"
+    black_phone_list = ITEMID + "-" + phone + ";"
     if check_result['status'] != '0000' or check_result['_metadata']['totalCount'] != 0:
         xunma.xm_relese(token, phone_list)
+        xunma.xm_black(token, black_phone_list)
         raise RuntimeError("手机号已注册过")
     get_sms_code(phone)
     time.sleep(2)
@@ -277,10 +280,25 @@ def hm_result():
     return phone + "|" + sms
 
 
+def yx_result():
+    phone = yunxiang.yx_phone()
+    if phone is None:
+        raise RuntimeError("手机号码获取不到")
+    check_result = check_phone(phone)
+    if check_result['status'] != '0000' or check_result['_metadata']['totalCount'] != 0:
+        yunxiang.yx_relese(phone)
+        yunxiang.yx_black(phone)
+        raise RuntimeError("手机号已注册过")
+    get_sms_code(phone)
+    time.sleep(2)
+    sms = yunxiang.yx_sms(phone, TIMEOUT)
+    return phone + "|" + sms
+
+
 def phone_sms():
     # 当为1的时候从易码获取，当为其他的时候从讯码获取
     global not_eq
-    num = random.randint(1, 3)
+    num = random.randint(1, 4)
     if num == 1 and num != not_eq:
         phone_sms_result = ym_result()
         print("本次易码获取号码")
@@ -293,6 +311,10 @@ def phone_sms():
         phone_sms_result = hm_result()
         print("本次海码获取号码")
         not_eq = 3
+    elif num == 4 and num != not_eq:
+        phone_sms_result = yx_result()
+        print("本次云享获取号码")
+        not_eq = 4
     else:
         raise RuntimeError("重新选平台")
     return phone_sms_result

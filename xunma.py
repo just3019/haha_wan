@@ -46,6 +46,8 @@ def xm_get_phone(token, area, PhoneType):
             return "release"
         if "False" in response[0]:
             return "timeout"
+        if "False:余额不足，请先释放号码" == response[0]:
+            raise ("False:余额不足，请先释放号码")
         return response[0]
     except RuntimeError as e:
         print("讯码平台问题phone")
