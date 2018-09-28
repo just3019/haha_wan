@@ -3,8 +3,8 @@ import time
 
 import requests
 
-YM_USERNAME = "shenyangtiexi"
-YM_PASSWORD = "shenyangtiexi"
+YM_USERNAME = "ye907182374"
+YM_PASSWORD = "baobao1515"
 header_dict = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko'}
 
 
@@ -110,10 +110,12 @@ def ym_ignore(token, itemid, mobile):
 if __name__ == '__main__':
     itemid = "7982"
     token = ym_login(YM_USERNAME, YM_PASSWORD)
-    user = json.loads(ym_user(token))
-    print(user)
-    phone = ym_phone(token, itemid, "", "", "", "")
-    print(phone)
+    print(token)
+
+    # user = json.loads(ym_user(token))
+    # print(user)
+    # phone = ym_phone(token, itemid, "", "", "", "")
+    # print(phone)
     # sms = ym_sms(token, itemid, phone, 60)
     # print(sms)
     # ym_release(token, itemid, phone)

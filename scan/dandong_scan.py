@@ -1,12 +1,12 @@
 import json
 import random
 import threading
+import time
 import tkinter
 from tkinter import *
 from tkinter import filedialog
 
 import requests
-import time
 
 lock = threading.Lock()
 place = '丹东'
@@ -28,6 +28,12 @@ def log(s):
 
 def write(s):
     f = open(log_path, "a")
+    f.write('%s\n' % s.strip())
+    f.close()
+
+
+def write_check(s):
+    f = open(log_path_check, "a")
     f.write('%s\n' % s.strip())
     f.close()
 
@@ -168,6 +174,8 @@ def ui():
     s1.config(command=textView.yview)
     btn = Button(root, text='开始', command=start)
     btn.pack(expand=YES, fill=X)
+    btn1 = Button(root, text='检测', command=check)
+    btn1.pack(expand=YES, fill=X)
     root.mainloop()
 
 
@@ -214,7 +222,87 @@ def deal():
     lock.release()
 
 
+def check():
+    lock.acquire()
+    file = open(file_path, 'r')
+    index = 0
+    t1 = time.time()
+    while True:
+        try:
+            index += 1
+            mystr = file.readline()
+            if not mystr:
+                break
+            log(str(index) + "  " + mystr)
+            code = mystr[mystr.find('info=') + 5: mystr.find('info=') + 17]
+            scan_code(code)
+            time.sleep(random.randint(0, 1))
+        except RuntimeError as e:
+            log(e)
+            continue
+    t2 = time.time()
+    log("总共使用：" + str(t2 - t1))
+    file.close()
+    lock.release()
+
+
+def scan_code(code):
+    params = (
+        ('', ''),
+        ('storeId', '2064055'),
+        ('clientType', 'iOS'),
+        ('uid', '154240'),
+        ('clientId', 'xapi_01'),
+        ('version', '47'),
+        ('_uni_source', '2.2'),
+        ('merchantId', '10005721'),
+        ('loginToken', '1cc92828bce23bb7cd71e437e9604486'),
+        ('deviceId', '184d19d52857d3628276407b946e367d208c7c5d'),
+        ('appType', 'bpMobile'),
+        ('username', '\u5434\u4E39'),
+        ('serverVersion', '1'),
+        ('clientAgent', 'iPhone9,2/iOS/11.4.1/1242*2208'),
+        ('telephone', '15004154152'),
+    )
+
+    data = {
+        '_uni_source': '2.2',
+        'appType': 'bpMobile',
+        'app_time': '13193565337393',
+        'app_verification_native': get_random(),
+        'certificateno': code,
+        'checkDevice': '1',
+        'clientAgent': 'iPhone9,2/iOS/11.4.1/1242*2208',
+        'clientId': 'xapi_01',
+        'clientType': 'iOS',
+        'deviceId': '184d19d52857d3628276407b946e367d208c7c5d',
+        'loginToken': '1cc92828bce23bb7cd71e437e9604486',
+        'merchantId': '10005721',
+        'serverVersion': '1',
+        'sign': '8f6ae1f653ad69979470552190b6ed34',
+        'storeId': '2064055',
+        'telephone': '15004154152',
+        'uid': '154240',
+        'username': '%E5%90%B4%E4%B8%B9',
+        'version': '47'
+    }
+
+    response = requests.post('https://sop.ffan.com/goods/coupon/queryUnusedCoupons', headers=headers, params=params,
+                             data=data)
+    print(response.text)
+    r = json.loads(response.text)
+    if r["status"] != 200:
+        write(code)
+        raise RuntimeError("不适用该门店")
+    re = r["data"]["subTitle"]
+    status = r["data"]["statusName"]
+    p = code + " " + re + " " + status
+    write_check(p)
+
+
 if __name__ == '__main__':
     global log_path
     log_path = place + '核销.txt'
+    global log_path_check
+    log_path_check = place + "扫描检测.txt"
     ui()
