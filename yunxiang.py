@@ -2,7 +2,7 @@ import time
 
 import requests
 
-import get_code
+# import get_code
 
 headers = {
     'Connection': 'keep-alive',
@@ -91,5 +91,5 @@ def yx_black(phone):
 
 if __name__ == '__main__':
     phone = yx_phone()
-    get_code.get_code(phone)
+    # get_code.get_code(phone)
     yx_sms(phone, 60)
