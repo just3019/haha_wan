@@ -292,7 +292,7 @@ def scan_code(code):
     print(response.text)
     r = json.loads(response.text)
     if r["status"] != 200:
-        write(code)
+        write_check(code)
         raise RuntimeError("不适用该门店")
     re = r["data"]["subTitle"]
     status = r["data"]["statusName"]
