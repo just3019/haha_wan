@@ -1,4 +1,3 @@
-15294212884  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=069405322560
 15730984655  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=086405023232
 18245808471  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=033303566812
 18409317589  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=012005361584
