@@ -134,13 +134,14 @@ def wanda_login(mobile, code):
         response = requests.post('https://api.ffan.com/microapp/v1/ffanLogin', headers=headers, data=data)
         result = json.loads(response.text)
         print(result)
-        if result["status"] == 200:
+        data = result["data"]
+        if result["status"] == 200 and "uid" in data and "cookieStr" in data and "puid" in data:
             global UID
             global COOKIESTR
             global PUID
-            UID = result['data']['uid']
-            COOKIESTR = result['data']['cookieStr']
-            PUID = result['data']['puid']
+            UID = data['uid']
+            COOKIESTR = data['cookieStr']
+            PUID = data['puid']
             return result
         if result["status"] == 500:
             global WANDA_LOGIN_500
