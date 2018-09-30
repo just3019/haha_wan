@@ -413,7 +413,7 @@ def dalian_deal(num):
     if user["Balance"] <= 0:
         log("请联系客服，再刷粉！")
         raise RuntimeError("请联系客服，再刷粉！")
-    productId = "20180822171513"
+    productId = "20180906094543"
     global COUNT
     while COUNT < num:
         try:
