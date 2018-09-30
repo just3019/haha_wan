@@ -36,9 +36,8 @@ not_eq = 0
 headers = {
     'Host': 'api.ffan.com',
     'Accept': '*/*',
-    'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko)'
-                  ' Mobile/15F79 MicroMessenger/6.7.1 NetType/4G Language/zh_CN',
-    'Referer': 'https://servicewechat.com/wx07dfb5d79541eca9/81/page-frame.html',
+    'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 12_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/16A366 MicroMessenger/6.7.3(0x16070321) NetType/WIFI Language/zh_CN',
+    'Referer': 'https://servicewechat.com/wx07dfb5d79541eca9/92/page-frame.html',
     'Accept-Language': 'zh-cn',
 }
 
@@ -97,10 +96,11 @@ def get_sms_code(mobile):
     params = (
         ('sign', 'xcx'),
     )
-    data = [
-        ('mobile', mobile),
-    ]
+    data = {
+        'mobile': mobile
+    }
     requests.post('https://api.ffan.com/wechatxmt/v1/member/verifyCode', headers=headers, params=params, data=data)
+
     print("发送验证码")
 
 
