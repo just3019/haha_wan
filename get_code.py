@@ -13,7 +13,7 @@ params = (
 )
 
 data = {
-  'mobile': '13675822154'
+  'mobile': '18842682580'
 }
 
 response = requests.post('https://api.ffan.com/wechatxmt/v1/member/verifyCode', headers=headers, params=params, data=data)
