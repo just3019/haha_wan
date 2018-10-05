@@ -54,7 +54,7 @@ def getUser(index, scope, start, end):
         ('regStartTime', start),
         ('regEndTime', end),
         ('pageIndex', index),
-        ('pageSize', '1000'),
+        ('pageSize', '10'),
         ('scopes/[/]', scope),
         ('scope', scope),
         ('orgType', '10003'),
@@ -133,7 +133,7 @@ def get_all_guangchang(start, end):
         result = mystr.split(" ")
         print(result)
         org_id = result[0]
-        place_name = "925/" + result[1] + ".txt"
+        place_name = "1003/" + result[1] + ".txt"
         file_write = open(place_name, "a")
         total_count = 0
         init()
@@ -206,26 +206,26 @@ def get_no_done_user_count(start1, end1, start2, end2):
 
 
 def write(s):
-    f = open("广场完成情况5.txt", "a")
+    f = open("广场完成情况.txt", "a")
     f.write('%s\n' % s.strip())
     f.close()
 
 
 if __name__ == '__main__':
     start1 = '2018-10-01'
-    end1 = '2018-10-02'
+    end1 = '2018-10-31'
     orgId = "1000625"
     getUser(1, orgId, start1, end1)
 
-    start2 = '2018-09-01'
-    end2 = '2018-10-01'
+    start2 = '2018-10-01'
+    end2 = '2018-11-01'
     # getUser(1, orgId, start2, end2)
 
     print("开始main方法")
 
-    # get_no_done_user_count("2018-08-01", "2018-09-01", start2, end2)
+    get_no_done_user_count("2018-09-01", "2018-09-30", start2, end2)
     # get_all_guangchang(start1, end1)
-    get_one_guangchang("1104805", "大连甘井子万达广场", "大连", start1, end1)
+    # get_one_guangchang("1104805", "大连甘井子万达广场", "大连", start1, end1)
     # local_file = "/Users/demon/PycharmProjects/wanda/v3song/丹东新人礼20180911-check.txt"
     # write_file = "/Users/demon/PycharmProjects/wanda/v3song/丹东新人礼20180911-check-result.txt"
     # get_and_check_local_phone(local_file, write_file)
