@@ -299,23 +299,23 @@ def yx_result():
 def phone_sms():
     # 当为1的时候从易码获取，当为其他的时候从讯码获取
     global not_eq
-    num = random.randint(1, 6)
-    if num == 1 or num == 5:
+    num = random.randint(1, 4)
+    if num == 1 and num != not_eq:
         phone_sms_result = ym_result()
         print("本次易码获取号码")
-        # not_eq = 1
+        not_eq = 1
     elif num == 2 and num != not_eq:
         phone_sms_result = xm_result(xmtoken)
         print("本次讯码获取号码")
-        # not_eq = 2
+        not_eq = 2
     elif num == 3 and num != not_eq:
         phone_sms_result = hm_result()
         print("本次海码获取号码")
-        # not_eq = 3
-    elif num == 4 or num == 6:
+        not_eq = 3
+    elif num == 4 and num != not_eq:
         phone_sms_result = yx_result()
         print("本次云享获取号码")
-        # not_eq = 4
+        not_eq = 4
     else:
         raise RuntimeError("重新选平台")
     return phone_sms_result
@@ -614,4 +614,6 @@ def get_new_order_no(index):
     if "CURLE_OPERATION_TIMEDOUT" in response.text:
         raise RuntimeError("领券超时")
     result = json.loads(response.text)
+    if len(result["data"]) == 0:
+        log("新人券已经领完，请上券")
     return result['data'][index]['order']['orderNo']

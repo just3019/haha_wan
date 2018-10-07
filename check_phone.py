@@ -21,9 +21,9 @@ headers = {
     'Referer': 'http://wanda.ffan.com/',
     'token': 'MjUxNzcwNDk1MTQ0Mjk2NDQ4',
 }
-file = "大连开发区20180930"
-file_write = "/Users/dayday/Desktop/1/" + file + "校验号码.txt"
-file_read = "/Users/dayday/Desktop/1/" + file + ".txt"
+file = "丹东新人礼20181007"
+file_write = "/Users/demon/Desktop/1/" + file + "校验号码.txt"
+file_read = "/Users/demon/Desktop/1/" + file + ".txt"
 name = "大连开发区万达广场"
 # 非该广场名
 notequal = ""
