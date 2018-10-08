@@ -607,3 +607,17 @@
 18444023917  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=021204794546
 056905311932 新人注册专用券
 18774439364  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=056905311932
+078805207768 新人注册专用券
+18772383036  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=078805207768
+083805000760 新人注册专用券
+15706566319  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=083805000760
+077804821664 新人注册专用券
+15706578417  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=077804821664
+034405321992 新人注册专用券
+15708945186  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=034405321992
+059005137816 新人注册专用券
+15708947003  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=059005137816
+029105105424 新人注册专用券
+13400210660  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=029105105424
+095405263800 新人注册专用券
+13483129340  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=095405263800
