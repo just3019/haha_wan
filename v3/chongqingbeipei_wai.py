@@ -8,7 +8,9 @@ import requests
 
 import yima
 
-TOKEN = '007711720862de70a346fc1788db353c18c5d478'
+ym_username = "shenyangtiexi"
+ym_password = "shenyangtiexi"
+TOKEN = yima.ym_login(ym_username, ym_password)
 PLAZAID = '1104655'
 PROVINCE = ''
 PLACE = '重庆北培'

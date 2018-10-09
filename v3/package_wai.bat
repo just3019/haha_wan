@@ -1,6 +1,7 @@
 pyinstaller -F beijinghuaifang_wai.py
+pyinstaller -F chongqingbeipei_wai.py
+pyinstaller -F huiminqu_wai.py
 pyinstaller -F kunmingxishan_wai.py
-pyinstaller -F pingyang_wai.py
 pyinstaller -F qingdaolicang_wai.py
 pyinstaller -F sanming_wai.py
 pyinstaller -F taizhou_wai.py

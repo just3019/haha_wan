@@ -8,12 +8,14 @@ import requests
 
 import yima
 
-TOKEN = '008551770945711a87b4c9ac66927e3ec0a0a3e5'
+ym_username = "huiminqu"
+ym_password = "huiminqu"
+TOKEN = yima.ym_login(ym_username, ym_password)
 PLAZAID = '1104483'
 PROVINCE = ''
 PLACE = '回民区'
 CITY = ""
-EXCLUDENOS = ["170.171.172","170.171.172","170.171.172"]
+EXCLUDENOS = ["170.171.172", "170.171.172", "170.171.172"]
 TIMEOUT = 30
 COUNT = 0
 UID = ""

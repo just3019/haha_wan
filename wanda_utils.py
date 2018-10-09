@@ -13,7 +13,9 @@ import yima
 # 易码token
 import yunxiang
 
-TOKEN = '00499849cbf687835af75182698438eb3c2ccdf4'
+ym_username = "ye907182374"
+ym_password = "baobao1515"
+TOKEN = yima.ym_login(ym_username, ym_password)
 PLAZAID = ""
 PROVINCE = ""
 CITY = ""
