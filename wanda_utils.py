@@ -411,10 +411,6 @@ def dalian_submit():
 
 
 def dalian_deal(num):
-    user = json.loads(yima.ym_user(TOKEN))
-    if user["Balance"] <= 0:
-        log("请联系客服，再刷粉！")
-        raise RuntimeError("请联系客服，再刷粉！")
     productId = "20180906094543"
     global COUNT
     while COUNT < num:
@@ -460,10 +456,6 @@ def user_submit():
 
 
 def user_deal(num):
-    user = json.loads(yima.ym_user(TOKEN))
-    if user["Balance"] <= 0:
-        log("请联系客服，再刷粉！")
-        raise RuntimeError("请联系客服，再刷粉！")
     global COUNT
     while COUNT < num:
         try:
@@ -512,10 +504,6 @@ def submit():
 
 
 def deal(num, index):
-    user = json.loads(yima.ym_user(TOKEN))
-    if user["Balance"] <= 0:
-        log("请联系客服，再刷粉！")
-        raise RuntimeError("请联系客服，再刷粉！")
     productId = get_product_info()['data']['resource'][index - 1]['couponNo']
     global COUNT
     while COUNT < num:
@@ -571,10 +559,6 @@ def xinren_submit():
 
 
 def xinren_deal(num, index):
-    user = json.loads(yima.ym_user(TOKEN))
-    if user["Balance"] <= 0:
-        log("请联系客服，再刷粉！")
-        raise RuntimeError("请联系客服，再刷粉！")
     global COUNT
     while COUNT < num:
         try:
