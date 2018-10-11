@@ -3,9 +3,9 @@ import random
 import requests
 
 # c57f13fb3b2e4b038b316bf4f0cd1e79
-# 2fc3a2775b11490db4b8e31006624239
-wxFfanToken = "2fc3a2775b11490db4b8e31006624239"
-# cho = ["2fc3a2775b11490db4b8e31006624239", "2fc3a2775b11490db4b8e31006624239"]
+# ddde88c336cb4030b9b81ad2f44febf5
+wxFfanToken = "ddde88c336cb4030b9b81ad2f44febf5"
+# cho = ["ddde88c336cb4030b9b81ad2f44febf5", "ddde88c336cb4030b9b81ad2f44febf5"]
 # wxFfanToken = random.choice(cho)
 print(wxFfanToken)
 
@@ -25,7 +25,7 @@ def wanda_login(mobile, code):
 
 
 if __name__ == '__main__':
-    wanda_login('13675822154', '836004')
+    wanda_login('18444027705', '459719')
 
 #
 # import requests
