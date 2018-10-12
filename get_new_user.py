@@ -212,8 +212,8 @@ def write(s):
 
 
 if __name__ == '__main__':
-    start1 = '2018-09-01'
-    end1 = '2018-09-30'
+    start1 = '2018-10-12'
+    end1 = '2018-10-12'
     orgId = "1104112"
     # getUser(1, orgId, start1, end1)
 
