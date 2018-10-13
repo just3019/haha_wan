@@ -110,9 +110,9 @@ def get_one_guangchang(id, guangchangname, localname, start, end):
             otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
             phone = list_data[j]['mobileNo']
             # 获取手机号地区
-            ip138_result = ip138check_phone.check(phone)
-            p = list_data[j]['mobileNo'] + "  " + otherStyleTime + ip138_result
-            # p = list_data[j]['mobileNo'] + "  " + otherStyleTime + check_phone(phone)
+            # ip138_result = ip138check_phone.check(phone)
+            # p = list_data[j]['mobileNo'] + "  " + otherStyleTime + ip138_result
+            p = list_data[j]['mobileNo'] + "  " + otherStyleTime + check_phone(phone)
             print(p)
             file_write.write('%s\n' % p)
             # time.sleep(random.randint(0, 1))
