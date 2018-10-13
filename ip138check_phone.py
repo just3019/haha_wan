@@ -110,7 +110,7 @@ def check(phone):
             result += (" " + type)
         # else:
         #     result += (" 非虚拟号 " + type)
-        time.sleep(1)
+        # time.sleep(1)
         return result
     except RuntimeError as e:
         time.sleep(1)
