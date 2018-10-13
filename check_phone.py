@@ -21,7 +21,7 @@ headers = {
     'Referer': 'http://wanda.ffan.com/',
     'token': 'MjUxNzcwNDk1MTQ0Mjk2NDQ4',
 }
-file = "丹东新人礼20181012"
+file = "丹东新人礼20181013"
 file_write = "/Users/demon/Desktop/1/" + file + "校验号码.txt"
 file_read = "/Users/demon/Desktop/1/" + file + ".txt"
 name = "丹东万达广场"
