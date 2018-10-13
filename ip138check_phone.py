@@ -16,22 +16,52 @@ virtual = 0
 header_dict1 = {
     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36'}
 header_dict2 = {
-    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36'}
+    'User-Agent': 'Mozilla/4.9 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36'}
 header_dict3 = {
-    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36'}
+    'User-Agent': 'Mozilla/4.8 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36'}
 header_dict4 = {
-    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36'}
+    'User-Agent': 'Mozilla/4.7 (Macintosh; Intel Mac OS X 10_10_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36'}
 header_dict5 = {
-    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36'}
+    'User-Agent': 'Mozilla/4.6 (Macintosh; Intel Mac OS X 10_9_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36'}
+
+pro = ["118.190.95.35:9001",
+       "171.39.78.4:8123",
+       "221.220.67.246:8118",
+       "114.115.170.247:80",
+       "117.21.191.151:61007",
+       "111.155.124.84:8123",
+       "180.118.240.207:808",
+       "114.225.168.235:53128",
+       "221.226.68.194:30442",
+       "222.133.178.146:48239",
+       "163.125.250.228:8118",
+       "112.85.72.147:53128",
+       "182.88.135.33:8123",
+       "60.24.142.126:8118",
+       "49.76.162.95:8123",
+       "219.157.147.115:8118",
+       "118.213.182.194:47944",
+       "42.56.120.2:55258",
+       "114.95.213.123:8118",
+       "115.219.110.68:8010"]
 
 
-def check_ip(ip):
+def validate_ip(ip, protocol):
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36'}
+
+    url = "http://www.baidu.com"
     try:
-        requests.get('http://wenshu.court.gov.cn/', proxies={"http": "http://183.234.38.213:6300"})
-    except:
-        print('connect failed')
-    else:
-        print('success')
+        proxy_host = {protocol: protocol + "://" + ip}
+        print(proxy_host)
+        html = requests.get(url, proxies=proxy_host, timeout=5, headers=headers)
+        print(html.status_code)
+        if html.status_code == 200:
+            return True
+        else:
+            return False
+    except RuntimeError as e:
+        return e
 
 
 def check(phone):
@@ -48,6 +78,15 @@ def check(phone):
             headers = header_dict4
         else:
             headers = header_dict5
+
+        # server = random.choice(pro)
+        # while True:
+        #     if validate_ip(server, "http"):
+        #         proxy = {"http": server}
+        #         break
+        #     else:
+        #         server = random.choice(pro)
+
         response = requests.get(url, headers=headers, timeout=10)
         response.encoding = 'gb2312'
         html = BeautifulSoup(response.text, 'lxml')
@@ -71,6 +110,7 @@ def check(phone):
             result += (" " + type)
         # else:
         #     result += (" 非虚拟号 " + type)
+        time.sleep(1)
         return result
     except RuntimeError as e:
         time.sleep(1)

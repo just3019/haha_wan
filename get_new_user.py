@@ -110,9 +110,9 @@ def get_one_guangchang(id, guangchangname, localname, start, end):
             otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
             phone = list_data[j]['mobileNo']
             # 获取手机号地区
-            # ip138_result = ip138check_phone.check(phone)
-            # p = list_data[j]['mobileNo'] + "  " + otherStyleTime + ip138_result
-            p = list_data[j]['mobileNo'] + "  " + otherStyleTime + check_phone(phone)
+            ip138_result = ip138check_phone.check(phone)
+            p = list_data[j]['mobileNo'] + "  " + otherStyleTime + ip138_result
+            # p = list_data[j]['mobileNo'] + "  " + otherStyleTime + check_phone(phone)
             print(p)
             file_write.write('%s\n' % p)
             # time.sleep(random.randint(0, 1))
@@ -212,9 +212,9 @@ def write(s):
 
 
 if __name__ == '__main__':
-    start1 = '2018-10-12'
-    end1 = '2018-10-12'
-    orgId = "1104112"
+    start1 = '2018-09-05'
+    end1 = '2018-09-05'
+    orgId = "1102649"
     # getUser(1, orgId, start1, end1)
 
     start2 = '2018-10-01'
@@ -225,7 +225,7 @@ if __name__ == '__main__':
 
     # get_no_done_user_count("2018-09-01", "2018-09-30", start2, end2)
     # get_all_guangchang(start1, end1)
-    get_one_guangchang("1000645", "满洲里万达广场", "满洲里", start1, end1)
+    get_one_guangchang("1000772", "北京通州万达广场", "北京", start1, end1)
     # local_file = "/Users/demon/PycharmProjects/wanda/v3song/丹东新人礼20180911-check.txt"
     # write_file = "/Users/demon/PycharmProjects/wanda/v3song/丹东新人礼20180911-check-result.txt"
     # get_and_check_local_phone(local_file, write_file)
