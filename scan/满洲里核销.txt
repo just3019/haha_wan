@@ -675,3 +675,5 @@
 15706566913  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=048505097432
 018005196256 欢迎加入满洲里万达广场小程序
 18402878013  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=018005196256
+093405346656 欢迎加入满洲里万达广场小程序
+15707135473  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=093405346656
