@@ -378,8 +378,14 @@ def ui():
     btn2.pack(side=LEFT)
     btn3 = Button(fm2, text='大连特定二维码', command=dalian_submit)
     btn3.pack(side=LEFT)
+    btn4 = Button(fm2, text='快速刷粉', command=kuai_submit)
+    btn4.pack(side=LEFT)
 
     root.mainloop()  # 进入消息循环
+
+
+def kuai_submit():
+    print("快速")
 
 
 def dalian_submit():
