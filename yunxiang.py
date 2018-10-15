@@ -16,9 +16,15 @@ TOKEN = "7920047BF00ED99E20CCCF859E648FA0"
 XMID = "5681"
 
 
+def yx_login():
+    url = "http://47.97.118.96:9180/service.asmx/UserLoginStr?name=demon3019&psw=12345678"
+    response = requests.get(url, headers=headers)
+    return response.text
+
+
 def yx_phone():
     url = "http://47.97.118.96:9180/service.asmx/GetHM2Str?token=%s&xmid=%s&sl=1&lx=6&ks=0&rj=demon3018&a1=&a2=&pk=" % (
-    TOKEN, XMID)
+        TOKEN, XMID)
     response = requests.get(url, headers=headers).text.split("=")
     print(response)
     if response[0] == '-3':
@@ -52,26 +58,43 @@ def yx_sms(phone, timeout):
 def yx_relese(phone):
     url = "http://47.97.118.96:9180/service.asmx/sfHmStr?token=%s&hm=%s" % (TOKEN, phone)
     response = requests.get(url, headers=headers)
-    print(response.text)
+    print("yx释放:" + response.text)
 
 
 def yx_release_all():
-    requests.get("http://47.97.118.96:9180/service.asmx/sfAllStr?token=7920047BF00ED99E20CCCF859E648FA0",
-                 headers=headers)
+    response = requests.get("http://47.97.118.96:9180/service.asmx/sfAllStr?token=7920047BF00ED99E20CCCF859E648FA0",
+                            headers=headers)
+    print("yx释放全部:" + response.text)
 
 
 def yx_black(phone):
     url = "http://47.97.118.96:9180/service.asmx/Hmd2Str?token=%s&xmid=%s&hm=%s&sf=1" % (TOKEN, XMID, phone)
     response = requests.get(url, headers=headers)
-    print("yx拉黑")
-    print(response.text)
+    print("yx拉黑:" + response.text)
+
+
+def yx_phone_many(num):
+    url = "http://47.97.118.96:9180/service.asmx/GetHM2Str?token=%s&xmid=%s&sl=%s&lx=6&ks=0&rj=demon3018&a1=&a2=&pk=" % (
+        TOKEN, XMID, num)
+    print(url)
+    response = requests.get(url, headers=headers).text.split("=")
+    print(response)
+    if response[0] == '-3':
+        yx_release_all()
+        raise RuntimeError("需要释放号码")
+    if len(response) > 1:
+        return response[1]
+    raise RuntimeError("云享获取不到号码")
 
 
 if __name__ == '__main__':
+    yx_login()
+    # yx_phone_many(100)
     # phone = yx_phone()
+    # print(phone)
     # get_code.get_code(phone)
     # yx_sms(phone, 60)
-    yx_release_all()
+    # yx_release_all()
     # yx_relese("13894530425")
     # yx_relese("18374111413")
     # yx_relese("18380405428")

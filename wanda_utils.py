@@ -23,9 +23,6 @@ PLACE = ""
 EXCLUDENOS = ["170.171.172"]
 TIMEOUT = 40
 COUNT = 0
-UID = ""
-COOKIESTR = ""
-PUID = ""
 ITEMID = '7982'
 WXFFANTOKEN = "ddde88c336cb4030b9b81ad2f44febf5"
 xmtoken = ""
@@ -34,6 +31,8 @@ WANDA_LOGIN_500 = 0
 XM_LOCAL = ""
 HM_PROVINCE = ""
 not_eq = 0
+QRCODE_URL = "https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info="
+yunxiang.yx_login()
 
 headers = {
     'Host': 'api.ffan.com',
@@ -138,13 +137,7 @@ def wanda_login(mobile, code):
         print(result)
         data = result["data"]
         if result["status"] == 200 and "uid" in data and "cookieStr" in data and "puid" in data:
-            global UID
-            global COOKIESTR
-            global PUID
-            UID = data['uid']
-            COOKIESTR = data['cookieStr']
-            PUID = data['puid']
-            return result
+            return data
         if result["status"] == 500:
             global WANDA_LOGIN_500
             WANDA_LOGIN_500 += 1
@@ -173,13 +166,13 @@ def get_product_info():
 
 
 # 领券
-def get_coupon(productId, mobile):
+def get_coupon(productId, mobile, cookieStr, uid, puid):
     params = (
-        ('cookieStr', COOKIESTR),
+        ('cookieStr', cookieStr),
     )
     productInfos = '[{"productId":"' + productId + '","count":1}]'
     data = [
-        ('memberId', UID),
+        ('memberId', uid),
         ('actionType', 'create'),
         ('remark', '{"orderType":"coupon","plazaId":' + PLAZAID + ',"adSpaceId":"couponList"}'),
         ('productInfos', productInfos),
@@ -188,7 +181,7 @@ def get_coupon(productId, mobile):
         ('phoneNo', mobile),
         ('paymentFlag', '0'),
         ('orderSrc', '2010'),
-        ('puid', PUID),
+        ('puid', puid),
         ('totalPrice', '0'),
         ('word_cup_2018', ''),
     ]
@@ -206,9 +199,9 @@ def get_coupon(productId, mobile):
 
 
 # 获取优惠券明细
-def get_coupon_no(oid):
+def get_coupon_no(oid, cookieStr):
     params = (
-        ('cookieStr', COOKIESTR),
+        ('cookieStr', cookieStr),
         ('oid', oid),
     )
     for i in range(0, 3):
@@ -421,10 +414,10 @@ def dalian_deal(num):
             phone = phone_smss[0]
             sms = phone_smss[1]
             code = get_code(sms)
-            wanda_login(phone, code)
-            oid = get_coupon(productId, phone)
+            login_result = wanda_login(phone, code)
+            oid = get_coupon(productId, phone, login_result["cookieStr"], login_result["uid"], login_result["puid"])
             time.sleep(1)
-            coupon = get_coupon_no(oid)
+            coupon = get_coupon_no(oid, login_result["cookieStr"])
             log("第" + str(COUNT + 1) + "条成功。")
             write(phone + "  " + "https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=" + str(coupon))
             COUNT += 1
@@ -514,10 +507,10 @@ def deal(num, index):
             phone = phone_smss[0]
             sms = phone_smss[1]
             code = get_code(sms)
-            wanda_login(phone, code)
-            oid = get_coupon(productId, phone)
+            login_result = wanda_login(phone, code)
+            oid = get_coupon(productId, phone, login_result["cookieStr"], login_result["uid"], login_result["puid"])
             time.sleep(1)
-            coupon = get_coupon_no(oid)
+            coupon = get_coupon_no(oid, login_result["cookieStr"])
             log("第" + str(COUNT + 1) + "条成功。")
             write(phone + "  " + "https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=" + str(coupon))
             COUNT += 1
@@ -530,7 +523,7 @@ def deal(num, index):
 def get_interval_time():
     interval_time = interval.get()
     slep = random.randint(0, int(interval_time))
-    print(slep)
+    print("本次停顿：" + str(slep))
     if interval_time.isdigit():
         return slep
     return 0
@@ -558,36 +551,40 @@ def xinren_submit():
     LOCK.release()
 
 
+# 循环新人礼
 def xinren_deal(num, index):
     global COUNT
     while COUNT < num:
         try:
             log("执行到第" + str(COUNT + 1) + "条。")
             phone_sms_result = phone_sms()
-            phone_smss = phone_sms_result.split("|")
-            phone = phone_smss[0]
-            sms = phone_smss[1]
-            code = get_code(sms)
-            wanda_login(phone, code)
-            time.sleep(1)
-            oid = get_new_order_no(int(index))
-            # oid = get_new_order_no()
-            time.sleep(1)
-            coupon = get_coupon_no(oid)
-            log("第" + str(COUNT + 1) + "条成功。")
-            write(phone + "  " + "https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=" + coupon)
+            t = threading.Thread(target=xinren, args=(phone_sms_result, COUNT, index))
+            t.setDaemon(True)
+            t.start()
             COUNT += 1
             time.sleep(get_interval_time())
         except RuntimeError as e:
             print(e)
             continue
+    t.join()
     xunma.xm_logout(xmtoken)
 
 
+# 新人礼操作流程
+def xinren(phone_sms_result, num, index):
+    login_result = get_phone_login(phone_sms_result)
+    time.sleep(1)
+    oid = get_new_order_no(int(index), login_result["cookieStr"])
+    time.sleep(1)
+    coupon = get_coupon_no(oid, login_result["cookieStr"])
+    log("第" + str(num + 1) + "条成功。")
+    write(login_result["member"]["mobile"] + "  " + QRCODE_URL + coupon)
+
+
 # 获取新用户优惠券
-def get_new_order_no(index):
+def get_new_order_no(index, cookieStr):
     params = (
-        ('cookieStr', COOKIESTR),
+        ('cookieStr', cookieStr),
     )
     data = [
         ('plazaId', PLAZAID),
@@ -603,3 +600,11 @@ def get_new_order_no(index):
     if len(result["data"]) == 0:
         log("新人券已经领完，请上券")
     return result['data'][index]['order']['orderNo']
+
+
+def get_phone_login(phone_sms_result):
+    phone_smss = phone_sms_result.split("|")
+    phone = phone_smss[0]
+    sms = phone_smss[1]
+    code = get_code(sms)
+    return wanda_login(phone, code)

@@ -1,3 +1,4 @@
+import json
 import random
 
 import requests
@@ -25,7 +26,8 @@ def wanda_login(mobile, code):
 
 
 if __name__ == '__main__':
-    wanda_login('18444027705', '459719')
+    result = json.loads(wanda_login('18842682580', '894880'))
+    print(result["data"])
 
 #
 # import requests
