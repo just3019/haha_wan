@@ -19,8 +19,8 @@ def xm_login(username, password, developer):
             ("Developer", developer),
             ("Code", "UTF8"),
         }
-        response = requests.get(url, params=params, headers=header_dict).text.split("&")
-        print("讯码登录：" + str(response))
+        response = requests.get(url, params=params, headers=header_dict, timeout=10).text.split("&")
+        # print("讯码登录：" + str(response))
         return response
     except RuntimeError as e:
         print(e)
@@ -37,9 +37,9 @@ def xm_get_phone(token, area, PhoneType):
             ("PhoneType", PhoneType),
             ("Area", area),
         }
-        response = requests.get(url, params=params, headers=header_dict).text.split(";")
+        response = requests.get(url, params=params, headers=header_dict, timeout=10).text.split(";")
         time.sleep(1)
-        print("讯码获取手机号：" + str(response))
+        # print("讯码获取手机号：" + str(response))
         if "False:暂时没有此项目号码，请等会试试..." == response[0]:
             raise RuntimeError("获取号码失败")
         if "False:单个用户获取数量不足" == response[0]:
@@ -65,12 +65,14 @@ def xm_sms(token, phone, timeout):
         }
         start = time.time()
         while True:
-            response = requests.get(url, params=params, headers=header_dict).text
+            response = requests.get(url, params=params, headers=header_dict, timeout=10).text
             if "飞凡" in response:
                 return response
             response = response.split("&")
             print(response)
             end = time.time()
+            if "False:Session 过期" in response:
+                raise RuntimeError("xm的token已经过期")
             if (end - start) > timeout:
                 phone_list = phone + "-" + ITEMID + ";"
                 xm_relese(token, phone_list)
@@ -88,16 +90,16 @@ def xm_sms(token, phone, timeout):
 def xm_relese(token, phoneList):
     try:
         url = "http://xapi.xunma.net/releasePhone?token=%s&phoneList=%s&Code=UFT8" % (token, phoneList)
-        response = requests.get(url, headers=header_dict).text
-        print("释放号码：" + response)
+        response = requests.get(url, headers=header_dict, timeout=10).text
+        # print("释放号码：" + response)
     except RuntimeError as e:
         raise RuntimeError("释放失败")
 
 
 def xm_black(token, phoneList):
     url = "http://xapi.xunma.net/addBlack?token=%s&phoneList=%s&Code=UTF8" % (token, phoneList)
-    response = requests.get(url, headers=header_dict).text
-    print("拉黑号码：" + response)
+    response = requests.get(url, headers=header_dict, timeout=10).text
+    # print("拉黑号码：" + response)
 
 
 def xm_logout(token):
@@ -107,7 +109,7 @@ def xm_logout(token):
             ("token", token),
             ("Code", "UTF8"),
         }
-        response = requests.get(url, params=params, headers=header_dict).text
+        response = requests.get(url, params=params, headers=header_dict, timeout=10).text
         print("登出：" + response)
     except RuntimeError as e:
         print(e)

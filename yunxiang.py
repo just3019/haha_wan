@@ -18,15 +18,15 @@ XMID = "5681"
 
 def yx_login():
     url = "http://47.97.118.96:9180/service.asmx/UserLoginStr?name=demon3019&psw=12345678"
-    response = requests.get(url, headers=headers)
+    response = requests.get(url, headers=headers, timeout=10)
     return response.text
 
 
 def yx_phone():
     url = "http://47.97.118.96:9180/service.asmx/GetHM2Str?token=%s&xmid=%s&sl=1&lx=6&ks=0&rj=demon3018&a1=&a2=&pk=" % (
         TOKEN, XMID)
-    response = requests.get(url, headers=headers).text.split("=")
-    print(response)
+    response = requests.get(url, headers=headers, timeout=10).text.split("=")
+    # print(response)
     if response[0] == '-3':
         yx_release_all()
         raise RuntimeError("需要释放号码")
@@ -39,7 +39,7 @@ def yx_sms(phone, timeout):
     url = "http://47.97.118.96:9180/service.asmx/GetYzm2Str?token=%s&xmid=%s&hm=%s&sf=1" % (TOKEN, XMID, phone)
     start = time.time()
     while True:
-        response = requests.get(url, headers=headers)
+        response = requests.get(url, headers=headers, timeout=10)
         print(response.text)
         if len(response.text) > 4:
             yx_black(phone)
@@ -57,28 +57,28 @@ def yx_sms(phone, timeout):
 
 def yx_relese(phone):
     url = "http://47.97.118.96:9180/service.asmx/sfHmStr?token=%s&hm=%s" % (TOKEN, phone)
-    response = requests.get(url, headers=headers)
-    print("yx释放:" + response.text)
+    response = requests.get(url, headers=headers, timeout=10)
+    # print("yx释放:" + response.text)
 
 
 def yx_release_all():
     response = requests.get("http://47.97.118.96:9180/service.asmx/sfAllStr?token=7920047BF00ED99E20CCCF859E648FA0",
-                            headers=headers)
-    print("yx释放全部:" + response.text)
+                            headers=headers, timeout=10)
+    # print("yx释放全部:" + response.text)
 
 
 def yx_black(phone):
     url = "http://47.97.118.96:9180/service.asmx/Hmd2Str?token=%s&xmid=%s&hm=%s&sf=1" % (TOKEN, XMID, phone)
-    response = requests.get(url, headers=headers)
-    print("yx拉黑:" + response.text)
+    response = requests.get(url, headers=headers, timeout=10)
+    # print("yx拉黑:" + response.text)
 
 
 def yx_phone_many(num):
     url = "http://47.97.118.96:9180/service.asmx/GetHM2Str?token=%s&xmid=%s&sl=%s&lx=6&ks=0&rj=demon3018&a1=&a2=&pk=" % (
         TOKEN, XMID, num)
-    print(url)
-    response = requests.get(url, headers=headers).text.split("=")
-    print(response)
+    # print(url)
+    response = requests.get(url, headers=headers, timeout=10).text.split("=")
+    # print(response)
     if response[0] == '-3':
         yx_release_all()
         raise RuntimeError("需要释放号码")

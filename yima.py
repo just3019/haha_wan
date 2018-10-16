@@ -11,7 +11,7 @@ header_dict = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0)
 # 易码登录获取token
 def ym_login(username, password):
     url = "http://api.fxhyd.cn/UserInterface.aspx?action=login&username=%s&password=%s" % (username, password)
-    response = requests.get(url, headers=header_dict).text.split("|")
+    response = requests.get(url, headers=header_dict, timeout=10).text.split("|")
     if response[0] == "success":
         return response[1]
     else:
@@ -22,7 +22,7 @@ def ym_login(username, password):
 # {"UserName":"zhangzhouts","UserLevel":1,"MaxHold":20,"Discount":1.000,"Balance":9.9000,"Status":1,"Frozen":10.0000}
 def ym_user(token):
     url = "http://api.fxhyd.cn/UserInterface.aspx?action=getaccountinfo&token=%s&format=1" % token
-    response = requests.get(url, headers=header_dict).text.split("|")
+    response = requests.get(url, headers=header_dict, timeout=10).text.split("|")
     if response[0] == "success":
         return response[1]
     else:
@@ -42,8 +42,8 @@ def ym_phone(token, itemid, excludeno, province, city, mobile):
         ("city", city),
         ("mobile", mobile),
     }
-    response = requests.get(url, params=param, headers=header_dict).text.split("|")
-    print(response)
+    response = requests.get(url, params=param, headers=header_dict, timeout=10).text.split("|")
+    # print(response)
     if response[0] == "success":
         return response[1]
     else:
@@ -62,7 +62,7 @@ def ym_sms(token, itemid, mobile, timeout):
     }
     start = time.time()
     while True:
-        response = requests.get(url, params=param, headers=header_dict).content.decode(encoding="utf-8")
+        response = requests.get(url, params=param, headers=header_dict, timeout=10).content.decode(encoding="utf-8")
         responses = response.split("|")
         print(responses)
         if responses[0] == "2008":
@@ -87,8 +87,8 @@ def ym_release(token, itemid, mobile):
         ("itemid", itemid),
         ("mobile", mobile),
     }
-    response = requests.get(url, param, headers=header_dict).text.split("|")
-    print(response)
+    response = requests.get(url, param, headers=header_dict, timeout=10).text.split("|")
+    # print(response)
     if response[0] != "success":
         print("%s 释放失败" % mobile)
 
@@ -102,8 +102,8 @@ def ym_ignore(token, itemid, mobile):
         ("itemid", itemid),
         ("mobile", mobile),
     }
-    response = requests.get(url, param, headers=header_dict).text.split("|")
-    print(response)
+    response = requests.get(url, param, headers=header_dict, timeout=10).text.split("|")
+    # print(response)
     if response[0] != "success":
         print("%s 拉黑失败" % mobile)
 

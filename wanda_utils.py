@@ -25,6 +25,7 @@ PLACE = ""
 EXCLUDENOS = ["170.171.172"]
 TIMEOUT = 60
 COUNT = 0
+SUCCESS_COUNT = 0
 ITEMID = '7982'
 XM_ITEMID = "3410"
 WXFFANTOKEN = "ddde88c336cb4030b9b81ad2f44febf5"
@@ -92,7 +93,7 @@ def check_phone(phone):
     )
 
     response = requests.get('http://wanda.ffan.com/sail/member/list', headers=headers_guanli, params=params)
-    print("检测手机号有效性：" + response.text)
+    # print("检测手机号有效性：" + response.text)
     return json.loads(response.text)
 
 
@@ -321,13 +322,12 @@ def phone_sms():
 
 def log(s):
     print(s)
-    textView.insert(END, '%s\n' % s)
+    textView.insert(END, '[%s] [%s] %s\n' % (threading.current_thread().name, time.ctime(), s))
     textView.update()
     textView.see(END)
 
 
 def write(s):
-    # log(s)
     f = open(FILE_PATH, "a")
     f.write('%s\n' % s.strip())
     f.close()
@@ -620,18 +620,16 @@ def get_phone_login(phone_sms_result):
 
 # 易码获取号码
 def new_ym_phone():
-    print("从易码获取")
     EXCLUDENO = random.choice(EXCLUDENOS)
     phone = yima.ym_phone(TOKEN, ITEMID, EXCLUDENO, PROVINCE, CITY, "")
     if phone is None:
-        log("获取手机号为：" + str(phone))
         raise RuntimeError("手机号获取不到")
+    print("易码获取手机号为：" + str(phone))
     return phone
 
 
 # 讯码获取号码
 def new_xm_phone(token):
-    print("从讯码获取")
     phone = xunma.xm_get_phone(token, XM_LOCAL, 0)
     if phone == "release" or phone == "timeout":
         xunma.xm_logout(token)
@@ -640,26 +638,26 @@ def new_xm_phone(token):
         xmtoken = login_result[0]
         raise RuntimeError("讯码重新登录")
     if phone is None:
-        log("获取手机号为：" + str(phone))
         raise RuntimeError("手机号获取不到")
+    print("讯码获取手机号为：" + str(phone))
     return phone
 
 
 # 海码获取号码
 def new_hm_phone():
-    print("从海码获取")
     phone = haima.hm_phone("", HM_PROVINCE)
     if phone is None:
         raise RuntimeError("手机号获取不到")
+    # print("海码获取手机号：" + str(phone))
     return phone
 
 
 # 云享获取号码
 def new_yx_phone():
-    print("从云享获取号码")
     phone = yunxiang.yx_phone()
     if phone is None:
         raise RuntimeError("手机号码获取不到")
+    print("云享获取手机号：" + str(phone))
     return phone
 
 
@@ -690,7 +688,7 @@ def new_get_phone(platform, token):
             elif platform == 4:
                 yunxiang.yx_relese(phone)
                 yunxiang.yx_black(phone)
-            raise RuntimeError("手机号已注册过")
+            continue
         return phone
 
 
@@ -749,8 +747,10 @@ def kuai_xinren_thread(num, index):
         except RuntimeError as e:
             print(e)
             continue
+
     th.join()
-    log("本次任务完成")
+    COUNT = SUCCESS_COUNT
+    log("本次任务完成,成功%s,已修改成%s,如果缺失，请再点击开始。" % (str(SUCCESS_COUNT), str(COUNT)))
     xunma.xm_logout(xmtoken)
 
 
@@ -764,11 +764,7 @@ def kuai_xinren_deal(platform, phone, xm_token, index, num):
     oid = get_new_order_no(int(index), login_result["cookieStr"])
     time.sleep(1)
     coupon = get_coupon_no(oid, login_result["cookieStr"])
+    global SUCCESS_COUNT
+    SUCCESS_COUNT += 1
     log("第" + str(num + 1) + "条成功。")
     write(login_result["member"]["mobile"] + "  " + QRCODE_URL + coupon)
-
-
-if __name__ == '__main__':
-    xm_token = xmtoken
-    phone = new_get_phone(1, xm_token)
-    print(phone)

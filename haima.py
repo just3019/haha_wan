@@ -18,7 +18,7 @@ def hm_login():
         ('uid', USERNAME),
         ('pwd', PASSWORD),
     ]
-    response = requests.post(url, data, headers=header_dict).text
+    response = requests.post(url, data, headers=header_dict, timeout=10).text
     print("登录：" + response)
     return response
 
@@ -26,8 +26,8 @@ def hm_login():
 def hm_phone(hm_type, province):
     url = URL + "getMobilenum?uid=%s&pid=%s&token=%s&type=%s&province=%s&nonVirtual=true" % (
         UID, PID, TOKEN, hm_type, province)
-    response = requests.post(url, headers=header_dict).text
-    print("获取手机号：" + response)
+    response = requests.post(url, headers=header_dict, timeout=10).text
+    # print("获取手机号：" + response)
     if "余额不足，请充值" == response:
         raise RuntimeError("海码余额不足，请充值")
     if "No_Data" == response:
@@ -40,7 +40,7 @@ def hm_sms(phone, timeout):
         phone, UID, TOKEN, USERNAME, PID)
     start = time.time()
     while True:
-        response = requests.post(url, headers=header_dict).text
+        response = requests.post(url, headers=header_dict, timeout=10).text
         print("获取短信：" + response)
         responses = response.split("|")
         end = time.time()
@@ -55,8 +55,8 @@ def hm_sms(phone, timeout):
 
 def hm_black(phone):
     url = URL + "addIgnoreList?mobiles=%s&token=%s&uid=%s&pid=%s" % (phone, TOKEN, UID, PID)
-    response = requests.post(url, headers=header_dict).text
-    print("海码拉黑：" + response)
+    response = requests.post(url, headers=header_dict, timeout=10).text
+    # print("海码拉黑：" + response)
 
 
 if __name__ == '__main__':
