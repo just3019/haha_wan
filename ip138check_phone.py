@@ -86,8 +86,9 @@ def check(phone):
         #         break
         #     else:
         #         server = random.choice(pro)
-
-        response = requests.get(url, headers=headers, timeout=10)
+        s = requests.session()
+        s.keep_alive = False
+        response = s.get(url, headers=headers, timeout=10)
         response.encoding = 'gb2312'
         html = BeautifulSoup(response.text, 'lxml')
         # for row in html.find_all("table")[1].find_all("td"):
@@ -112,7 +113,15 @@ def check(phone):
         #     result += (" 非虚拟号 " + type)
         # time.sleep(1)
         return result
+    except TimeoutError as e:
+        raise TimeoutError("超时")
+    except IndexError as e:
+        raise IndexError("页面获取错误")
+    except ConnectionError as e:
+        print(e)
+        raise ConnectionError("连接错误")
     except RuntimeError as e:
+        print(e)
         time.sleep(1)
         print("被拦截")
         raise RuntimeError("请求失败")

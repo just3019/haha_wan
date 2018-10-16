@@ -104,18 +104,22 @@ def get_one_guangchang(id, guangchangname, localname, start, end):
             break
         # 遍历查询出来的所有手机号 检验手机号
         for j in range(0, count):
-            timeStamp = list_data[j]["regTime"]
-            timeArray = time.localtime(timeStamp / 1000)
-            # fromOrg = list_data[j]["fromOrg"]
-            otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
-            phone = list_data[j]['mobileNo']
-            # 获取手机号地区
-            # ip138_result = ip138check_phone.check(phone)
-            # p = list_data[j]['mobileNo'] + "  " + otherStyleTime + ip138_result
-            p = list_data[j]['mobileNo'] + "  " + otherStyleTime + check_phone(phone)
-            print(p)
-            file_write.write('%s\n' % p)
-            # time.sleep(random.randint(0, 1))
+            try:
+                timeStamp = list_data[j]["regTime"]
+                timeArray = time.localtime(timeStamp / 1000)
+                # fromOrg = list_data[j]["fromOrg"]
+                otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
+                phone = list_data[j]['mobileNo']
+                # 获取手机号地区
+                ip138_result = ip138check_phone.check(phone)
+                p = time.ctime() + list_data[j]['mobileNo'] + "  " + otherStyleTime + ip138_result
+                # p = list_data[j]['mobileNo'] + "  " + otherStyleTime + check_phone(phone)
+                print(p)
+                file_write.write('%s\n' % p)
+                # time.sleep(random.randint(0, 1))
+            except RuntimeError as e:
+                print(e)
+                continue
     r = "总量：" + str(total_count) + " 非本地号：" + str(ip138check_phone.get_not_local()) + " 虚拟号：" + str(
         ip138check_phone.get_virtual())
     file_write.write("%s \n" % r)
@@ -199,7 +203,8 @@ def get_no_done_user_count(start1, end1, start2, end2):
             total_count2 = json.loads(getUser(1, org_id, start2, end2))["_metadata"]["totalCount"]
             if total_count2 == 0:
                 raise RuntimeError("2为0")
-            p = result[1] + " " + str(total_count1) + " " + str(total_count2) + " 完成：" + str(total_count2 / total_count1)
+            p = result[1] + " " + str(total_count1) + " " + str(total_count2) + " 完成：" + str(
+                total_count2 / total_count1)
             write(p)
         except RuntimeError as e:
             print(e)
@@ -212,8 +217,8 @@ def write(s):
 
 
 if __name__ == '__main__':
-    start1 = '2018-10-15'
-    end1 = '2018-10-15'
+    start1 = '2018-10-01'
+    end1 = '2018-10-16'
     orgId = "1102649"
     # getUser(1, orgId, start1, end1)
 
@@ -225,7 +230,7 @@ if __name__ == '__main__':
 
     # get_no_done_user_count("2018-09-01", "2018-09-30", start2, end2)
     # get_all_guangchang(start1, end1)
-    get_one_guangchang("1104498", "辽阳万达广场", "辽阳", start1, end1)
+    get_one_guangchang("1100649", "荆门万达广场", "荆门", start1, end1)
     # local_file = "/Users/demon/PycharmProjects/wanda/v3song/丹东新人礼20180911-check.txt"
     # write_file = "/Users/demon/PycharmProjects/wanda/v3song/丹东新人礼20180911-check-result.txt"
     # get_and_check_local_phone(local_file, write_file)

@@ -13,17 +13,20 @@ import yima
 # 易码token
 import yunxiang
 
+# 平台标识：1，易码 2，讯码 3，海码 4，云享
 ym_username = "ye907182374"
 ym_password = "baobao1515"
 TOKEN = yima.ym_login(ym_username, ym_password)
+# TOKEN = "00499849c00c557b7598dda4ebaeed5b1e30f8d5e701"
 PLAZAID = ""
 PROVINCE = ""
 CITY = ""
 PLACE = ""
 EXCLUDENOS = ["170.171.172"]
-TIMEOUT = 40
+TIMEOUT = 60
 COUNT = 0
 ITEMID = '7982'
+XM_ITEMID = "3410"
 WXFFANTOKEN = "ddde88c336cb4030b9b81ad2f44febf5"
 xmtoken = ""
 LOCK = threading.Lock()
@@ -378,14 +381,10 @@ def ui():
     btn2.pack(side=LEFT)
     btn3 = Button(fm2, text='大连特定二维码', command=dalian_submit)
     btn3.pack(side=LEFT)
-    btn4 = Button(fm2, text='快速刷粉', command=kuai_submit)
+    btn4 = Button(fm2, text='快速新人礼刷粉', command=kuai_xinren_submit)
     btn4.pack(side=LEFT)
 
     root.mainloop()  # 进入消息循环
-
-
-def kuai_submit():
-    print("快速")
 
 
 def dalian_submit():
@@ -614,3 +613,162 @@ def get_phone_login(phone_sms_result):
     sms = phone_smss[1]
     code = get_code(sms)
     return wanda_login(phone, code)
+
+
+###################################新方法###########################
+
+
+# 易码获取号码
+def new_ym_phone():
+    print("从易码获取")
+    EXCLUDENO = random.choice(EXCLUDENOS)
+    phone = yima.ym_phone(TOKEN, ITEMID, EXCLUDENO, PROVINCE, CITY, "")
+    if phone is None:
+        log("获取手机号为：" + str(phone))
+        raise RuntimeError("手机号获取不到")
+    return phone
+
+
+# 讯码获取号码
+def new_xm_phone(token):
+    print("从讯码获取")
+    phone = xunma.xm_get_phone(token, XM_LOCAL, 0)
+    if phone == "release" or phone == "timeout":
+        xunma.xm_logout(token)
+        login_result = xunma.xm_login("demon3019", "12345678", "wdVJ21MmabfWT72lAxf3JA==")
+        global xmtoken
+        xmtoken = login_result[0]
+        raise RuntimeError("讯码重新登录")
+    if phone is None:
+        log("获取手机号为：" + str(phone))
+        raise RuntimeError("手机号获取不到")
+    return phone
+
+
+# 海码获取号码
+def new_hm_phone():
+    print("从海码获取")
+    phone = haima.hm_phone("", HM_PROVINCE)
+    if phone is None:
+        raise RuntimeError("手机号获取不到")
+    return phone
+
+
+# 云享获取号码
+def new_yx_phone():
+    print("从云享获取号码")
+    phone = yunxiang.yx_phone()
+    if phone is None:
+        raise RuntimeError("手机号码获取不到")
+    return phone
+
+
+# 返回手机号
+def new_get_phone(platform, token):
+    while True:
+        phone = ""
+        if platform == 1:
+            phone = new_ym_phone()
+        elif platform == 2:
+            phone = new_xm_phone(token)
+        elif platform == 3:
+            phone = new_hm_phone()
+        elif platform == 4:
+            phone = new_yx_phone()
+        check_result = check_phone(phone)
+        if check_result['status'] != '0000' or check_result['_metadata']['totalCount'] != 0:
+            if platform == 1:
+                yima.ym_release(TOKEN, ITEMID, phone)
+                yima.ym_ignore(TOKEN, ITEMID, phone)
+            elif platform == 2:
+                phone_list = phone + "-" + XM_ITEMID + ";"
+                black_phone_list = XM_ITEMID + "-" + phone + ";"
+                xunma.xm_relese(token, phone_list)
+                xunma.xm_black(token, black_phone_list)
+            elif platform == 3:
+                haima.hm_black(phone)
+            elif platform == 4:
+                yunxiang.yx_relese(phone)
+                yunxiang.yx_black(phone)
+            raise RuntimeError("手机号已注册过")
+        return phone
+
+
+# 新版获取短信
+def new_get_sms(platform, phone, xm_token):
+    get_sms_code(phone)
+    time.sleep(2)
+    if platform == 1:
+        return yima.ym_sms(TOKEN, ITEMID, phone, TIMEOUT)
+    elif platform == 2:
+        return xunma.xm_sms(xm_token, phone, TIMEOUT)
+    elif platform == 3:
+        return haima.hm_sms(phone, TIMEOUT)
+    elif platform == 4:
+        return yunxiang.yx_sms(phone, TIMEOUT)
+
+
+# 快速刷粉提交
+def kuai_xinren_submit():
+    LOCK.acquire()
+    try:
+        global FILE_PATH
+        FILE_PATH = PLACE + "新人礼%s.txt" % time.strftime("%Y%m%d")
+        fans = entry1.get()  # 多少粉丝
+        index = entry2.get()  # 第几个商品
+        if fans == '' or index == '':
+            log('参数不能为空')
+            raise RuntimeError('参数不能为空')
+        num = int(fans)
+        if num == '' and num < 0:
+            num = 0
+        t = threading.Thread(target=kuai_xinren_thread, args=(num, index))
+        t.setDaemon(True)
+        t.start()
+    except RuntimeError as e:
+        print(e)
+        log("入参请正确输入")
+    LOCK.release()
+
+
+# 快速新人线程
+def kuai_xinren_thread(num, index):
+    global COUNT
+    while COUNT < num:
+        try:
+            log("执行到第" + str(COUNT + 1) + "条。")
+            platform = random.randint(1, 4)
+            xm_token = xmtoken
+            phone = new_get_phone(platform, xm_token)
+            time.sleep(5)
+            th = threading.Thread(target=kuai_xinren_deal, args=(platform, phone, xm_token, index, COUNT))
+            th.setDaemon(True)  # 守护线程
+            th.start()
+            COUNT += 1
+            time.sleep(get_interval_time())
+        except RuntimeError as e:
+            print(e)
+            continue
+    th.join()
+    log("本次任务完成")
+    xunma.xm_logout(xmtoken)
+
+
+# 快速新人礼处理
+def kuai_xinren_deal(platform, phone, xm_token, index, num):
+    # 获取验证码，进行领券
+    sms = new_get_sms(platform, phone, xm_token)
+    code = get_code(sms)
+    login_result = wanda_login(phone, code)
+    time.sleep(1)
+    oid = get_new_order_no(int(index), login_result["cookieStr"])
+    time.sleep(1)
+    coupon = get_coupon_no(oid, login_result["cookieStr"])
+    log("第" + str(num + 1) + "条成功。")
+    write(login_result["member"]["mobile"] + "  " + QRCODE_URL + coupon)
+
+
+if __name__ == '__main__':
+    xm_token = xmtoken
+    phone = new_get_phone(1, xm_token)
+    print(phone)
