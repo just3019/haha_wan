@@ -735,7 +735,6 @@ def kuai_xinren_thread(num, index):
     threads = []
     while COUNT < num:
         try:
-            time.sleep(5)
             th = threading.Thread(target=kuai_xinren_deal, args=(index, COUNT))
             threads.append(th)
             th.setDaemon(True)  # 守护线程
