@@ -732,14 +732,12 @@ def kuai_xinren_submit():
 # 快速新人线程
 def kuai_xinren_thread(num, index):
     global COUNT
+    threads = []
     while COUNT < num:
         try:
-            log("执行到第" + str(COUNT + 1) + "条。")
-            platform = random.randint(1, 4)
-            xm_token = xmtoken
-            phone = new_get_phone(platform, xm_token)
             time.sleep(5)
-            th = threading.Thread(target=kuai_xinren_deal, args=(platform, phone, xm_token, index, COUNT))
+            th = threading.Thread(target=kuai_xinren_deal, args=(index, COUNT))
+            threads.append(th)
             th.setDaemon(True)  # 守护线程
             th.start()
             COUNT += 1
@@ -748,14 +746,19 @@ def kuai_xinren_thread(num, index):
             print(e)
             continue
 
-    th.join()
+    for t in threads:
+        t.join()
     COUNT = SUCCESS_COUNT
     log("本次任务完成,成功%s,已修改成%s,如果缺失，请再点击开始。" % (str(SUCCESS_COUNT), str(COUNT)))
     xunma.xm_logout(xmtoken)
 
 
 # 快速新人礼处理
-def kuai_xinren_deal(platform, phone, xm_token, index, num):
+def kuai_xinren_deal(index, num):
+    log("执行到第" + str(COUNT + 1) + "条。")
+    platform = random.randint(1, 4)
+    xm_token = xmtoken
+    phone = new_get_phone(platform, xm_token)
     # 获取验证码，进行领券
     sms = new_get_sms(platform, phone, xm_token)
     code = get_code(sms)
