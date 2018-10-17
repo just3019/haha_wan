@@ -663,6 +663,7 @@ def new_yx_phone():
 
 # 返回手机号
 def new_get_phone(platform, token):
+    count = 0
     while True:
         phone = ""
         if platform == 1:
@@ -688,6 +689,9 @@ def new_get_phone(platform, token):
             elif platform == 4:
                 yunxiang.yx_relese(phone)
                 yunxiang.yx_black(phone)
+            count += 1
+            if (count >= 10):
+                raise RuntimeError("本次%s通道10次没有成功获取号码。" % str(platform))
             continue
         return phone
 
@@ -747,6 +751,8 @@ def kuai_xinren_thread(num, index):
 
     for t in threads:
         t.join()
+
+    time.sleep(5)
     COUNT = SUCCESS_COUNT
     log("本次任务完成,成功%s,已修改成%s,如果缺失，请再点击开始。" % (str(SUCCESS_COUNT), str(COUNT)))
     xunma.xm_logout(xmtoken)

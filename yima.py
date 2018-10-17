@@ -42,7 +42,9 @@ def ym_phone(token, itemid, excludeno, province, city, mobile):
         ("city", city),
         ("mobile", mobile),
     }
-    response = requests.get(url, params=param, headers=header_dict, timeout=10).text.split("|")
+    s = requests.session()
+    s.keep_alive = False
+    response = s.get(url, params=param, headers=header_dict, timeout=10).text.split("|")
     # print(response)
     if response[0] == "success":
         return response[1]
@@ -61,8 +63,10 @@ def ym_sms(token, itemid, mobile, timeout):
         ("release", "1"),
     }
     start = time.time()
+    s = requests.session()
+    s.keep_alive = False
     while True:
-        response = requests.get(url, params=param, headers=header_dict, timeout=10).content.decode(encoding="utf-8")
+        response = s.get(url, params=param, headers=header_dict, timeout=10).content.decode(encoding="utf-8")
         responses = response.split("|")
         print(responses)
         if responses[0] == "2008":
