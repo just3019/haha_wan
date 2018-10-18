@@ -112,7 +112,7 @@ def get_one_guangchang(id, guangchangname, localname, start, end):
                 phone = list_data[j]['mobileNo']
                 # 获取手机号地区
                 ip138_result = ip138check_phone.check(phone)
-                p = time.ctime() + list_data[j]['mobileNo'] + "  " + otherStyleTime + ip138_result
+                p = time.ctime() + " " + list_data[j]['mobileNo'] + "  " + otherStyleTime + ip138_result
                 # p = list_data[j]['mobileNo'] + "  " + otherStyleTime + check_phone(phone)
                 print(p)
                 file_write.write('%s\n' % p)
@@ -211,7 +211,7 @@ def get_no_done_user_count(start1, end1, start2, end2):
 
 
 def write(s):
-    f = open("广场完成情况.txt", "a")
+    f = open("广场完成情况1.txt", "a")
     f.write('%s\n' % s.strip())
     f.close()
 
@@ -223,14 +223,14 @@ if __name__ == '__main__':
     # getUser(1, orgId, start1, end1)
 
     start2 = '2018-10-01'
-    end2 = '2018-11-01'
+    end2 = '2018-10-31'
     # getUser(1, orgId, start2, end2)
 
     print("开始main方法")
 
     # get_no_done_user_count("2018-09-01", "2018-09-30", start2, end2)
     # get_all_guangchang(start1, end1)
-    get_one_guangchang("1100649", "荆门万达广场", "荆门", start1, end1)
+    get_one_guangchang("1104498", "辽阳万达广场", "辽阳", start1, end1)
     # local_file = "/Users/demon/PycharmProjects/wanda/v3song/丹东新人礼20180911-check.txt"
     # write_file = "/Users/demon/PycharmProjects/wanda/v3song/丹东新人礼20180911-check-result.txt"
     # get_and_check_local_phone(local_file, write_file)
