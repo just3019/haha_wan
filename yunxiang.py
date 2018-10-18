@@ -32,6 +32,7 @@ def yx_phone():
         raise RuntimeError("需要释放号码")
     if len(response) > 1:
         return response[1]
+    print(response)
     raise RuntimeError("云享获取不到号码")
 
 
@@ -90,8 +91,8 @@ def yx_phone_many(num):
 if __name__ == '__main__':
     yx_login()
     # yx_phone_many(100)
-    # phone = yx_phone()
-    # print(phone)
+    phone = yx_phone()
+    print(phone)
     # get_code.get_code(phone)
     # yx_sms(phone, 60)
     # yx_release_all()

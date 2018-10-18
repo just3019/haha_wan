@@ -749,9 +749,10 @@ def kuai_xinren_thread(num, index):
             print(e)
             continue
 
+    print("主循环结束")
     for t in threads:
         t.join()
-
+    print("join完成")
     time.sleep(5)
     COUNT = SUCCESS_COUNT
     log("本次任务完成,成功%s,已修改成%s,如果缺失，请再点击开始。" % (str(SUCCESS_COUNT), str(COUNT)))
