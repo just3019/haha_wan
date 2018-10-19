@@ -409,7 +409,7 @@ def dalian_submit():
 
 
 def dalian_deal(num):
-    productId = "20180906094543"
+    productId = "20181018180530"
     global COUNT
     while COUNT < num:
         try:
