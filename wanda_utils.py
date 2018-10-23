@@ -383,6 +383,8 @@ def ui():
     btn3.pack(side=LEFT)
     btn4 = Button(fm2, text='快速新人礼刷粉', command=kuai_xinren_submit)
     btn4.pack(side=LEFT)
+    btn5 = Button(fm2, text='快速普通刷粉', command=kuai_putong_submit)
+    btn5.pack(side=LEFT)
 
     root.mainloop()  # 进入消息循环
 
@@ -771,6 +773,77 @@ def kuai_xinren_deal(index, num):
     login_result = wanda_login(phone, code)
     time.sleep(1)
     oid = get_new_order_no(int(index), login_result["cookieStr"])
+    time.sleep(1)
+    coupon = get_coupon_no(oid, login_result["cookieStr"])
+    global SUCCESS_COUNT
+    SUCCESS_COUNT += 1
+    log("第" + str(num + 1) + "条成功。")
+    write(login_result["member"]["mobile"] + "  " + QRCODE_URL + coupon)
+
+
+# 快速普通券刷粉提交
+def kuai_putong_submit():
+    LOCK.acquire()
+    try:
+        global FILE_PATH
+        FILE_PATH = PLACE + "普通%s.txt" % time.strftime("%Y%m%d")
+        fans = entry1.get()  # 多少粉丝
+        index = entry2.get()  # 第几个商品
+        if fans == '' or index == '':
+            log('参数不能为空')
+            raise RuntimeError('参数不能为空')
+        num = int(fans)
+        if num == '' and num < 0:
+            num = 0
+        t = threading.Thread(target=kuai_putong_thread, args=(num, int(index)))
+        t.setDaemon(True)
+        t.start()
+    except RuntimeError as e:
+        print(e)
+        log("入参请正确输入")
+    LOCK.release()
+
+
+# 快速普通券线程
+def kuai_putong_thread(num, index):
+    productId = get_product_info()['data']['resource'][index - 1]['couponNo']
+    print(productId)
+    global COUNT
+    threads = []
+    while COUNT < num:
+        try:
+            th = threading.Thread(target=kuai_putong_deal, args=(productId, COUNT))
+            threads.append(th)
+            th.setDaemon(True)  # 守护线程
+            th.start()
+            COUNT += 1
+            time.sleep(get_interval_time())
+        except RuntimeError as e:
+            print(e)
+            continue
+
+    print("主循环结束")
+    for t in threads:
+        t.join()
+    print("join完成")
+    time.sleep(5)
+    COUNT = SUCCESS_COUNT
+    log("本次任务完成,成功%s,已修改成%s,如果缺失，请再点击开始。" % (str(SUCCESS_COUNT), str(COUNT)))
+    xunma.xm_logout(xmtoken)
+
+
+# 快速普通券处理
+def kuai_putong_deal(productId, num):
+    log("执行到第" + str(COUNT + 1) + "条。")
+    platform = random.randint(1, 4)
+    xm_token = xmtoken
+    phone = new_get_phone(platform, xm_token)
+    # 获取验证码，进行领券
+    sms = new_get_sms(platform, phone, xm_token)
+    code = get_code(sms)
+    login_result = wanda_login(phone, code)
+    time.sleep(1)
+    oid = get_coupon(productId, phone, login_result["cookieStr"], login_result["uid"], login_result["puid"])
     time.sleep(1)
     coupon = get_coupon_no(oid, login_result["cookieStr"])
     global SUCCESS_COUNT
