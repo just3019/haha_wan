@@ -12,9 +12,8 @@ import xunma
 import yima
 # 易码token
 import yunxiang
-
 # 平台标识：1，易码 2，讯码 3，海码 4，云享
-from test.thread_pool import ThreadPool
+from thread_pool import ThreadPool
 
 ym_username = "ye907182374"
 ym_password = "baobao1515"
@@ -740,13 +739,15 @@ def kuai_xinren_submit():
 # 快速新人线程
 def kuai_xinren_thread(num, index):
     global COUNT
-    threads = []
+    # threads = []
+    TP = ThreadPool(30)
     while COUNT < num:
         try:
-            th = threading.Thread(target=kuai_xinren_deal, args=(index, COUNT))
-            threads.append(th)
-            th.setDaemon(True)  # 守护线程
-            th.start()
+            TP.add_task(kuai_xinren_deal, index, COUNT)
+            # th = threading.Thread(target=kuai_xinren_deal, args=(index, COUNT))
+            # threads.append(th)
+            # th.setDaemon(True)  # 守护线程
+            # th.start()
             COUNT += 1
             time.sleep(get_interval_time())
         except RuntimeError as e:
@@ -754,9 +755,10 @@ def kuai_xinren_thread(num, index):
             continue
 
     print("主循环结束")
-    for t in threads:
-        t.join()
-    print("join完成")
+    # for t in threads:
+    #     t.join()
+    # print("join完成")
+    TP.wait_completion()
     time.sleep(5)
     COUNT = SUCCESS_COUNT
     log("本次任务完成,成功%s,已修改成%s,如果缺失，请再点击开始。" % (str(SUCCESS_COUNT), str(COUNT)))
@@ -765,7 +767,7 @@ def kuai_xinren_thread(num, index):
 
 # 快速新人礼处理
 def kuai_xinren_deal(index, num):
-    log("执行到第" + str(COUNT + 1) + "条。")
+    log("执行到第" + str(num + 1) + "条。")
     platform = random.randint(1, 4)
     xm_token = xmtoken
     phone = new_get_phone(platform, xm_token)
