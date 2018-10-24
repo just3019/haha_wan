@@ -271,3 +271,7 @@
 13285709243  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=089304823192
 13438001794  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=050105179388
 15943583624  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=064905151976
+15843247909  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=054805005016
+13438571909  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=011804143884
+13476696410  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=044504776712
+18794862839  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=003005368143

@@ -566,15 +566,18 @@ def xinren_deal(num, index):
         try:
             log("执行到第" + str(COUNT + 1) + "条。")
             phone_sms_result = phone_sms()
-            t = threading.Thread(target=xinren, args=(phone_sms_result, COUNT, index))
-            t.setDaemon(True)
-            t.start()
+            login_result = get_phone_login(phone_sms_result)
+            time.sleep(1)
+            oid = get_new_order_no(int(index), login_result["cookieStr"])
+            time.sleep(1)
+            coupon = get_coupon_no(oid, login_result["cookieStr"])
+            log("第" + str(num + 1) + "条成功。")
+            write(login_result["member"]["mobile"] + "  " + QRCODE_URL + coupon)
             COUNT += 1
             time.sleep(get_interval_time())
         except RuntimeError as e:
             print(e)
             continue
-    t.join()
     xunma.xm_logout(xmtoken)
 
 
