@@ -2405,3 +2405,9 @@
 18843553409  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=053503886708
 067405026016 欢迎加入满洲里万达广场小程序
 18804358416  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=067405026016
+031205277276 欢迎加入满洲里万达广场小程序
+18317354172  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=031205277276
+021005361116 欢迎加入满洲里万达广场小程序
+15834566443  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=021005361116
+086704545008 欢迎加入满洲里万达广场小程序
+15297391774  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=086704545008
