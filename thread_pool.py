@@ -1,3 +1,4 @@
+import threading
 import time
 from threading import Thread
 from queue import Queue
@@ -38,6 +39,7 @@ class ThreadWorker(Thread):
                 r = func(*args, **kwargs)
                 self.result_queue.put(r)
             except Exception as e:
+                print("[" + threading.current_thread().name + "] " + e)
                 self.result_queue.put(e)
             finally:
                 self.tasks_queue.task_done()

@@ -95,7 +95,7 @@ def ym_release(token, itemid, mobile):
     response = requests.get(url, param, headers=header_dict, timeout=10).text.split("|")
     # print(response)
     if response[0] != "success":
-        print("%s 释放失败" % mobile)
+        print("[" + threading.current_thread().name + "] " + "%s 释放失败" % mobile)
 
 
 # 拉黑号码
@@ -110,7 +110,7 @@ def ym_ignore(token, itemid, mobile):
     response = requests.get(url, param, headers=header_dict, timeout=10).text.split("|")
     # print(response)
     if response[0] != "success":
-        print("%s 拉黑失败" % mobile)
+        print("[" + threading.current_thread().name + "] " + "%s 拉黑失败" % mobile)
 
 
 if __name__ == '__main__':

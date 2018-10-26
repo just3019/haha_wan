@@ -51,7 +51,7 @@ headers = {
 def init(place, token, province, plazaid, hm_province, xm_local):
     global TOKEN
     if token != "":
-        print("易码token：" + token)
+        print("[" + threading.current_thread().name + "] " + "易码token：" + token)
         TOKEN = token
     global PLACE
     PLACE = place
@@ -107,7 +107,7 @@ def get_sms_code(mobile):
     }
     requests.post('https://api.ffan.com/wechatxmt/v1/member/verifyCode', headers=headers, params=params, data=data)
 
-    print("发送验证码")
+    print("[" + threading.current_thread().name + "] " + "发送验证码")
 
 
 # 处理飞凡短信内容
@@ -121,7 +121,7 @@ def get_code(sms):
     IC = re.search(pat, code)
     if IC:
         code = IC.group()
-    print("验证码为：" + code)
+    print("[" + threading.current_thread().name + "] " + "验证码为：" + code)
     if code is None:
         raise RuntimeError('验证码为空')
     return code
@@ -139,7 +139,7 @@ def wanda_login(mobile, code):
     for i in range(0, 3):
         response = requests.post('https://api.ffan.com/microapp/v1/ffanLogin', headers=headers, data=data)
         result = json.loads(response.text)
-        print(result)
+        print("[" + threading.current_thread().name + "] " + result)
         data = result["data"]
         if result["status"] == 200 and "uid" in data and "cookieStr" in data and "puid" in data:
             writePhone(mobile)
@@ -166,7 +166,7 @@ def get_product_info():
         ('pageSize', '10'),
     )
     response = requests.get('https://api.ffan.com/wechatxmt/v5/plaza/coupons', headers=headers, params=params)
-    print("获取商品id" + response.text)
+    print("[" + threading.current_thread().name + "] " + "获取商品id" + response.text)
     result = json.loads(response.text)
     return result
 
@@ -193,12 +193,12 @@ def get_coupon(productId, mobile, cookieStr, uid, puid):
     ]
     url = "https://api.ffan.com/wechatxmt/v1/order/create/proxy"
     response = requests.post(url, headers=headers, params=params, data=data)
-    print("领券：" + response.text)
+    print("[" + threading.current_thread().name + "] " + "领券：" + response.text)
     result = json.loads(response.text)
     if result["status"] == 5001:
         raise RuntimeError(result["message"])
     if result["status"] == 521:
-        print("服务器太火爆")
+        print("[" + threading.current_thread().name + "] " + "服务器太火爆")
         time.sleep(5)
         raise RuntimeError(result["message"])
     return result["orderNo"]
@@ -212,7 +212,7 @@ def get_coupon_no(oid, cookieStr):
     )
     for i in range(0, 3):
         response = requests.get('https://api.ffan.com/wechatxmt/v1/order', headers=headers, params=params)
-        print("获取明细：" + response.text)
+        print("[" + threading.current_thread().name + "] " + "获取明细：" + response.text)
         result = json.loads(response.text)
         if result["status"] == 200 and "couponNo" in response.text:
             if result['data']['product'][0]['couponNo'] is None:
@@ -303,19 +303,19 @@ def phone_sms():
     num = random.randint(1, 4)
     if num == 1 and num != not_eq:
         phone_sms_result = ym_result()
-        print("本次易码获取号码")
+        print("[" + threading.current_thread().name + "] " + "本次易码获取号码")
         not_eq = 1
     elif num == 2 and num != not_eq:
         phone_sms_result = xm_result(xmtoken)
-        print("本次讯码获取号码")
+        print("[" + threading.current_thread().name + "] " + "本次讯码获取号码")
         not_eq = 2
     elif num == 3 and num != not_eq:
         phone_sms_result = hm_result()
-        print("本次海码获取号码")
+        print("[" + threading.current_thread().name + "] " + "本次海码获取号码")
         not_eq = 3
     elif num == 4 and num != not_eq:
         phone_sms_result = yx_result()
-        print("本次云享获取号码")
+        print("[" + threading.current_thread().name + "] " + "本次云享获取号码")
         not_eq = 4
     else:
         raise RuntimeError("重新选平台")
@@ -323,7 +323,7 @@ def phone_sms():
 
 
 def log(s):
-    print(s)
+    print("[" + threading.current_thread().name + "] " + s)
     textView.insert(END, '[%s] [%s] %s\n' % (threading.current_thread().name, time.ctime(), s))
     textView.update()
     textView.see(END)
@@ -414,7 +414,7 @@ def dalian_submit():
         th.setDaemon(True)  # 守护线程
         th.start()
     except RuntimeError as e:
-        print(e)
+        print("[" + threading.current_thread().name + "] " + e)
         log('获取失败，请确保输入参数都是整数')
     LOCK.release()
 
@@ -439,7 +439,7 @@ def dalian_deal(num):
             COUNT += 1
             time.sleep(get_interval_time())
         except RuntimeError as e:
-            print(e)
+            print("[" + threading.current_thread().name + "] " + e)
     xunma.xm_logout(xmtoken)
 
 
@@ -459,7 +459,7 @@ def user_submit():
         th.setDaemon(True)  # 守护线程
         th.start()
     except RuntimeError as e:
-        print(e)
+        print("[" + threading.current_thread().name + "] " + e)
         log('获取失败，请确保输入参数都是整数')
     LOCK.release()
 
@@ -481,7 +481,7 @@ def user_deal(num):
             COUNT += 1
             time.sleep(get_interval_time())
         except RuntimeError as e:
-            print(e)
+            print("[" + threading.current_thread().name + "] " + e)
             continue
     xunma.xm_logout(xmtoken)
 
@@ -507,7 +507,7 @@ def submit():
         th.setDaemon(True)  # 守护线程
         th.start()
     except RuntimeError as e:
-        print(e)
+        print("[" + threading.current_thread().name + "] " + e)
         log('获取失败，请确保输入参数都是整数')
     LOCK.release()
 
@@ -532,14 +532,14 @@ def deal(num, index):
             COUNT += 1
             time.sleep(get_interval_time())
         except RuntimeError as e:
-            print(e)
+            print("[" + threading.current_thread().name + "] " + e)
     xunma.xm_logout(xmtoken)
 
 
 def get_interval_time():
     interval_time = interval.get()
     slep = random.randint(0, int(interval_time))
-    print("本次停顿：" + str(slep))
+    print("[" + threading.current_thread().name + "] " + "本次停顿：" + str(slep))
     if interval_time.isdigit():
         return slep
     return 0
@@ -562,7 +562,7 @@ def xinren_submit():
         th.setDaemon(True)  # 守护线程
         th.start()
     except RuntimeError as e:
-        print(e)
+        print("[" + threading.current_thread().name + "] " + e)
         log('获取失败，请确保输入参数都是整数')
     LOCK.release()
 
@@ -584,7 +584,7 @@ def xinren_deal(num, index):
             COUNT += 1
             time.sleep(get_interval_time())
         except RuntimeError as e:
-            print(e)
+            print("[" + threading.current_thread().name + "] " + e)
             continue
     xunma.xm_logout(xmtoken)
 
@@ -610,7 +610,7 @@ def get_new_order_no(index, cookieStr):
     ]
     response = requests.post('https://api.ffan.com/wechatxmt/v1/coupons-package/', headers=headers, params=params,
                              data=data)
-    print("领取新用户优惠券：" + response.text)
+    print("[" + threading.current_thread().name + "] " + "领取新用户优惠券：" + response.text)
     if ":5001" in response.text:
         raise RuntimeError("该用户已领取过")
     if "CURLE_OPERATION_TIMEDOUT" in response.text:
@@ -638,7 +638,7 @@ def new_ym_phone():
     phone = yima.ym_phone(TOKEN, ITEMID, EXCLUDENO, PROVINCE, CITY, "")
     if phone is None:
         raise RuntimeError("手机号获取不到")
-    print("易码获取手机号为：" + str(phone))
+    print("[" + threading.current_thread().name + "] " + "易码获取手机号为：" + str(phone))
     return phone
 
 
@@ -653,7 +653,7 @@ def new_xm_phone(token):
         raise RuntimeError("讯码重新登录")
     if phone is None:
         raise RuntimeError("手机号获取不到")
-    print("讯码获取手机号为：" + str(phone))
+    print("[" + threading.current_thread().name + "] " + "讯码获取手机号为：" + str(phone))
     return phone
 
 
@@ -662,7 +662,7 @@ def new_hm_phone():
     phone = haima.hm_phone("", HM_PROVINCE)
     if phone is None:
         raise RuntimeError("手机号获取不到")
-    # print("海码获取手机号：" + str(phone))
+    print("[" + threading.current_thread().name + "] " + "海码获取手机号：" + str(phone))
     return phone
 
 
@@ -671,7 +671,7 @@ def new_yx_phone():
     phone = yunxiang.yx_phone()
     if phone is None:
         raise RuntimeError("手机号码获取不到")
-    print("云享获取手机号：" + str(phone))
+    print("[" + threading.current_thread().name + "] " + "云享获取手机号：" + str(phone))
     return phone
 
 
@@ -742,7 +742,7 @@ def kuai_xinren_submit():
         t.setDaemon(True)
         t.start()
     except RuntimeError as e:
-        print(e)
+        print("[" + threading.current_thread().name + "] " + e)
         log("入参请正确输入")
     LOCK.release()
 
@@ -762,10 +762,10 @@ def kuai_xinren_thread(num, index):
             COUNT += 1
             time.sleep(get_interval_time())
         except RuntimeError as e:
-            print(e)
+            print("[" + threading.current_thread().name + "] " + e)
             continue
 
-    print("主循环结束")
+    print("[" + threading.current_thread().name + "] " + "主循环结束")
     # for t in threads:
     #     t.join()
     # print("join完成")
@@ -814,7 +814,7 @@ def kuai_putong_submit():
         t.setDaemon(True)
         t.start()
     except RuntimeError as e:
-        print(e)
+        print("[" + threading.current_thread().name + "] " + e)
         log("入参请正确输入")
     LOCK.release()
 
@@ -822,7 +822,7 @@ def kuai_putong_submit():
 # 快速普通券线程
 def kuai_putong_thread(num, index):
     productId = get_product_info()['data']['resource'][index - 1]['couponNo']
-    print(productId)
+    print("[" + threading.current_thread().name + "] " + productId)
     global COUNT
     # threads = []
     TP = ThreadPool(30)
@@ -836,10 +836,10 @@ def kuai_putong_thread(num, index):
             COUNT += 1
             time.sleep(get_interval_time())
         except RuntimeError as e:
-            print(e)
+            print("[" + threading.current_thread().name + "] " + e)
             continue
 
-    print("主循环结束")
+    print("[" + threading.current_thread().name + "] " + "主循环结束")
     # for t in threads:
     #     t.join()
     TP.wait_completion()

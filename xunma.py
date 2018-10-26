@@ -24,7 +24,7 @@ def xm_login(username, password, developer):
         # print("讯码登录：" + str(response))
         return response
     except RuntimeError as e:
-        print(e)
+        print("[" + threading.current_thread().name + "] " + e)
 
 
 def xm_get_phone(token, area, PhoneType):
@@ -53,7 +53,7 @@ def xm_get_phone(token, area, PhoneType):
             raise ("False:余额不足，请先释放号码")
         return response[0]
     except RuntimeError as e:
-        print("讯码平台问题phone")
+        print("[" + threading.current_thread().name + "] " + "讯码平台问题phone")
         raise RuntimeError(e)
 
 
@@ -88,7 +88,7 @@ def xm_sms(token, phone, timeout):
                 return response[3]
             time.sleep(2)
     except RuntimeError as e:
-        print("讯码平台问题sms")
+        print("[" + threading.current_thread().name + "] " + "讯码平台问题sms")
         raise RuntimeError(e)
 
 
@@ -119,17 +119,17 @@ def xm_logout(token):
             ("Code", "UTF8"),
         }
         response = requests.get(url, params=params, headers=header_dict, timeout=10).text
-        print("登出：" + response)
+        print("[" + threading.current_thread().name + "] " + "登出：" + response)
     except RuntimeError as e:
-        print(e)
+        print("[" + threading.current_thread().name + "] " + e)
 
 
 if __name__ == '__main__':
     login_result = xm_login("demon3019", "12345678", "wdVJ21MmabfWT72lAxf3JA==")
     token = login_result[0]
-    print(token)
+    print("[" + threading.current_thread().name + "] " + token)
     phone = xm_get_phone(token, "辽宁", random.randint(0, 4))
-    print(phone)
+    print("[" + threading.current_thread().name + "] " + phone)
     # # get_code.get_code(phone)
     # time.sleep(2)
     # sms = xm_sms(token, phone, 60)

@@ -20,7 +20,7 @@ def hm_login():
         ('pwd', PASSWORD),
     ]
     response = requests.post(url, data, headers=header_dict, timeout=10).text
-    print("登录：" + response)
+    print("[" + threading.current_thread().name + "] " + "登录：" + response)
     return response
 
 

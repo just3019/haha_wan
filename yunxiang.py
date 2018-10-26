@@ -33,7 +33,7 @@ def yx_phone():
         raise RuntimeError("需要释放号码")
     if len(response) > 1:
         return response[1]
-    print(response)
+    print("[" + threading.current_thread().name + "] " + response)
     raise RuntimeError("云享获取不到号码")
 
 
