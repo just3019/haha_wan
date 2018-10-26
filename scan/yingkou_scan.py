@@ -88,8 +88,8 @@ def scan(code):
                              data=data)
     print(response.text)
     re = json.loads(response.text)["data"]["subTitle"]
-    p = code + " " + re
-    write(p)
+    p = time.ctime() + " " + code + " " + re
+    print(p)
 
     params1 = (
         ('storeId', '10016920'),
@@ -206,10 +206,8 @@ def deal():
             code = mystr[mystr.find('info=') + 5: mystr.find('info=') + 17]
             print(code)
             scan(code)
-            write(mystr)
-            log(str(index) + "个核销成功。")
-            print(minTime)
-            print(maxTime)
+            write(time.ctime() + " " + mystr)
+            log(time.ctime() + " " + str(index) + "个核销成功。")
             sleeptime = random.randint(int(minTime), int(maxTime))
             log("本次停顿：" + str(sleeptime))
             time.sleep(sleeptime)
