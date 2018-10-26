@@ -139,7 +139,7 @@ def wanda_login(mobile, code):
     for i in range(0, 3):
         response = requests.post('https://api.ffan.com/microapp/v1/ffanLogin', headers=headers, data=data)
         result = json.loads(response.text)
-        print("[" + threading.current_thread().name + "] " + result)
+        print("[" + threading.current_thread().name + "] " + response.text)
         data = result["data"]
         if result["status"] == 200 and "uid" in data and "cookieStr" in data and "puid" in data:
             writePhone(mobile)
@@ -414,7 +414,7 @@ def dalian_submit():
         th.setDaemon(True)  # 守护线程
         th.start()
     except RuntimeError as e:
-        print("[" + threading.current_thread().name + "] " + e)
+        print(e)
         log('获取失败，请确保输入参数都是整数')
     LOCK.release()
 
@@ -439,7 +439,7 @@ def dalian_deal(num):
             COUNT += 1
             time.sleep(get_interval_time())
         except RuntimeError as e:
-            print("[" + threading.current_thread().name + "] " + e)
+            print(e)
     xunma.xm_logout(xmtoken)
 
 
@@ -459,7 +459,7 @@ def user_submit():
         th.setDaemon(True)  # 守护线程
         th.start()
     except RuntimeError as e:
-        print("[" + threading.current_thread().name + "] " + e)
+        print(e)
         log('获取失败，请确保输入参数都是整数')
     LOCK.release()
 
@@ -481,7 +481,7 @@ def user_deal(num):
             COUNT += 1
             time.sleep(get_interval_time())
         except RuntimeError as e:
-            print("[" + threading.current_thread().name + "] " + e)
+            print(e)
             continue
     xunma.xm_logout(xmtoken)
 
@@ -507,7 +507,7 @@ def submit():
         th.setDaemon(True)  # 守护线程
         th.start()
     except RuntimeError as e:
-        print("[" + threading.current_thread().name + "] " + e)
+        print(e)
         log('获取失败，请确保输入参数都是整数')
     LOCK.release()
 
@@ -532,7 +532,7 @@ def deal(num, index):
             COUNT += 1
             time.sleep(get_interval_time())
         except RuntimeError as e:
-            print("[" + threading.current_thread().name + "] " + e)
+            print(e)
     xunma.xm_logout(xmtoken)
 
 
@@ -562,7 +562,7 @@ def xinren_submit():
         th.setDaemon(True)  # 守护线程
         th.start()
     except RuntimeError as e:
-        print("[" + threading.current_thread().name + "] " + e)
+        print(e)
         log('获取失败，请确保输入参数都是整数')
     LOCK.release()
 
@@ -584,7 +584,7 @@ def xinren_deal(num, index):
             COUNT += 1
             time.sleep(get_interval_time())
         except RuntimeError as e:
-            print("[" + threading.current_thread().name + "] " + e)
+            print(e)
             continue
     xunma.xm_logout(xmtoken)
 
@@ -742,7 +742,7 @@ def kuai_xinren_submit():
         t.setDaemon(True)
         t.start()
     except RuntimeError as e:
-        print("[" + threading.current_thread().name + "] " + e)
+        print(e)
         log("入参请正确输入")
     LOCK.release()
 
@@ -762,7 +762,7 @@ def kuai_xinren_thread(num, index):
             COUNT += 1
             time.sleep(get_interval_time())
         except RuntimeError as e:
-            print("[" + threading.current_thread().name + "] " + e)
+            print(e)
             continue
 
     print("[" + threading.current_thread().name + "] " + "主循环结束")
@@ -814,7 +814,7 @@ def kuai_putong_submit():
         t.setDaemon(True)
         t.start()
     except RuntimeError as e:
-        print("[" + threading.current_thread().name + "] " + e)
+        print(e)
         log("入参请正确输入")
     LOCK.release()
 
@@ -836,7 +836,7 @@ def kuai_putong_thread(num, index):
             COUNT += 1
             time.sleep(get_interval_time())
         except RuntimeError as e:
-            print("[" + threading.current_thread().name + "] " + e)
+            print(e)
             continue
 
     print("[" + threading.current_thread().name + "] " + "主循环结束")

@@ -39,7 +39,7 @@ class ThreadWorker(Thread):
                 r = func(*args, **kwargs)
                 self.result_queue.put(r)
             except Exception as e:
-                print("[" + threading.current_thread().name + "] " + e)
+                print(e)
                 self.result_queue.put(e)
             finally:
                 self.tasks_queue.task_done()

@@ -24,7 +24,7 @@ def xm_login(username, password, developer):
         # print("讯码登录：" + str(response))
         return response
     except RuntimeError as e:
-        print("[" + threading.current_thread().name + "] " + e)
+        print(e)
 
 
 def xm_get_phone(token, area, PhoneType):
@@ -121,7 +121,7 @@ def xm_logout(token):
         response = requests.get(url, params=params, headers=header_dict, timeout=10).text
         print("[" + threading.current_thread().name + "] " + "登出：" + response)
     except RuntimeError as e:
-        print("[" + threading.current_thread().name + "] " + e)
+        print(e)
 
 
 if __name__ == '__main__':
