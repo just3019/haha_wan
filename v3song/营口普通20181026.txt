@@ -383,3 +383,7 @@
 15714429058  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=007105153541
 13483174103  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=041104208876
 13990247329  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=045405323592
+18216451536  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=045505153960
+18711843775  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=064304618000
+13402495174  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=027505257808
+13654494039  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=091104006776
