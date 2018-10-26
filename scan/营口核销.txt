@@ -7037,3 +7037,5 @@
 13116849476  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=067305120408
 079105289176 凭此券参与抽奖
 13197951854  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=079105289176
+036605178900 凭此券参与抽奖
+13221704462  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=036605178900
