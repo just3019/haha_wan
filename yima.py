@@ -1,4 +1,5 @@
 import json
+import threading
 import time
 
 import requests
@@ -68,7 +69,7 @@ def ym_sms(token, itemid, mobile, timeout):
     while True:
         response = s.get(url, params=param, headers=header_dict, timeout=10).content.decode(encoding="utf-8")
         responses = response.split("|")
-        print(responses)
+        print("[" + threading.current_thread().name + "] " + responses)
         if responses[0] == "2008":
             raise RuntimeError("号码已离线")
         if responses[0] == "success":

@@ -1,4 +1,5 @@
 import json
+import threading
 import time
 
 import requests
@@ -41,7 +42,7 @@ def hm_sms(phone, timeout):
     start = time.time()
     while True:
         response = requests.post(url, headers=header_dict, timeout=10).text
-        print("获取短信：" + response)
+        print("[" + threading.current_thread().name + "] " + response)
         responses = response.split("|")
         end = time.time()
         if (end - start) > timeout:

@@ -142,6 +142,7 @@ def wanda_login(mobile, code):
         print(result)
         data = result["data"]
         if result["status"] == 200 and "uid" in data and "cookieStr" in data and "puid" in data:
+            writePhone(mobile)
             return data
         if result["status"] == 500:
             global WANDA_LOGIN_500
@@ -330,6 +331,13 @@ def log(s):
 
 def write(s):
     f = open(FILE_PATH, "a")
+    f.write('%s\n' % s.strip())
+    f.close()
+
+
+def writePhone(s):
+    filename = "phone" + FILE_PATH
+    f = open(filename, "a")
     f.write('%s\n' % s.strip())
     f.close()
 

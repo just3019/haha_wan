@@ -1,3 +1,4 @@
+import threading
 import time
 
 import requests
@@ -41,7 +42,7 @@ def yx_sms(phone, timeout):
     start = time.time()
     while True:
         response = requests.get(url, headers=headers, timeout=10)
-        print(response.text)
+        print("[" + threading.current_thread().name + "] " + response.text)
         if len(response.text) > 4:
             yx_black(phone)
             return response.text

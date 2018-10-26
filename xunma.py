@@ -1,4 +1,5 @@
 import random
+import threading
 import time
 
 import requests
@@ -73,7 +74,7 @@ def xm_sms(token, phone, timeout):
             if "飞凡" in response:
                 return response
             response = response.split("&")
-            print(response)
+            print("[" + threading.current_thread().name + "] " + response)
             end = time.time()
             if "False:Session 过期" in response:
                 raise RuntimeError("xm的token已经过期")
