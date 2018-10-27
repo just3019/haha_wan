@@ -579,7 +579,7 @@ def xinren_deal(num, index):
             oid = get_new_order_no(int(index), login_result["cookieStr"])
             time.sleep(1)
             coupon = get_coupon_no(oid, login_result["cookieStr"])
-            log("第" + str(num + 1) + "条成功。")
+            log("第" + str(COUNT + 1) + "条成功。")
             write(login_result["member"]["mobile"] + "  " + QRCODE_URL + coupon)
             COUNT += 1
             time.sleep(get_interval_time())
