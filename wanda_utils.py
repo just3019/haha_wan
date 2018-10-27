@@ -24,7 +24,7 @@ PROVINCE = ""
 CITY = ""
 PLACE = ""
 EXCLUDENOS = ["170.171.172"]
-TIMEOUT = 60
+TIMEOUT = 80
 COUNT = 0
 SUCCESS_COUNT = 0
 ITEMID = '7982'
@@ -105,8 +105,8 @@ def get_sms_code(mobile):
     data = {
         'mobile': mobile
     }
-    requests.post('https://api.ffan.com/wechatxmt/v1/member/verifyCode', headers=headers, params=params, data=data)
-
+    r = requests.post('https://api.ffan.com/wechatxmt/v1/member/verifyCode', headers=headers, params=params, data=data)
+    print(r.text)
     print("[" + threading.current_thread().name + "] " + "发送验证码")
 
 
