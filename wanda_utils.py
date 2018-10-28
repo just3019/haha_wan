@@ -347,17 +347,17 @@ def ui():
     root = Tk()  # 创建窗口对象的背景色
     # 创建两个列表
     root.title('飞凡刷粉工具-' + PLACE + '万达版')
-    root.geometry('600x600')
+    root.geometry('400x250')
     fm1 = Frame(root)
     fm1.pack(fill=X)
 
     label1 = Label(fm1, text='生成数量：')
     global entry1
-    entry1 = Entry(fm1, width=10)
+    entry1 = Entry(fm1, width=5)
 
     label2 = Label(fm1, text='第几个商品：')
     global entry2
-    entry2 = Entry(fm1, width=10)
+    entry2 = Entry(fm1, width=5)
     label1.pack(side=LEFT)
     entry1.pack(side=LEFT)
     label2.pack(side=LEFT)
@@ -365,7 +365,7 @@ def ui():
 
     interval_label = Label(fm1, text="间隔时间")
     global interval
-    interval = Entry(fm1, width=10)
+    interval = Entry(fm1, width=5)
     interval_label.pack(side=LEFT)
     interval.pack(side=LEFT)
 
@@ -373,7 +373,7 @@ def ui():
     s1 = Scrollbar(root)
     s1.pack(side=RIGHT, fill=Y)
     global textView
-    textView = Text(root, height=34, yscrollcommand=s1.set)
+    textView = Text(root, height=10, yscrollcommand=s1.set)
 
     label3 = Label(root, text='日志输出：')  # '
     label3.pack()
@@ -382,17 +382,17 @@ def ui():
 
     fm2 = Frame(root)
     fm2.pack()
-    btn = Button(fm2, text='开始', command=submit)
+    btn = Button(fm2, text='普通', command=submit)
     btn.pack(side=LEFT)
-    btn1 = Button(fm2, text='新人礼开始', command=xinren_submit)
+    btn1 = Button(fm2, text='新人礼', command=xinren_submit)
     btn1.pack(side=LEFT)
-    btn2 = Button(fm2, text="只注册用户", command=user_submit)
+    btn2 = Button(fm2, text="注册", command=user_submit)
     btn2.pack(side=LEFT)
-    btn3 = Button(fm2, text='大连特定二维码', command=dalian_submit)
+    btn3 = Button(fm2, text='特定', command=dalian_submit)
     btn3.pack(side=LEFT)
-    btn4 = Button(fm2, text='快速新人礼刷粉', command=kuai_xinren_submit)
+    btn4 = Button(fm2, text='快新人礼', command=kuai_xinren_submit)
     btn4.pack(side=LEFT)
-    btn5 = Button(fm2, text='快速普通刷粉', command=kuai_putong_submit)
+    btn5 = Button(fm2, text='快普通', command=kuai_putong_submit)
     btn5.pack(side=LEFT)
 
     root.mainloop()  # 进入消息循环

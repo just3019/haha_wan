@@ -7039,3 +7039,4 @@
 13197951854  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=079105289176
 036605178900 凭此券参与抽奖
 13221704462  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=036605178900
+Sun Oct 28 10:07:17 2018 13250884856  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=014304413222
