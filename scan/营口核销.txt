@@ -7040,3 +7040,18 @@
 036605178900 凭此券参与抽奖
 13221704462  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=036605178900
 Sun Oct 28 10:07:17 2018 13250884856  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=014304413222
+[Sun Oct 28 11:03:54 2018] 13944241434  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=047805220960
+[Sun Oct 28 11:04:27 2018] 15944241784  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=002805363985
+[Sun Oct 28 11:04:37 2018] 18408275581  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=089405342544
+[Sun Oct 28 11:05:07 2018] 18843200134  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=030805370086
+[Sun Oct 28 11:05:33 2018] 17858425084  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=018305270170
+[Sun Oct 28 11:05:56 2018] 18458220395  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=040004214552
+[Sun Oct 28 11:06:27 2018] 15828184964  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=047605082248
+[Sun Oct 28 11:06:43 2018] 18246923042  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=051204671872
+[Sun Oct 28 11:06:53 2018] 13438267960  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=095205135320
+[Sun Oct 28 11:07:14 2018] 18343212161  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=004805243194
+[Sun Oct 28 11:07:35 2018] 13022646960  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=058904360684
+[Sun Oct 28 11:08:00 2018] 18783112645  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=025605117706
+[Sun Oct 28 11:08:15 2018] 18380406490  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=016305017958
+[Sun Oct 28 11:08:32 2018] 13451483097  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=095104525320
+[Sun Oct 28 11:08:50 2018] 18237208744  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=002405331297

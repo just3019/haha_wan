@@ -28,7 +28,7 @@ def log(s):
 
 def write(s):
     f = open(log_path, "a")
-    f.write('%s\n' % s.strip())
+    f.write('[%s] %s\n' % (time.ctime(), s))
     f.close()
 
 
@@ -207,12 +207,11 @@ def deal():
             mystr = file.readline()
             if not mystr:
                 break
-            log(str(index) + "  " + mystr)
             code = mystr[mystr.find('info=') + 5: mystr.find('info=') + 17]
-            print(code)
+            log(str(index) + "  " + code)
             scan(code)
-            write(time.ctime() + " " + mystr)
-            log(time.ctime() + " " + str(index) + "个核销成功。")
+            write(mystr.strip())
+            log(str(index) + "个核销成功。")
             sleeptime = random.randint(int(minTime), int(maxTime))
             log("本次停顿：" + str(sleeptime))
             time.sleep(sleeptime)

@@ -102,3 +102,9 @@
 15124325539  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=042205388844
 18224059329  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=079105330168
 18374689475  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=052905292452
+13409743648  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=093605047168
+13438552344  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=025505297590
+13175745918  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=081705025760
+18407431220  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=001505249995
+[Sun Oct 28 11:06:06 2018] 18380414267  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=069204583984
+[Sun Oct 28 11:07:04 2018] 13419070470  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=063403932992

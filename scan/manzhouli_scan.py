@@ -28,7 +28,7 @@ def log(s):
 
 def write(s):
     f = open(log_path, "a")
-    f.write('%s\n' % s.strip())
+    f.write('[%s] %s\n' % (time.ctime(), s))
     f.close()
 
 
@@ -86,10 +86,10 @@ def scan(code):
 
     response = requests.post('https://sop.ffan.com/goods/coupon/queryUnusedCoupons', headers=headers, params=params,
                              data=data)
-    print(response.text)
-    re = json.loads(response.text)["data"]["subTitle"]
-    p = code + " " + re
-    write(p)
+    # print(response.text)
+    # re = json.loads(response.text)["data"]["subTitle"]
+    # p = code + " " + re
+    # write(p)
 
     params1 = (
         ('storeId', '2072467'),
@@ -205,14 +205,11 @@ def deal():
             mystr = file.readline()
             if not mystr:
                 break
-            log(str(index) + "  " + mystr)
             code = mystr[mystr.find('info=') + 5: mystr.find('info=') + 17]
-            print(code)
+            log(str(index) + "  " + code)
             scan(code)
-            write(mystr)
+            write(mystr.strip())
             log(str(index) + "个核销成功。")
-            print(minTime)
-            print(maxTime)
             sleeptime = random.randint(int(minTime), int(maxTime))
             log("本次停顿：" + str(sleeptime))
             time.sleep(sleeptime)

@@ -18551,3 +18551,26 @@
 038304498380 新人注册专用券
 082105151472 新人注册专用券
 068105382240 新人注册专用券
+028205279090 新人注册专用券
+18708151543  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=028205279090
+098505161440 新人注册专用券
+13400110778  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=098505161440
+066605161680 新人注册专用券
+18408215108  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=066605161680
+038005333604 新人注册专用券
+15182649957  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=038005333604
+096205008600 新人注册专用券
+15928941793  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=096205008600
+003304956433 新人注册专用券
+15883620145  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=003304956433
+099405043728 新人注册专用券
+18337229885  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=099405043728
+[Sun Oct 28 11:07:32 2018] 028205279090 新人注册专用券
+[Sun Oct 28 11:07:33 2018] 098505161440 新人注册专用券
+[Sun Oct 28 11:07:34 2018] 066605161680 新人注册专用券
+[Sun Oct 28 11:07:34 2018] 038005333604 新人注册专用券
+[Sun Oct 28 11:07:35 2018] 096205008600 新人注册专用券
+[Sun Oct 28 11:07:37 2018] 003304956433 新人注册专用券
+[Sun Oct 28 11:07:37 2018] 099405043728 新人注册专用券
+[Sun Oct 28 11:07:42 2018] 052405128760 新人注册专用券
+[Sun Oct 28 11:07:42 2018] 13400119505  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=052405128760
