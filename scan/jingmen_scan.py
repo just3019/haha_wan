@@ -170,8 +170,6 @@ def ui():
     fm2.pack()
     btn = Button(fm2, text='开始', command=start)
     btn.pack(side=LEFT)
-    btn1 = Button(fm2, text='检测', command=check)
-    btn1.pack(side=LEFT)
     root.mainloop()
 
 
