@@ -87,9 +87,9 @@ def scan(code):
     response = requests.post('https://sop.ffan.com/goods/coupon/queryUnusedCoupons', headers=headers, params=params,
                              data=data)
     print(response.text)
-    re = json.loads(response.text)["data"]["subTitle"]
-    p = code + " " + re
-    write(p)
+    # re = json.loads(response.text)["data"]["subTitle"]
+    # p = code + " " + re
+    # write(p)
 
     params1 = (
         ('storeId', '2064055'),

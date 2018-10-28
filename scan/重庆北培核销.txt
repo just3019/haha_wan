@@ -108,3 +108,18 @@
 18407431220  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=001505249995
 [Sun Oct 28 11:06:06 2018] 18380414267  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=069204583984
 [Sun Oct 28 11:07:04 2018] 13419070470  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=063403932992
+[Sun Oct 28 11:10:36 2018] 18444026129  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=038104694920
+[Sun Oct 28 11:13:04 2018] 18402864039  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=098704735456
+[Sun Oct 28 11:16:43 2018] 15182634823  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=099505158512
+[Sun Oct 28 11:21:34 2018] 13943576494  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=094405133192
+[Sun Oct 28 11:22:04 2018] 15621529954  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=075504577792
+[Sun Oct 28 11:23:56 2018] 13596359162  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=008105185613
+[Sun Oct 28 11:26:57 2018] 18308421145  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=025605239504
+[Sun Oct 28 11:27:57 2018] 18483621318  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=082204797448
+[Sun Oct 28 11:29:43 2018] 15181021774  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=028005239820
+[Sun Oct 28 11:30:59 2018] 15928451889  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=011504841546
+[Sun Oct 28 11:35:02 2018] 13936899465  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=045705357824
+[Sun Oct 28 11:36:55 2018] 15144204803  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=089205065296
+[Sun Oct 28 11:40:28 2018] 13704669745  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=012304098392
+[Sun Oct 28 11:42:45 2018] 13185773040  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=097703839408
+[Sun Oct 28 11:46:45 2018] 18200145635  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=079404662416

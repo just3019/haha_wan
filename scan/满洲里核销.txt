@@ -3386,3 +3386,21 @@
 15948517504  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=038205300880
 13133955708  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=003205062210
 [Sun Oct 28 11:07:53 2018] 15928642316  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=066505356172
+[Sun Oct 28 11:12:18 2018] 15928483686  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=053105365144
+[Sun Oct 28 11:13:15 2018] 15928489573  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=076403947992
+[Sun Oct 28 11:13:46 2018] 18200472235  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=086504295960
+[Sun Oct 28 11:15:01 2018] 18483643917  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=089905071808
+[Sun Oct 28 11:17:30 2018] 18743554718  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=094105291888
+[Sun Oct 28 11:19:58 2018] 13408581055  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=017505190284
+[Sun Oct 28 11:22:51 2018] 13438314691  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=027305256296
+[Sun Oct 28 11:27:08 2018] 15024499691  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=001105090561
+[Sun Oct 28 11:27:53 2018] 18380154669  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=026404960892
+[Sun Oct 28 11:30:02 2018] 13438375574  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=097305012848
+[Sun Oct 28 11:31:04 2018] 13483159061  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=037905094088
+[Sun Oct 28 11:34:59 2018] 18328589743  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=061605215272
+[Sun Oct 28 11:39:48 2018] 15246147195  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=008005265570
+[Sun Oct 28 11:40:56 2018] 18202848880  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=007704449105
+[Sun Oct 28 11:41:22 2018] 18127098925  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=081103865048
+[Sun Oct 28 11:42:54 2018] 13216296428  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=035505365776
+[Sun Oct 28 11:44:58 2018] 13438104459  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=002005219292
+[Sun Oct 28 11:47:28 2018] 18224027515  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=085505121872
