@@ -107,6 +107,9 @@ def get_sms_code(mobile):
     }
     r = requests.post('https://api.ffan.com/wechatxmt/v1/member/verifyCode', headers=headers, params=params, data=data)
     print(r.text)
+    result = json.loads(r.text)
+    if result["status"] != 200:
+        raise RuntimeError(result["message"])
     print("[" + threading.current_thread().name + "] " + "发送验证码")
 
 
@@ -141,8 +144,9 @@ def wanda_login(mobile, code):
         result = json.loads(response.text)
         print("[" + threading.current_thread().name + "] " + response.text)
         data = result["data"]
-        if result["status"] == 200 and "uid" in data and "cookieStr" in data and "puid" in data:
+        if result["status"] == 200:
             writePhone(mobile)
+        if result["status"] == 200 and "uid" in data and "cookieStr" in data and "puid" in data:
             return data
         if result["status"] == 500:
             global WANDA_LOGIN_500
