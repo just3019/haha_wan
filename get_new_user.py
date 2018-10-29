@@ -211,7 +211,7 @@ def get_no_done_user_count(start1, end1, start2, end2):
 
 
 def write(s):
-    f = open("广场完成情况3.txt", "a")
+    f = open("广场完成情况4.txt", "a")
     f.write('%s\n' % s.strip())
     f.close()
 
