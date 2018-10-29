@@ -45,3 +45,6 @@
 13604647649  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=075705339176
 13221705564  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=026205131652
 15708472514  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=082205295448
+18482381452  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=089304959944
+15044244913  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=095605176264
+13456706803  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=094004815024
