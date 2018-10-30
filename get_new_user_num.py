@@ -2,7 +2,7 @@ import requests
 
 cookies = {
     'sensorsdata2015jssdkcross': '%7B%22distinct_id%22%3A%22wangli59%22%2C%22%24device_id%22%3A%22164c642c5b7407-048ae012493e02-163b6952-1296000-164c642c5b837%22%2C%22props%22%3A%7B%22%24latest_traffic_source_type%22%3A%22%E7%9B%B4%E6%8E%A5%E6%B5%81%E9%87%8F%22%2C%22%24latest_referrer%22%3A%22%22%2C%22%24latest_referrer_host%22%3A%22%22%2C%22%24latest_search_keyword%22%3A%22%E6%9C%AA%E5%8F%96%E5%88%B0%E5%80%BC_%E7%9B%B4%E6%8E%A5%E6%89%93%E5%BC%80%22%7D%2C%22first_id%22%3A%22164c642c5b7407-048ae012493e02-163b6952-1296000-164c642c5b837%22%7D',
-    'JSESSIONID': '36A805645E63A86388892A4FFFEB0FA4',
+    'JSESSIONID': 'A335AEACCFCF82338D055F725C905E17',
 }
 
 headers = {
@@ -16,22 +16,22 @@ headers = {
     'Connection': 'keep-alive',
     'workingOrgCode': 'syqy',
     'code': 'syqy',
-    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36',
+    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36',
     'tenantId': '2017092600001',
     'Accept': 'application/json, text/plain, */*',
     'username': '%E7%8E%8B%E5%8A%9B',
     'Referer': 'http://wanda.ffan.com/',
-    'token': 'MjU4ODY5NTQ1ODY1ODM4NTky',
+    'token': 'MjYxMTAwMDU4ODM1OTQzNDI0',
 }
 
 params = (
-    ('scope', '1000625'),
+    ('scope', '1104512'),
     ('orgType', '10003'),
-    ('startDate', '2016-05-01'),
-    ('endDate', '2018-10-17'),
+    ('startDate', '2018-10-30'),
+    ('endDate', '2018-10-30'),
     ('pageIndex', '1'),
     ('pageSize', '10'),
-    ('timestr', '1539735097043'),
+    ('timestr', '1540898923917'),
 )
 
 response = requests.get('http://wanda.ffan.com/sail/member/report/analyse/expandingAnalyse/expandingSmallProcedureChannel', headers=headers, params=params, cookies=cookies)

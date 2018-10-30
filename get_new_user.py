@@ -219,8 +219,8 @@ def write(s):
 if __name__ == '__main__':
     start1 = '2018-10-18'
     end1 = '2018-10-19'
-    orgId = "1102649"
-    # getUser(1, orgId, start1, end1)
+    orgId = "1104512"
+    getUser(1, orgId, start1, end1)
 
     start2 = '2018-10-01'
     end2 = '2018-10-31'
@@ -228,7 +228,7 @@ if __name__ == '__main__':
 
     print("开始main方法")
 
-    get_no_done_user_count("2018-09-01", "2018-09-30", start2, end2)
+    # get_no_done_user_count("2018-09-01", "2018-09-30", start2, end2)
     # get_all_guangchang(start1, end1)
     # get_one_guangchang("1000885", "营口万达广场", "营口", start1, end1)
     # local_file = "/Users/demon/PycharmProjects/wanda/v3song/丹东新人礼20180911-check.txt"
