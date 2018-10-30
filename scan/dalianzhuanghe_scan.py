@@ -9,7 +9,7 @@ import requests
 import time
 
 lock = threading.Lock()
-place = '大连庄周'
+place = '大连庄河'
 
 headers = {
     'Host': 'sop.ffan.com',
@@ -28,7 +28,7 @@ def log(s):
 
 def write(s):
     f = open(log_path, "a")
-    f.write('%s\n' % s.strip())
+    f.write('[%s] %s\n' % (time.ctime(), s))
     f.close()
 
 
@@ -47,7 +47,7 @@ def scan(code):
         ('version', '47'),
         ('_uni_source', '2.2'),
         ('merchantId', '10103498'),
-        ('loginToken', 'b9754caf985805fe15ac417c9e33b684'),
+        ('loginToken', '9df0b6c31ded941f9bf7e8c6dcf9babc'),
         ('deviceId', '184d19d52857d3628276407b946e367d208c7c5d'),
         ('appType', 'bpMobile'),
         ('username', '15840866817'),
@@ -59,7 +59,7 @@ def scan(code):
     data = {
         '_uni_source': '2.2',
         'appType': 'bpMobile',
-        'app_time': '2789511355917',
+        'app_time': '26852892206078',
         'app_verification_native': get_random(),
         'certificateno': code,
         'checkDevice': '1',
@@ -67,17 +67,16 @@ def scan(code):
         'clientId': 'xapi_01',
         'clientType': 'iOS',
         'deviceId': '184d19d52857d3628276407b946e367d208c7c5d',
-        'loginToken': 'b9754caf985805fe15ac417c9e33b684',
+        'loginToken': '9df0b6c31ded941f9bf7e8c6dcf9babc',
         'merchantId': '10103498',
         'serverVersion': '1',
-        'sign': 'b772b2afccec27904474466ebaf70f08',
+        'sign': '632265244091937fd2bca4d3d56c4f90',
         'storeId': '10421457',
         'telephone': '15840866817',
         'uid': '464721',
         'username': '15840866817',
         'version': '47'
     }
-
     response = requests.post('https://sop.ffan.com/goods/coupon/queryUnusedCoupons', headers=headers, params=params,
                              data=data)
     print(response.text)
@@ -90,7 +89,7 @@ def scan(code):
         ('version', '47'),
         ('_uni_source', '2.2'),
         ('merchantId', '10103498'),
-        ('loginToken', 'b9754caf985805fe15ac417c9e33b684'),
+        ('loginToken', '9df0b6c31ded941f9bf7e8c6dcf9babc'),
         ('deviceId', '184d19d52857d3628276407b946e367d208c7c5d'),
         ('appType', 'bpMobile'),
         ('username', '15840866817'),
@@ -102,18 +101,18 @@ def scan(code):
     data1 = {
         '_uni_source': '2.2',
         'appType': 'bpMobile',
-        'app_time': '2789581373891',
+        'app_time': '26852945505160',
         'app_verification_native': get_random(),
         'certificateno': code,
         'clientAgent': 'iPhone9,2/iOS/12.0/1242*2208',
         'clientId': 'xapi_01',
         'clientType': 'iOS',
         'deviceId': '184d19d52857d3628276407b946e367d208c7c5d',
-        'loginToken': 'b9754caf985805fe15ac417c9e33b684',
-        'memberId': '15000000115872445',
+        'loginToken': '9df0b6c31ded941f9bf7e8c6dcf9babc',
+        'memberId': '15000000081688778',
         'merchantId': '10103498',
         'serverVersion': '1',
-        'sign': '942b18ea533886427c8ba439f20ec637',
+        'sign': 'bc0a91fba5798bcacc74c6da4589669a',
         'storeId': '10421457',
         'telephone': '15840866817',
         'uid': '464721',
@@ -121,7 +120,6 @@ def scan(code):
         'username': '15840866817',
         'version': '47'
     }
-
     response = requests.post('https://sop.ffan.com/goods/coupon/checkCoupon', headers=headers, params=params1,
                              data=data1)
     result = response.text
@@ -196,14 +194,11 @@ def deal():
             mystr = file.readline()
             if not mystr:
                 break
-            log(str(index) + "  " + mystr)
             code = mystr[mystr.find('info=') + 5: mystr.find('info=') + 17]
-            print(code)
+            log(str(index) + "  " + code)
             scan(code)
-            write(mystr)
+            write(mystr.strip())
             log(str(index) + "个核销成功。")
-            print(minTime)
-            print(maxTime)
             sleeptime = random.randint(int(minTime), int(maxTime))
             log("本次停顿：" + str(sleeptime))
             time.sleep(sleeptime)
