@@ -1,3 +1,5 @@
+import json
+
 import requests
 
 cookies = {
@@ -25,14 +27,18 @@ headers = {
 }
 
 params = (
-    ('scope', '1104512'),
+    ('scope', '1100573'),
     ('orgType', '10003'),
-    ('startDate', '2018-10-30'),
-    ('endDate', '2018-10-30'),
+    ('startDate', '2018-10-31'),
+    ('endDate', '2018-10-31'),
     ('pageIndex', '1'),
-    ('pageSize', '10'),
+    ('pageSize', '1'),
     ('timestr', '1540898923917'),
 )
 
-response = requests.get('http://wanda.ffan.com/sail/member/report/analyse/expandingAnalyse/expandingSmallProcedureChannel', headers=headers, params=params, cookies=cookies)
+response = requests.get(
+    'http://wanda.ffan.com/sail/member/report/analyse/expandingAnalyse/expandingSmallProcedureChannel', headers=headers,
+    params=params, cookies=cookies)
 print(response.text)
+r = json.loads(response.text)
+print(r["_metadata"]["totalCount"])
