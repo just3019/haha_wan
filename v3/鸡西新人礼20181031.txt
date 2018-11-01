@@ -1,2 +1,0 @@
-13216054559  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=013105357810
-13216414590  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=053605077916
