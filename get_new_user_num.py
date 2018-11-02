@@ -27,12 +27,12 @@ headers = {
 }
 
 params = (
-    ('scope', '1104512'),
+    ('scope', '1101038'),
     ('orgType', '10003'),
-    ('startDate', '2018-11-01'),
+    ('startDate', '2018-11-02'),
     ('endDate', '2018-11-02'),
     ('pageIndex', '1'),
-    ('pageSize', '1'),
+    ('pageSize', '1000'),
     ('timestr', '1540898923917'),
 )
 
@@ -41,4 +41,10 @@ response = requests.get(
     params=params, cookies=cookies)
 print(response.text)
 r = json.loads(response.text)
-print(r["_metadata"]["totalCount"])
+print(r)
+list = r["data"]
+print(list)
+for i in range(0, len(list)):
+    print(list[i]["mobileNo"])
+#
+# print(r["_metadata"]["totalCount"])
