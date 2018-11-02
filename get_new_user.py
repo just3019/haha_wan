@@ -54,7 +54,7 @@ def getUser(index, scope, start, end):
         ('regStartTime', start),
         ('regEndTime', end),
         ('pageIndex', index),
-        ('pageSize', '10'),
+        ('pageSize', '1000'),
         ('scopes/[/]', scope),
         ('scope', scope),
         ('orgType', '10003'),
@@ -90,7 +90,7 @@ def check_phone(phone):
 
 
 def get_one_guangchang(id, guangchangname, localname, start, end):
-    place_name = "1011/" + guangchangname + ".txt"
+    place_name = "1102/" + guangchangname + ".txt"
     file_write = open(place_name, "a")
     total_count = 0
     ip138check_phone.init(localname)
@@ -217,10 +217,10 @@ def write(s):
 
 
 if __name__ == '__main__':
-    start1 = '2018-10-18'
-    end1 = '2018-10-19'
+    start1 = '2018-10-01'
+    end1 = '2018-10-07'
     orgId = "1104512"
-    getUser(1, orgId, start1, end1)
+    # getUser(1, orgId, start1, end1)
 
     start2 = '2018-10-01'
     end2 = '2018-10-31'
@@ -230,7 +230,7 @@ if __name__ == '__main__':
 
     # get_no_done_user_count("2018-09-01", "2018-09-30", start2, end2)
     # get_all_guangchang(start1, end1)
-    # get_one_guangchang("1000885", "营口万达广场", "营口", start1, end1)
+    get_one_guangchang("1000303", "呼和浩特万达广场", "呼和浩特", start1, end1)
     # local_file = "/Users/demon/PycharmProjects/wanda/v3song/丹东新人礼20180911-check.txt"
     # write_file = "/Users/demon/PycharmProjects/wanda/v3song/丹东新人礼20180911-check-result.txt"
     # get_and_check_local_phone(local_file, write_file)

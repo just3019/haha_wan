@@ -351,23 +351,23 @@ def ui():
     root = Tk()  # 创建窗口对象的背景色
     # 创建两个列表
     root.title('飞凡刷粉工具-' + PLACE + '万达版')
-    root.geometry('400x250')
+    root.geometry('300x250')
     fm1 = Frame(root)
     fm1.pack(fill=X)
 
-    label1 = Label(fm1, text='生成数量：')
+    label1 = Label(fm1, text='量：')
     global entry1
-    entry1 = Entry(fm1, width=5)
+    entry1 = Entry(fm1, width=4)
 
-    label2 = Label(fm1, text='第几个商品：')
+    label2 = Label(fm1, text='序号：')
     global entry2
-    entry2 = Entry(fm1, width=5)
+    entry2 = Entry(fm1, width=3)
     label1.pack(side=LEFT)
     entry1.pack(side=LEFT)
     label2.pack(side=LEFT)
     entry2.pack(side=LEFT)
 
-    interval_label = Label(fm1, text="间隔时间")
+    interval_label = Label(fm1, text="间隔：")
     global interval
     interval = Entry(fm1, width=5)
     interval_label.pack(side=LEFT)
@@ -386,17 +386,17 @@ def ui():
 
     fm2 = Frame(root)
     fm2.pack()
-    btn = Button(fm2, text='普通', command=submit)
+    btn = Button(fm2, text='普', command=submit)
     btn.pack(side=LEFT)
-    btn1 = Button(fm2, text='新人礼', command=xinren_submit)
+    btn1 = Button(fm2, text='新', command=xinren_submit)
     btn1.pack(side=LEFT)
     btn2 = Button(fm2, text="注册", command=user_submit)
     btn2.pack(side=LEFT)
     btn3 = Button(fm2, text='特定', command=dalian_submit)
     btn3.pack(side=LEFT)
-    btn4 = Button(fm2, text='快新人礼', command=kuai_xinren_submit)
+    btn4 = Button(fm2, text='快新', command=kuai_xinren_submit)
     btn4.pack(side=LEFT)
-    btn5 = Button(fm2, text='快普通', command=kuai_putong_submit)
+    btn5 = Button(fm2, text='快普', command=kuai_putong_submit)
     btn5.pack(side=LEFT)
 
     root.mainloop()  # 进入消息循环

@@ -21,10 +21,11 @@ headers = {
     'Referer': 'http://wanda.ffan.com/',
     'token': 'MjUxNzcwNDk1MTQ0Mjk2NDQ4',
 }
-file = "营口新人礼20181030"
+file = "未成为新增会员电话明细"
 file_write = "/Users/demon/Desktop/1/" + file + "校验号码.txt"
 file_read = "/Users/demon/Desktop/1/" + file + ".txt"
-name = "营口万达广场"
+file_write_success = "/Users/demon/Desktop/1/" + file + ".txt"
+name = "朝阳万达广场"
 # 非该广场名
 notequal = ""
 # 非该广场数
@@ -34,6 +35,12 @@ no_num = 0
 
 
 def write(s):
+    f = open(file_write, "a")
+    f.write('%s\n' % s.strip())
+    f.close()
+
+
+def write_success(s):
     f = open(file_write, "a")
     f.write('%s\n' % s.strip())
     f.close()
@@ -79,6 +86,8 @@ if __name__ == '__main__':
                 if address not in notequal:
                     notequal += " " + address
                 notequal_num += 1
+            else:
+                write_success(mystr.strip())
             write(phone + " " + result["fromOrg"])
         except RuntimeError as e:
             no_num += 1
