@@ -21,10 +21,10 @@ headers = {
     'Referer': 'http://wanda.ffan.com/',
     'token': 'MjUxNzcwNDk1MTQ0Mjk2NDQ4',
 }
-file = "朝阳普通20181102"
+file = "朝阳普通20181103"
 file_write = "/Users/demon/Desktop/1/" + file + "校验号码.txt"
 file_read = "/Users/demon/Desktop/1/" + file + ".txt"
-file_write_success = "/Users/demon/Desktop/1/" + file + ".txt"
+file_write_success = "/Users/demon/Desktop/1/" + file + "succ.txt"
 name = "朝阳万达广场"
 # 非该广场名
 notequal = ""
@@ -41,7 +41,7 @@ def write(s):
 
 
 def write_success(s):
-    f = open(file_write, "a")
+    f = open(file_write_success, "a")
     f.write('%s\n' % s.strip())
     f.close()
 
