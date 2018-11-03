@@ -351,7 +351,7 @@ def ui():
     root = Tk()  # 创建窗口对象的背景色
     # 创建两个列表
     root.title('飞凡刷粉工具-' + PLACE + '万达版')
-    root.geometry('300x250')
+    root.geometry('320x250')
     fm1 = Frame(root)
     fm1.pack(fill=X)
 
