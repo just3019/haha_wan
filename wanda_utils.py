@@ -328,7 +328,7 @@ def phone_sms():
 
 def log(s):
     print("[" + threading.current_thread().name + "] " + s)
-    textView.insert(END, '[%s] [%s] %s\n' % (threading.current_thread().name, time.ctime(), s))
+    textView.insert(END, '[%s] [%s] %s\n' % (threading.current_thread().name, time.strftime("%x %X"), s))
     textView.update()
     textView.see(END)
 
@@ -392,8 +392,8 @@ def ui():
     btn1.pack(side=LEFT)
     btn2 = Button(fm2, text="注册", command=user_submit)
     btn2.pack(side=LEFT)
-    btn3 = Button(fm2, text='特定', command=dalian_submit)
-    btn3.pack(side=LEFT)
+    # btn3 = Button(fm2, text='特定', command=dalian_submit)
+    # btn3.pack(side=LEFT)
     btn4 = Button(fm2, text='快新', command=kuai_xinren_submit)
     btn4.pack(side=LEFT)
     btn5 = Button(fm2, text='快普', command=kuai_putong_submit)
