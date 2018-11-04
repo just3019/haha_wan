@@ -21,7 +21,7 @@ headers = {
     'Referer': 'http://wanda.ffan.com/',
     'token': 'MjUxNzcwNDk1MTQ0Mjk2NDQ4',
 }
-file = "朝阳普通20181103"
+file = "朝阳普通20181104"
 file_write = "/Users/demon/Desktop/1/" + file + "校验号码.txt"
 file_read = "/Users/demon/Desktop/1/" + file + ".txt"
 file_write_success = "/Users/demon/Desktop/1/" + file + "succ.txt"
