@@ -9,3 +9,5 @@ pom.xml.versionsBackup
 build
 dest
 __*
+*.spec
+*.exe
