@@ -27,12 +27,12 @@ headers = {
 }
 
 params = (
-    ('scope', '1000645'),
+    ('scope', '1101038'),
     ('orgType', '10003'),
-    ('startDate', '2018-11-04'),
-    ('endDate', '2018-11-04'),
+    ('startDate', '2018-11-05'),
+    ('endDate', '2018-11-05'),
     ('pageIndex', '1'),
-    ('pageSize', '1'),
+    ('pageSize', '1000'),
     ('timestr', '1540898923917'),
 )
 
@@ -46,4 +46,4 @@ list = r["data"]
 print(list)
 for i in range(0, len(list)):
     print(list[i]["mobileNo"])
-print(r["_metadata"]["totalCount"])
+# print(r["_metadata"]["totalCount"])
