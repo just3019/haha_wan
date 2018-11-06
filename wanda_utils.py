@@ -37,7 +37,7 @@ XM_LOCAL = ""
 HM_PROVINCE = ""
 not_eq = 0
 QRCODE_URL = "https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info="
-yunxiang.yx_login()
+yunxiang.yx_login("demon3019", "12345678")
 
 headers = {
     'Host': 'api.ffan.com',

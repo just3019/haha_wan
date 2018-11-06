@@ -17,9 +17,11 @@ TOKEN = "7920047BF00ED99E20CCCF859E648FA0"
 XMID = "5681"
 
 
-def yx_login():
-    url = "http://47.97.118.96:9180/service.asmx/UserLoginStr?name=demon3019&psw=12345678"
+def yx_login(username, password):
+    url = "http://47.97.118.96:9180/service.asmx/UserLoginStr?name=%s&psw=%s" % (username, password)
     response = requests.get(url, headers=headers, timeout=10)
+    global TOKEN
+    TOKEN = response.text
     return response.text
 
 
@@ -90,10 +92,10 @@ def yx_phone_many(num):
 
 
 if __name__ == '__main__':
-    yx_login()
+    print(yx_login("demon3019", "12345678"))
     # yx_phone_many(100)
-    phone = yx_phone()
-    print(phone)
+    # phone = yx_phone()
+    # print(phone)
     # get_code.get_code(phone)
     # yx_sms(phone, 60)
     # yx_release_all()

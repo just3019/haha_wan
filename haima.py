@@ -13,14 +13,21 @@ UID = "29135"
 header_dict = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko'}
 
 
-def hm_login():
+def hm_login(username, password):
     url = URL + "loginIn"
     data = [
-        ('uid', USERNAME),
-        ('pwd', PASSWORD),
+        ('uid', username),
+        ('pwd', password),
     ]
     response = requests.post(url, data, headers=header_dict, timeout=10).text
     print("[" + threading.current_thread().name + "] " + "登录：" + response)
+    r = json.loads(response)
+    global TOKEN
+    TOKEN = r["Token"]
+    global UID
+    UID = r["Uid"]
+    print(TOKEN)
+    print(UID)
     return response
 
 
@@ -61,14 +68,14 @@ def hm_black(phone):
 
 
 if __name__ == '__main__':
-    login_result = json.loads(hm_login())
-    print(str(login_result["Uid"]) + " " + login_result["Token"] + " " + str(login_result["Balance"]) + " " + str(
-        login_result["UsedMax"]))
-    uid = login_result["Uid"]
-    token = login_result["Token"]
-    print(token)
+    # login_result = json.loads(hm_login("wuhai", "wuhai123"))
+    # print(str(login_result["Uid"]) + " " + login_result["Token"] + " " + str(login_result["Balance"]) + " " + str(
+    #     login_result["UsedMax"]))
+    # uid = login_result["Uid"]
+    # token = login_result["Token"]
+    # print(token)
     phone_result = hm_phone("", "辽宁")
     print(phone_result)
     # # get_code.get_code(phone_result)
     # sms_result = hm_sms(phone_result, 60)
-    hm_black(phone_result)
+    # hm_black(phone_result)

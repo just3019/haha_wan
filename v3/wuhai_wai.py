@@ -6,11 +6,15 @@ from tkinter import *
 
 import requests
 
+import haima
 import yima
+import yunxiang
 
 ym_username = "wuhaiwanda"
 ym_password = "wuhaiwanda"
 TOKEN = yima.ym_login(ym_username, ym_password)
+haima.hm_login("wuhai", "wuhai123")
+yunxiang.yx_login("wuhai", "wuhai123")
 PLAZAID = '1100754'
 PROVINCE = ''
 PLACE = '乌海'
@@ -24,6 +28,7 @@ PUID = ""
 ITEMID = '7982'
 WXFFANTOKEN = "ddde88c336cb4030b9b81ad2f44febf5"
 LOCK = threading.Lock()
+not_eq = 0
 
 headers = {
     'Host': 'api.ffan.com',
@@ -191,6 +196,75 @@ def get_coupon_no(oid):
             raise RuntimeError("获取优惠券失败")
 
 
+def phone_sms():
+    # 当为1的时候从易码获取，当为其他的时候从讯码获取
+    global not_eq
+    num = random.randint(1, 3)
+    if num == 1 and num != not_eq:
+        phone_sms_result = ym_result()
+        print("[" + threading.current_thread().name + "] " + "本次易码获取号码")
+        not_eq = 1
+    elif num == 2 and num != not_eq:
+        phone_sms_result = hm_result()
+        print("[" + threading.current_thread().name + "] " + "本次海码获取号码")
+        not_eq = 2
+    elif num == 3 and num != not_eq:
+        phone_sms_result = yx_result()
+        print("[" + threading.current_thread().name + "] " + "本次云享获取号码")
+        not_eq = 3
+    else:
+        raise RuntimeError("重新选平台")
+    return phone_sms_result
+
+
+# 易码获取手机号和短信 phone|sms
+def ym_result():
+    # log("从易码获取")
+    EXCLUDENO = random.choice(EXCLUDENOS)
+    phone = yima.ym_phone(TOKEN, ITEMID, EXCLUDENO, PROVINCE, CITY, "")
+    if phone is None:
+        log("获取手机号为：" + str(phone))
+        raise RuntimeError("手机号获取不到")
+    check_result = check_phone(phone)
+    if check_result['status'] != '0000' or check_result['_metadata']['totalCount'] != 0:
+        yima.ym_release(TOKEN, ITEMID, phone)
+        yima.ym_ignore(TOKEN, ITEMID, phone)
+        raise RuntimeError("手机号已注册过")
+    get_sms_code(phone)
+    sms = yima.ym_sms(TOKEN, ITEMID, phone, TIMEOUT)
+    return phone + "|" + sms
+
+
+def hm_result():
+    # log("从海码获取")
+    phone = haima.hm_phone("", "")
+    if phone is None:
+        raise RuntimeError("手机号获取不到")
+    check_result = check_phone(phone)
+    if check_result['status'] != '0000' or check_result['_metadata']['totalCount'] != 0:
+        haima.hm_black(phone)
+        raise RuntimeError("手机号已注册过")
+    get_sms_code(phone)
+    time.sleep(2)
+    sms = haima.hm_sms(phone, TIMEOUT)
+    return phone + "|" + sms
+
+
+def yx_result():
+    phone = yunxiang.yx_phone()
+    if phone is None:
+        raise RuntimeError("手机号码获取不到")
+    check_result = check_phone(phone)
+    if check_result['status'] != '0000' or check_result['_metadata']['totalCount'] != 0:
+        yunxiang.yx_relese(phone)
+        yunxiang.yx_black(phone)
+        raise RuntimeError("手机号已注册过")
+    get_sms_code(phone)
+    time.sleep(2)
+    sms = yunxiang.yx_sms(phone, TIMEOUT)
+    return phone + "|" + sms
+
+
 def log(s):
     print(s)
     textView.insert(END, '%s\n' % s)
@@ -286,18 +360,10 @@ def deal(num, index):
     while COUNT < num:
         try:
             log("执行到第" + str(COUNT + 1) + "条。")
-            EXCLUDENO = random.choice(EXCLUDENOS)
-            phone = yima.ym_phone(TOKEN, ITEMID, EXCLUDENO, PROVINCE, CITY, "")
-            if phone is None:
-                log("获取手机号为：" + str(phone))
-                raise RuntimeError("手机号获取不到")
-            check_result = check_phone(phone)
-            if check_result['status'] != '0000' or check_result['_metadata']['totalCount'] != 0:
-                yima.ym_release(TOKEN, ITEMID, phone)
-                yima.ym_ignore(TOKEN, ITEMID, phone)
-                continue
-            get_sms_code(phone)
-            sms = yima.ym_sms(TOKEN, ITEMID, phone, TIMEOUT)
+            phone_sms_result = phone_sms()
+            phone_smss = phone_sms_result.split("|")
+            phone = phone_smss[0]
+            sms = phone_smss[1]
             code = get_code(sms)
             login_result = wanda_login(phone, code)
             if login_result == "500":
@@ -340,16 +406,10 @@ def xinren_deal(num):
     while COUNT < num:
         try:
             log("执行到第" + str(COUNT + 1) + "条。")
-            EXCLUDENO = random.choice(EXCLUDENOS)
-            phone = yima.ym_phone(TOKEN, ITEMID, EXCLUDENO, PROVINCE, CITY, "")
-            log("获取手机号为：" + str(phone))
-            check_result = check_phone(phone)
-            if check_result['status'] != '0000' or check_result['_metadata']['totalCount'] != 0:
-                yima.ym_release(TOKEN, ITEMID, phone)
-                yima.ym_ignore(TOKEN, ITEMID, phone)
-                continue
-            get_sms_code(phone)
-            sms = yima.ym_sms(TOKEN, ITEMID, phone, TIMEOUT)
+            phone_sms_result = phone_sms()
+            phone_smss = phone_sms_result.split("|")
+            phone = phone_smss[0]
+            sms = phone_smss[1]
             code = get_code(sms)
             wanda_login(phone, code)
             oid = get_new_order_no()
