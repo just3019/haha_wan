@@ -11,3 +11,4 @@ dest
 __*
 *.spec
 *.exe
+.txt
