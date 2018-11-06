@@ -27,7 +27,7 @@ headers = {
 }
 
 params = (
-    ('scope', '1101038'),
+    ('scope', '1000645'),
     ('orgType', '10003'),
     ('startDate', '2018-11-06'),
     ('endDate', '2018-11-06'),
@@ -45,5 +45,5 @@ print(r)
 list = r["data"]
 print(list)
 for i in range(0, len(list)):
-    print(list[i]["mobileNo"])
+    print(list[i]["mobileNo"] + " " + list[i]["firstLoginTime"])
 print(r["_metadata"]["totalCount"])
