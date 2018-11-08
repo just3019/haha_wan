@@ -9338,3 +9338,195 @@ Sun Oct 28 10:07:17 2018 13250884856  https://api.ffan.com/qrcode/v1/qrcode?type
 [Sun Nov  4 18:45:06 2018] 15183690546  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=078405242568
 [Sun Nov  4 18:45:17 2018] 15883679240  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=020305113024
 [Sun Nov  4 18:45:39 2018] 18349388878  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=095604481504
+[Thu Nov  8 14:26:59 2018] 13261374023  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=017905090392
+[Thu Nov  8 14:29:02 2018] 18781949209  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=077905118576
+[Thu Nov  8 14:29:55 2018] 15828214208  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=088503943376
+[Thu Nov  8 14:30:32 2018] 13117922808  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=088805079144
+[Thu Nov  8 14:31:22 2018] 18334375929  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=040105358504
+[Thu Nov  8 14:31:37 2018] 13251084691  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=045404940644
+[Thu Nov  8 14:32:49 2018] 14702868515  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=088704700480
+[Thu Nov  8 14:34:00 2018] 13483119375  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=053405273688
+[Thu Nov  8 14:35:03 2018] 15928148922  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=075704530392
+[Thu Nov  8 15:42:20 2018] 13261374023  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=017905090392
+[Thu Nov  8 16:11:12 2018] 18333416576  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=034205227468
+
+[Thu Nov  8 16:11:36 2018] 13408542740  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=001505025605
+
+[Thu Nov  8 16:12:28 2018] 18336425484  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=090205347192
+
+[Thu Nov  8 16:13:22 2018] 13026216564  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=001602257832
+
+[Thu Nov  8 16:15:18 2018] 18328547741  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=023405008240
+
+[Thu Nov  8 16:17:46 2018] 18380145854  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=001304234083
+
+[Thu Nov  8 16:20:28 2018] 13408516534  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=026605294638
+
+[Thu Nov  8 16:22:14 2018] 18380434421  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=061105255396
+
+[Thu Nov  8 16:24:06 2018] 18458185450  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=048405354504
+
+[Thu Nov  8 16:26:27 2018] 18383860453  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=067305181128
+
+[Thu Nov  8 16:27:25 2018] 17162767435  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=066605092044
+
+[Thu Nov  8 16:27:51 2018] 15884280409  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=074303845056
+
+[Thu Nov  8 16:30:00 2018] 13500955430  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=040905022064
+
+[Thu Nov  8 16:32:32 2018] 13944595714  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=023705345530
+
+[Thu Nov  8 16:35:19 2018] 18380435862  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=097505224144
+
+[Thu Nov  8 16:36:10 2018] 18224439863  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=038605072592
+
+[Thu Nov  8 16:36:25 2018] 15731326196  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=088904763272
+
+[Thu Nov  8 16:37:41 2018] 18380434253  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=035605080880
+
+[Thu Nov  8 16:39:14 2018] 13795986504  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=030603431816
+
+[Thu Nov  8 16:40:45 2018] 18380434471  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=051505233784
+
+[Thu Nov  8 16:42:55 2018] 18380435196  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=059204602660
+
+[Thu Nov  8 16:45:56 2018] 15926757748  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=008304946206
+
+[Thu Nov  8 16:46:19 2018] 15971403669  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=081705243416
+
+[Thu Nov  8 16:47:13 2018] 13483124017  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=037805075892
+
+[Thu Nov  8 16:47:56 2018] 18380435287  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=058903554604
+
+[Thu Nov  8 16:49:39 2018] 18380436063  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=062805399672
+
+[Thu Nov  8 16:51:38 2018] 18272147167  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=028904635498
+
+[Thu Nov  8 16:52:28 2018] 18380433697  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=026005171816
+
+[Thu Nov  8 16:53:45 2018] 13668300474  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=016505226670
+
+[Thu Nov  8 16:56:00 2018] 18380433572  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=057005077424
+
+[Thu Nov  8 16:56:42 2018] 18349380693  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=019004910020
+
+[Thu Nov  8 16:58:30 2018] 18428082593  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=058805072604
+
+[Thu Nov  8 16:59:20 2018] 18380434388  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=016005007864
+
+[Thu Nov  8 17:01:03 2018] 18345964097  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=019105221010
+
+[Thu Nov  8 17:01:27 2018] 15928541757  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=036805090488
+
+[Thu Nov  8 17:04:13 2018] 13126708184  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=068505356544
+
+[Thu Nov  8 17:05:23 2018] 18380641541  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=072504715464
+
+[Thu Nov  8 17:07:12 2018] 13157764785  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=000705012407
+
+[Thu Nov  8 17:09:51 2018] 15731331247  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=070005062936
+
+[Thu Nov  8 17:12:17 2018] 13170955676  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=021604649266
+
+[Thu Nov  8 17:12:41 2018] 13550655404  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=033005069294
+
+[Thu Nov  8 17:14:04 2018] 13184673819  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=037705149612
+
+[Thu Nov  8 17:15:21 2018] 13408643179  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=003503848110
+
+[Thu Nov  8 17:17:57 2018] 18708124997  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=082905210176
+
+[Thu Nov  8 17:19:35 2018] 18349390030  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=031105191700
+
+[Thu Nov  8 17:20:17 2018] 18281056734  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=040005282544
+
+[Thu Nov  8 17:21:21 2018] 13463892171  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=057604270664
+
+[Thu Nov  8 17:21:54 2018] 13221722564  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=085604023008
+
+[Thu Nov  8 17:23:57 2018] 18481919661  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=008805062318
+
+[Thu Nov  8 17:26:07 2018] 13216273449  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=043605298336
+
+[Thu Nov  8 17:28:01 2018] 13221726405  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=058305012488
+
+[Thu Nov  8 17:29:34 2018] 18380191324  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=048104760648
+
+[Thu Nov  8 17:32:31 2018] 15507921485  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=040405099176
+
+[Thu Nov  8 17:33:09 2018] 13282098714  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=045205354236
+
+[Thu Nov  8 17:35:52 2018] 15507923341  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=088705157360
+
+[Thu Nov  8 17:38:15 2018] 15507922349  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=095605261096
+
+[Thu Nov  8 17:39:49 2018] 18383848014  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=040304572204
+
+[Thu Nov  8 17:42:01 2018] 14556636534  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=040605199784
+
+[Thu Nov  8 17:43:57 2018] 14556632426  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=035104799792
+
+[Thu Nov  8 17:44:51 2018] 13216416647  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=033404932376
+
+[Thu Nov  8 17:46:07 2018] 15507923243  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=036004994452
+
+[Thu Nov  8 17:47:13 2018] 15507923464  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=070305140256
+
+[Thu Nov  8 17:48:36 2018] 18737305885  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=090805040320
+
+[Thu Nov  8 17:49:15 2018] 18224099981  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=051305063504
+
+[Thu Nov  8 17:50:39 2018] 17137523326  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=005004983210
+
+[Thu Nov  8 17:51:17 2018] 15700414865  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=076605360552
+
+[Thu Nov  8 17:53:59 2018] 18200438961  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=069005046592
+
+[Thu Nov  8 17:55:46 2018] 18702820196  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=030804135878
+
+[Thu Nov  8 17:57:13 2018] 19831358684  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=069205290784
+
+[Thu Nov  8 17:58:28 2018] 13658166574  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=099505284720
+
+[Thu Nov  8 18:00:19 2018] 18408207907  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=034405126188
+
+[Thu Nov  8 18:02:13 2018] 14556646935  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=065905206704
+
+[Thu Nov  8 18:02:47 2018] 18846646747  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=079605130120
+
+[Thu Nov  8 18:04:49 2018] 15183899604  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=064004740476
+
+[Thu Nov  8 18:06:10 2018] 18331315037  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=094605353088
+
+[Thu Nov  8 18:07:15 2018] 13451470129  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=084204981400
+
+[Thu Nov  8 19:17:56 2018] 18380436136  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=085105264176
+
+[Thu Nov  8 19:25:02 2018] 18443584732  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=038905392016
+
+[Thu Nov  8 19:25:05 2018] 13235771534  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=011804480636
+
+[Thu Nov  8 19:25:06 2018] 18118776345  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=001305239608
+
+[Thu Nov  8 19:25:11 2018] 15281367545  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=053705146332
+
+[Thu Nov  8 19:25:14 2018] 14556635330  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=008105310172
+
+[Thu Nov  8 19:25:22 2018] 18384806029  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=017005268244
+
+[Thu Nov  8 19:26:04 2018] 18780679476  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=070305211024
+
+[Thu Nov  8 19:26:12 2018] 18780691574  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=024505387292
+
+[Thu Nov  8 19:26:21 2018] 18346648397  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=080504225128
+
+[Thu Nov  8 19:26:31 2018] 15947942413  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=053404626188
+
+[Thu Nov  8 19:27:08 2018] 14556638962  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=020505231284
+
+[Thu Nov  8 19:27:16 2018] 15981122604  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=027904357576
+
+[Thu Nov  8 19:27:57 2018] 17057914557  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=078004738976
+
+[Thu Nov  8 19:28:50 2018] 18232321319  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=045004714296
+

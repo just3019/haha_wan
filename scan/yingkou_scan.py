@@ -8,6 +8,8 @@ from tkinter import filedialog
 
 import requests
 
+from thread_pool import ThreadPool
+
 lock = threading.Lock()
 place = '营口'
 
@@ -21,14 +23,14 @@ headers = {
 
 def log(s):
     print(s)
-    textView.insert(END, '%s\n' % s)
+    textView.insert(END, '[%s][%s]%s\n' % (threading.current_thread().name, time.strftime("%x %X"), s))
     textView.update()
     textView.see(END)
 
 
 def write(s):
     f = open(log_path, "a")
-    f.write('[%s] %s\n' % (time.ctime(), s))
+    f.write('[%s] %s\n' % (time.strftime("%x %X"), s.strip()))
     f.close()
 
 
@@ -196,8 +198,10 @@ def deal():
     file = open(file_path, 'r')
     index = 0
     t1 = time.time()
+    TP = ThreadPool(30)
     while True:
         try:
+            log(str(index) + " 开始")
             minTime = entry1.get()
             maxTime = entry2.get()
             if minTime == "" or maxTime == "":
@@ -207,21 +211,25 @@ def deal():
             mystr = file.readline()
             if not mystr:
                 break
-            code = mystr[mystr.find('info=') + 5: mystr.find('info=') + 17]
-            log(str(index) + "  " + code)
-            scan(code)
-            write(mystr.strip())
-            log(str(index) + "个核销成功。")
+            TP.add_task(scan_write, mystr, index)
             sleeptime = random.randint(int(minTime), int(maxTime))
             log("本次停顿：" + str(sleeptime))
             time.sleep(sleeptime)
         except RuntimeError as e:
             log(e)
             continue
+    TP.wait_completion()
     t2 = time.time()
     log("总共使用：" + str(t2 - t1))
     file.close()
     lock.release()
+
+
+def scan_write(mystr, count):
+    code = mystr[mystr.find('info=') + 5: mystr.find('info=') + 17]
+    scan(code)
+    write(mystr)
+    log(str(count) + "个核销成功。")
 
 
 def check():
