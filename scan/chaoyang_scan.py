@@ -23,7 +23,7 @@ headers = {
 
 def log(s):
     print(s)
-    textView.insert(END, '[%s][%s]%s\n' % (threading.current_thread().name, time.strftime("%x %X"), s))
+    textView.insert(END, '[%s][%s]%s\n' % (threading.current_thread().name, time.strftime("%X"), s))
     textView.update()
     textView.see(END)
 
@@ -227,6 +227,7 @@ def deal():
 
 def scan_write(mystr, count):
     code = mystr[mystr.find('info=') + 5: mystr.find('info=') + 17]
+
     scan(code)
     write(mystr)
     log(str(count) + "个核销成功。")

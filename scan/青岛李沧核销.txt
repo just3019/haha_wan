@@ -198,3 +198,4 @@
 13407388832  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=046004932296
 18443586540  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=014103903520
 15706566720  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=083104987560
+15948421634  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=050504795264

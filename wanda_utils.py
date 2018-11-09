@@ -328,7 +328,7 @@ def phone_sms():
 
 def log(s):
     print("[" + threading.current_thread().name + "] " + s)
-    textView.insert(END, '[%s][%s]%s\n' % (threading.current_thread().name, time.strftime("%x %X"), s))
+    textView.insert(END, '[%s][%s]%s\n' % (threading.current_thread().name, time.strftime("%X"), s))
     textView.update()
     textView.see(END)
 
