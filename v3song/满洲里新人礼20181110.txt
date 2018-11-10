@@ -1,0 +1,1 @@
+18349988814  https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=042905055088
