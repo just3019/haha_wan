@@ -392,8 +392,8 @@ def ui():
     btn1.pack(side=LEFT)
     btn2 = Button(fm2, text="注册", command=user_submit)
     btn2.pack(side=LEFT)
-    # btn3 = Button(fm2, text='特定', command=dalian_submit)
-    # btn3.pack(side=LEFT)
+    btn3 = Button(fm2, text='特定', command=kuai_ding_submit)
+    btn3.pack(side=LEFT)
     btn4 = Button(fm2, text='快新', command=kuai_xinren_submit)
     btn4.pack(side=LEFT)
     btn5 = Button(fm2, text='快普', command=kuai_putong_submit)
@@ -425,7 +425,7 @@ def dalian_submit():
 
 def dalian_deal(num):
     ## 朝阳
-    productId = "20181020181621"
+    productId = "20181110002349"
     global COUNT
     while COUNT < num:
         try:
@@ -755,15 +755,10 @@ def kuai_xinren_submit():
 # 快速新人线程
 def kuai_xinren_thread(num, index):
     global COUNT
-    # threads = []
     TP = ThreadPool(30)
     while COUNT < num:
         try:
             TP.add_task(kuai_xinren_deal, index, COUNT)
-            # th = threading.Thread(target=kuai_xinren_deal, args=(index, COUNT))
-            # threads.append(th)
-            # th.setDaemon(True)  # 守护线程
-            # th.start()
             COUNT += 1
             time.sleep(get_interval_time())
         except RuntimeError as e:
@@ -771,9 +766,6 @@ def kuai_xinren_thread(num, index):
             continue
 
     print("[" + threading.current_thread().name + "] " + "主循环结束")
-    # for t in threads:
-    #     t.join()
-    # print("join完成")
     TP.wait_completion()
     time.sleep(5)
     COUNT = SUCCESS_COUNT
@@ -834,10 +826,6 @@ def kuai_putong_thread(num, index):
     while COUNT < num:
         try:
             TP.add_task(kuai_putong_deal, productId, COUNT)
-            # th = threading.Thread(target=kuai_putong_deal, args=(productId, COUNT))
-            # threads.append(th)
-            # th.setDaemon(True)  # 守护线程
-            # th.start()
             COUNT += 1
             time.sleep(get_interval_time())
         except RuntimeError as e:
@@ -872,3 +860,64 @@ def kuai_putong_deal(productId, num):
     SUCCESS_COUNT += 1
     log("第" + str(num + 1) + "条成功。")
     write(login_result["member"]["mobile"] + "  " + QRCODE_URL + coupon)
+
+
+def kuai_ding_submit():
+    LOCK.acquire()
+    global FILE_PATH
+    FILE_PATH = PLACE + "%s.txt" % time.strftime("%Y%m%d")
+    fans = entry1.get()
+    if fans == '':
+        log('参数不能为空')
+        raise RuntimeError('参数不能为空')
+    try:
+        num = int(entry1.get())
+        if num == '' and num < 0:
+            num = 0
+        th = threading.Thread(target=kuai_ding_thread, args=(num,))
+        th.setDaemon(True)  # 守护线程
+        th.start()
+    except RuntimeError as e:
+        print(e)
+        log('获取失败，请确保输入参数都是整数')
+    LOCK.release()
+
+
+def kuai_ding_thread(num):
+    global COUNT
+    TP = ThreadPool(30)
+    while COUNT < num:
+        try:
+            TP.add_task(kuai_ding_deal, COUNT)
+            COUNT += 1
+            time.sleep(get_interval_time())
+        except RuntimeError as e:
+            print(e)
+            continue
+    print("[" + threading.current_thread().name + "] " + "主循环结束")
+    TP.wait_completion()
+    time.sleep(5)
+    COUNT = SUCCESS_COUNT
+    log("本次任务完成,成功%s,已修改成%s,如果缺失，请再点击开始。" % (str(SUCCESS_COUNT), str(COUNT)))
+    xunma.xm_logout(xmtoken)
+
+
+def kuai_ding_deal(num):
+    productId = "20181110002349"
+    try:
+        log("执行到第" + str(num + 1) + "条。")
+        platform = random.randint(1, 4)
+        xm_token = xmtoken
+        phone = new_get_phone(platform, xm_token)
+        sms = new_get_sms(platform, phone, xm_token)
+        code = get_code(sms)
+        login_result = wanda_login(phone, code)
+        oid = get_coupon(productId, phone, login_result["cookieStr"], login_result["uid"], login_result["puid"])
+        time.sleep(1)
+        coupon = get_coupon_no(oid, login_result["cookieStr"])
+        write(phone + "  " + "https://api.ffan.com/qrcode/v1/qrcode?type=png&size=200&info=" + str(coupon))
+        global SUCCESS_COUNT
+        SUCCESS_COUNT += 1
+        log("第" + str(num + 1) + "条成功。")
+    except RuntimeError as e:
+        print(e)

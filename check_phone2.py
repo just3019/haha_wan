@@ -27,7 +27,7 @@ headers = {
     'token': 'MjY2NjQ2MjA5NTA1MDAxNDcy',
 }
 
-file = "朝阳普通20181110"
+file = "phone朝阳20181111"
 file_write = "/Users/demon/Desktop/1/" + file + "校验号码.txt"
 file_read = "/Users/demon/Desktop/1/" + file + ".txt"
 file_write_success = "/Users/demon/Desktop/1/" + file + "succ.txt"
@@ -56,8 +56,8 @@ def check(phone):
     params = (
         ('scope', '1101038'),
         ('orgType', '10003'),
-        ('startDate', '2018-11-10'),
-        ('endDate', '2018-11-10'),
+        ('startDate', '2018-11-11'),
+        ('endDate', '2018-11-11'),
         ("mobileNo", phone),
         ('pageIndex', '1'),
         ('pageSize', '10'),
