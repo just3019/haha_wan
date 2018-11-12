@@ -23,7 +23,7 @@ headers = {
 
 def log(s):
     print(s)
-    textView.insert(END, '[%s][%s]%s\n' % (threading.current_thread().name, time.strftime("%x %X"), s))
+    textView.insert(END, '[%s][%s]%s\n' % (threading.current_thread().name, time.strftime("%X"), s))
     textView.update()
     textView.see(END)
 

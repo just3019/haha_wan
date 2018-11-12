@@ -183,7 +183,7 @@ def start():
 
 def deal():
     lock.acquire()
-    file = open(file_path, 'r')
+    file = open(file_path, 'rb')
     index = 0
     t1 = time.time()
     while True:

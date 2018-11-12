@@ -24,7 +24,7 @@ PROVINCE = ""
 CITY = ""
 PLACE = ""
 EXCLUDENOS = ["170.171.172"]
-TIMEOUT = 80
+TIMEOUT = 40
 COUNT = 0
 SUCCESS_COUNT = 0
 ITEMID = '7982'
@@ -798,7 +798,7 @@ def kuai_putong_submit():
     LOCK.acquire()
     try:
         global FILE_PATH
-        FILE_PATH = PLACE + "普通%s.txt" % time.strftime("%Y%m%d")
+        FILE_PATH = PLACE + "%s.txt" % time.strftime("%Y%m%d")
         fans = entry1.get()  # 多少粉丝
         index = entry2.get()  # 第几个商品
         if fans == '' or index == '':
