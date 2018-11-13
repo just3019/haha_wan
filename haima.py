@@ -9,6 +9,7 @@ USERNAME = "demon3019"
 PASSWORD = "123456"
 TOKEN = "zPghzzU%2BTqJbhiYruSiTYry5%2B31hVU/yDr9rBgRI9H5vliniFqmmWtEGI/Gj7cdh"
 PID = "521"
+# PID = "11147"  # 丙晟科技
 UID = "29135"
 header_dict = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko'}
 

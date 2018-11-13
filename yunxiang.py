@@ -15,6 +15,7 @@ headers = {
 }
 TOKEN = "7920047BF00ED99E20CCCF859E648FA0"
 XMID = "5681"
+# XMID = "171348"  # 丙晟科技
 
 
 def yx_login(username, password):
