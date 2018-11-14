@@ -25,6 +25,8 @@ TIMEOUT = 80
 def init(plazaId, place):
     global PLAZAID
     PLAZAID = plazaId
+    global PLACE
+    PLACE = place
     global FILE_PATH_PHONE
     FILE_PATH_PHONE = "%s%sphone.txt" % (place, time.strftime("%Y%m%d"))
     global FILE_PATH
@@ -214,7 +216,7 @@ def get_code(sms):
 
 def ui():
     root = Tk()  # 创建窗口对象的背景色
-    root.title('飞凡刷粉工具')
+    root.title('飞凡刷粉工具-%s' % PLACE)
     root.geometry('320x210')
 
     fm1 = Frame(root)
