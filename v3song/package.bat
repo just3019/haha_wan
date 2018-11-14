@@ -1,12 +1,6 @@
-pyinstaller -F beijingfengtai.py
 pyinstaller -F chaoyang.py
 pyinstaller -F daliankaifa.py
 pyinstaller -F dalianzhuanghe.py
 pyinstaller -F dandong.py
 pyinstaller -F manzhouli.py
 pyinstaller -F yingkou.py
-pyinstaller -F chaoyang_scan.py
-pyinstaller -F dandong_scan.py
-pyinstaller -F dalianzhuanghe_scan.py
-pyinstaller -F manzhouli_scan.py
-pyinstaller -F yingkou_scan.py
