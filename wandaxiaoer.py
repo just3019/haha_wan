@@ -1,7 +1,9 @@
+import json
 import random
 import threading
 import time
 from tkinter import *
+from tkinter import filedialog
 
 import requests
 
@@ -32,10 +34,17 @@ def get_interval_time():
     return 0
 
 
+def openfile():
+    r = filedialog.askopenfilename(title='打开文件', filetypes=[('Python', '*.txt'), ('All Files', '*')])
+    log("当前操作的文件是：" + r)
+    global file_path
+    file_path = r
+
+
 def ui():
     root = Tk()
     root.title('核销工具')
-    root.geometry('320x210')
+    root.geometry('320x280')
 
     fm1 = Frame(root)
     fm1.pack(fill=X)
@@ -43,11 +52,24 @@ def ui():
     global entryPhone
     entryPhone = Entry(fm1, width=11)
     entryPhone.pack(side=LEFT)
-    Button(fm1, text="发送验证码", command=send_v_code)
-    Label(fm1, text="间隔").pack(side=LEFT)
+    Button(fm1, text="发送验证码", command=send_v_code).pack(side=LEFT)
+
+    fm2 = Frame(root)
+    fm2.pack(fill=X)
+    Label(fm2, text="验证码").pack(side=LEFT)
+    global entryCode
+    entryCode = Entry(fm2, width=8)
+    entryCode.pack(side=LEFT)
+    Button(fm2, text="登录", command=login).pack(side=LEFT)
+
+    fm3 = Frame(root)
+    fm3.pack(fill=X)
+    global btn_file
+    btn_file = Button(fm3, text='选择券文件', command=openfile).pack(side=LEFT)
+    Label(fm3, text="间隔").pack(side=LEFT)
     global interval
     ie = StringVar()
-    interval = Entry(fm1, width=4, textvariable=ie)
+    interval = Entry(fm3, width=4, textvariable=ie)
     ie.set(30)
     interval.pack(side=LEFT)
 
@@ -58,6 +80,10 @@ def ui():
     textView = Text(root, height=10, yscrollcommand=s1.set)
     textView.pack(expand=YES, fill=X)
     s1.config(command=textView.yview)
+
+    fm4 = Frame(root)
+    fm4.pack()
+    Button(fm4, text="核销").pack(side=LEFT)
 
     root.mainloop()
 
@@ -74,6 +100,15 @@ def send_v_code():
     data = 'mobile=%s' % phone
     response = requests.post('https://api.beyonds.com/wpxe/v1/user/sendVerifyCode', headers=headers, data=data)
     printf(response.text)
+    result = json.loads(response.text)
+    if result["status"] == 200:
+        log("验证码发送成功")
+    else:
+        log("发送失败：%s" % result["message"])
+
+
+def login():
+    printf("登录")
 
 
 if __name__ == '__main__':
