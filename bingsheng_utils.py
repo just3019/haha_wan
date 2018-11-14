@@ -9,6 +9,7 @@ import requests
 from tkinter import *
 
 import yima
+from thread_pool import ThreadPool
 
 LOCK = threading.Lock()
 WXFFANTOKEN = '0fb65ff60569472082c838fbadc9ff92'
@@ -16,7 +17,7 @@ ym_username = "ye907182374"
 ym_password = "baobao1515"
 YM_TOKEN = yima.ym_login(ym_username, ym_password)
 YM_ITEMID = '27894'  # 丙晟科技
-COUNT = 0
+COUNT = 1
 SUCCESS_COUNT = 0
 TIMEOUT = 80
 
@@ -25,9 +26,9 @@ def init(plazaId, place):
     global PLAZAID
     PLAZAID = plazaId
     global FILE_PATH_PHONE
-    FILE_PATH_PHONE = "%s%sphone.txt" % (PLAZAID, time.strftime("%Y%m%d"))
+    FILE_PATH_PHONE = "%s%sphone.txt" % (place, time.strftime("%Y%m%d"))
     global FILE_PATH
-    FILE_PATH = "%s%s.txt" % (PLAZAID, time.strftime("%Y%m%d"))
+    FILE_PATH = "%s%s.txt" % (place, time.strftime("%Y%m%d"))
 
 
 def printf(s):
@@ -56,7 +57,7 @@ def write_phone(s):
 def get_interval_time():
     interval_time = interval.get()
     slep = random.randint(0, int(interval_time))
-    printf("本次停顿：%s秒" + slep)
+    printf("本次停顿：%s秒" % slep)
     if interval_time.isdigit():
         return slep
     return 0
@@ -123,6 +124,7 @@ def new_user_coupon(token, memberid, plazaId):
     data = '{"plazaId":%s}' % plazaId
     response = requests.post('https://api.beyonds.com/wdmp/coupon/v1/newUserCoupon', headers=headers, data=data)
     printf(response.text)
+    return json.loads(response.text)
 
 
 # 获取免费券
@@ -177,7 +179,6 @@ def check_phone(phone):
         'orgTypeCode': '10003',
         'token': 'MjM1MDY0MDgxMjgxNzEyMTI4',
     }
-
     params = (
         ('pageIndex', '1'),
         ('pageSize', '10'),
@@ -189,7 +190,6 @@ def check_phone(phone):
         ('drainagedateshow', 'true'),
         ('timestr', time.time()),
     )
-
     response = requests.get('http://wanda.ffan.com/sail/member/list', headers=headers_guanli, params=params)
     printf("检测手机号有效性：%s" % response.text)
     return json.loads(response.text)
@@ -268,7 +268,6 @@ def ui():
 
 
 def kuai_putong_submit():
-    printf("进行快速普通券")
     num = entry1.get()
     if not num.isdigit() or int(num) <= 0:
         log("输入需要刷的量")
@@ -276,20 +275,31 @@ def kuai_putong_submit():
     t = threading.Thread(target=kuai_putong_thread)
     t.setDaemon(True)
     t.start()
-    printf("完成快速普通全")
 
 
 def kuai_putong_thread():
+    global COUNT
     product = str(comboxlist.get()).split("|")
     log(product)
     productId = product[2]
-    printf("进入线程处理事件")
-    i = 0
+    TP = ThreadPool(30)
     while True:
         # 如果当前大于等于要刷的数量则跳出循环
         if COUNT >= int(entry1.get()):
             break
-        log("进行第%s个任务" % i)
+        TP.add_task(kuai_putong_deal, COUNT, productId)
+        COUNT += 1
+        time.sleep(get_interval_time())
+
+    TP.wait_completion()
+    time.sleep(1)
+    COUNT = SUCCESS_COUNT
+    log("本次任务完成,成功%s,已修改成%s,如果缺失，请再点击开始。" % (SUCCESS_COUNT, COUNT))
+
+
+def kuai_putong_deal(num, productId):
+    try:
+        log("进行第%s个任务" % num)
         platform = random.randint(1, 1)
         phone = new_get_phone(platform)
         sms = new_get_sms(platform, phone)
@@ -297,14 +307,66 @@ def kuai_putong_thread():
         login_result = login(phone, code)
         memberId = login_result["memberId"]
         token = login_result["token"]
-        gain_free_coupon(token, memberId, productId)
-
-        time.sleep(5)
-    printf("完成线程事件")
+        free_coupon = gain_free_coupon(token, memberId, productId)
+        coupon = free_coupon["data"]["code"]
+        s = "%s|%s" % (phone, coupon)
+        write(s)
+        global SUCCESS_COUNT
+        SUCCESS_COUNT += 1
+        log("第%s个任务完成" % num)
+    except RuntimeError as e:
+        printf(e)
 
 
 def kuai_xin_submit():
-    printf("进行快速新人券")
+    num = entry1.get()
+    if not num.isdigit() or int(num) <= 0:
+        log("输入需要刷的量")
+        raise RuntimeError("输入需要刷的量")
+    t = threading.Thread(target=kuai_xin_thread)
+    t.setDaemon(True)
+    t.start()
+
+
+def kuai_xin_thread():
+    global COUNT
+    TP = ThreadPool(30)
+    while True:
+        # 如果当前大于等于要刷的数量则跳出循环
+        if COUNT > int(entry1.get()):
+            break
+        TP.add_task(kuai_xin_deal, COUNT)
+        COUNT += 1
+        time.sleep(get_interval_time())
+
+    TP.wait_completion()
+    time.sleep(1)
+    COUNT = SUCCESS_COUNT
+    log("本次任务完成,成功%s,已修改成%s,如果缺失，请再点击开始。" % (SUCCESS_COUNT, COUNT))
+
+
+def kuai_xin_deal(num):
+    try:
+        log("进行第%s个任务" % num)
+        platform = random.randint(1, 1)
+        phone = new_get_phone(platform)
+        sms = new_get_sms(platform, phone)
+        code = get_code(sms)
+        login_result = login(phone, code)
+        memberId = login_result["memberId"]
+        token = login_result["token"]
+        xin_coupon = new_user_coupon(token, memberId, PLAZAID)
+        coupon = xin_coupon["data"]
+        rr = ""
+        for i in coupon:
+            rr += "%s|" % i["code"]
+        s = "%s|%s" % (phone, rr)
+        write(s)
+        global SUCCESS_COUNT
+        SUCCESS_COUNT += 1
+        log("第%s个任务完成" % num)
+    except RuntimeError as e:
+        printf(e)
 
 
 # 易码获取号码
