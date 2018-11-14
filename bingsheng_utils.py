@@ -10,26 +10,46 @@ from tkinter import *
 
 import yima
 
+LOCK = threading.Lock()
 WXFFANTOKEN = '0fb65ff60569472082c838fbadc9ff92'
-PLAZAID = 1102461
 ym_username = "ye907182374"
 ym_password = "baobao1515"
-TOKEN = yima.ym_login(ym_username, ym_password)
-ITEMID = '27894'  # 丙晟科技
+YM_TOKEN = yima.ym_login(ym_username, ym_password)
+YM_ITEMID = '27894'  # 丙晟科技
+COUNT = 0
+SUCCESS_COUNT = 0
+TIMEOUT = 80
 
 
-def init(plazaId, ):
+def init(plazaId, place):
     global PLAZAID
     PLAZAID = plazaId
+    global FILE_PATH_PHONE
+    FILE_PATH_PHONE = "%s%sphone.txt" % (PLAZAID, time.strftime("%Y%m%d"))
+    global FILE_PATH
+    FILE_PATH = "%s%s.txt" % (PLAZAID, time.strftime("%Y%m%d"))
 
 
 def printf(s):
-    print('[%s][%s][%s]' % (threading.current_thread().getName(), time.strftime("%X"), s))
+    print('[%s][%s]%s' % (threading.current_thread().getName(), time.strftime("%X"), s))
 
 
-def write(path, s):
-    f = open(path, "a")
-    f.write('[%s][%s]\n' % (time.strftime("%X"), s.strip()))
+def log(s):
+    printf(s)
+    textView.insert(END, '[%s][%s]%s\n' % (threading.current_thread().name, time.strftime("%X"), s))
+    textView.update()
+    textView.see(END)
+
+
+def write(s):
+    f = open(FILE_PATH, "a")
+    f.write('[%s]%s\n' % (time.strftime("%X"), s.strip()))
+    f.close()
+
+
+def write_phone(s):
+    f = open(FILE_PATH_PHONE, "a")
+    f.write('[%s]%s\n' % (time.strftime("%X"), s.strip()))
     f.close()
 
 
@@ -77,8 +97,15 @@ def login(phone, code):
         'phonefocus': 'true',
         'codefocus': 'false'
     }
-    response = requests.post('https://api.beyonds.com/wdmp/member/v1/manualLogin', headers=headers, data=data)
-    printf(response.text)
+    for i in range(0, 3):
+        response = requests.post('https://api.beyonds.com/wdmp/member/v1/manualLogin', headers=headers, data=data)
+        printf(response.text)
+        result = json.loads(response.text)
+        if result["status"] == 200:
+            write_phone(phone)
+            return result["data"]
+        if i >= 2:
+            raise RuntimeError("登录失败")
 
 
 # 领取新人礼
@@ -136,8 +163,52 @@ def get_product_list(plazaId):
         ('rushFlag', '0'),
     )
     response = requests.get('https://api.beyonds.com/wdmp/product/v1/getProductList', headers=headers, params=params)
-    print(response.text)
+    printf(response.text)
     return json.loads(response.text)
+
+
+# 验证号码是否可用
+def check_phone(phone):
+    headers_guanli = {
+        'tenantId': '2017092600001',
+        'Accept': 'application/json, text/plain, */*',
+        'orgcode': '1104483',
+        'orgTypeCode': '10003',
+        'token': 'MjM1MDY0MDgxMjgxNzEyMTI4',
+    }
+
+    params = (
+        ('pageIndex', '1'),
+        ('pageSize', '10'),
+        ('scopes[]', 'DQFquanjituan'),
+        ('scope', 'DQFquanjituan'),
+        ('orgType', '10001'),
+        ('mobileNo', phone),
+        ('drainageTypeshow', 'true'),
+        ('drainagedateshow', 'true'),
+        ('timestr', time.time()),
+    )
+
+    response = requests.get('http://wanda.ffan.com/sail/member/list', headers=headers_guanli, params=params)
+    printf("检测手机号有效性：%s" % response.text)
+    return json.loads(response.text)
+
+
+# 处理飞凡短信内容
+def get_code(sms):
+    if sms is None:
+        raise RuntimeError("短信获取不到")
+    if "您已经是飞凡会员" in sms:
+        raise RuntimeError("该手机号已注册")
+    code = sms[sms.find('，') - 8: sms.find('，')]
+    pat = "[0-9]+"
+    IC = re.search(pat, code)
+    if IC:
+        code = IC.group()
+    print("[" + threading.current_thread().name + "] " + "验证码为：" + code)
+    if code is None:
+        raise RuntimeError('验证码为空')
+    return code
 
 
 def ui():
@@ -148,6 +219,7 @@ def ui():
     fm1 = Frame(root)
     fm1.pack(fill=X)
     value = tkinter.StringVar()  # 窗体自带的文本，新建一个值
+    global comboxlist
     comboxlist = ttk.Combobox(fm1, textvariable=value, width=15)  # 初始化
     list = get_product_list(PLAZAID)
     items = list["data"]["items"]
@@ -161,12 +233,16 @@ def ui():
     comboxlist.pack(side=LEFT)
     label1 = Label(fm1, text='量')
     global entry1
-    entry1 = Entry(fm1, width=4)
+    ee = StringVar()
+    entry1 = Entry(fm1, width=4, textvariable=ee)
+    ee.set(0)
     label1.pack(side=LEFT)
     entry1.pack(side=LEFT)
     interval_label = Label(fm1, text="间隔")
     global interval
-    interval = Entry(fm1, width=5)
+    ie = StringVar()
+    interval = Entry(fm1, width=4, textvariable=ie)
+    ie.set(30)
     interval_label.pack(side=LEFT)
     interval.pack(side=LEFT)
 
@@ -180,23 +256,92 @@ def ui():
 
     fm2 = Frame(root)
     fm2.pack()
-    btn4 = Button(fm2, text='快新', command=kuai_xin_submit)
-    btn4.pack(side=LEFT)
-    btn5 = Button(fm2, text='快普', command=kuai_putong_submit)
-    btn5.pack(side=LEFT)
+    global kuaixin
+    kuaixin = Button(fm2, text='快新', command=kuai_xin_submit)
+    kuaixin.pack(side=LEFT)
+    global kuaiputong
+    kuaiputong = Button(fm2, text='快普', command=kuai_putong_submit)
+    kuaiputong.pack(side=LEFT)
 
     root.mainloop()
 
 
 def kuai_putong_submit():
     printf("进行快速普通券")
+    printf(comboxlist.get())
+    num = entry1.get()
+    if not num.isdigit() or int(num) <= 0:
+        log("输入需要刷的量")
+        raise RuntimeError("输入需要刷的量")
+    t = threading.Thread(target=kuai_putong_thread)
+    t.setDaemon(True)
+    t.start()
+    printf("完成快速普通全")
+
+
+def kuai_putong_thread():
+    printf("进入线程处理事件")
+    # i = 0
+    # while True:
+    #     # 如果当前大于等于要刷的数量则跳出循环
+    #     if COUNT >= int(entry1.get()):
+    #         break
+    #     log("进行第%s个任务" % i)
+    #     platform = random.randint(1, 1)
+    #     phone = new_get_phone(platform)
+    #     sms = new_get_sms(platform, phone)
+    #     code = get_code(sms)
+    #     login_result = login(phone, code)
+    #     memberId = login_result["memberId"]
+    #     token = login_result["token"]
+    #     gain_free_coupon(token, memberId, )
+    #
+    #     time.sleep(5)
+    printf("完成线程事件")
 
 
 def kuai_xin_submit():
     printf("进行快速新人券")
 
 
+# 易码获取号码
+def new_ym_phone():
+    phone = yima.ym_phone(YM_TOKEN, YM_ITEMID, "170.171.172", "", "", "")
+    if phone is None:
+        raise RuntimeError("手机号获取不到")
+    printf("易码获取手机号为：%s" % phone)
+    return phone
+
+
+# 返回手机号
+def new_get_phone(platform):
+    count = 0
+    while True:
+        phone = ""
+        if platform == 1:
+            phone = new_ym_phone()
+        check_result = check_phone(phone)
+        if check_result['status'] != '0000' or check_result['_metadata']['totalCount'] != 0:
+            if platform == 1:
+                yima.ym_release(YM_TOKEN, YM_ITEMID, phone)
+                yima.ym_ignore(YM_TOKEN, YM_ITEMID, phone)
+            count += 1
+            if count >= 10:
+                raise RuntimeError("本次%s通道10次没有成功获取号码。" % platform)
+            continue
+        return phone
+
+
+# 新版获取短信
+def new_get_sms(platform, phone):
+    send_v_code(phone)
+    time.sleep(5)
+    if platform == 1:
+        return yima.ym_sms(YM_TOKEN, YM_ITEMID, phone, TIMEOUT)
+
+
 if __name__ == '__main__':
     # new_user_coupon("2431933be35f422abb6c1639f1c51075", "15000000275022050", 1102461)
     # get_product_list(1102461)
-    ui()
+    # ui()
+    printf()
