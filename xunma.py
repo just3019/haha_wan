@@ -5,6 +5,7 @@ import time
 import requests
 
 ITEMID = "3410"  # 飞凡网
+# ITEMID = "29188"  # 丙晟科技
 
 header_dict = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko'}
 
@@ -27,12 +28,12 @@ def xm_login(username, password, developer):
         print(e)
 
 
-def xm_get_phone(token, area, PhoneType):
+def xm_get_phone(token, area, PhoneType, itemid=ITEMID):
     try:
         url = "http://xapi.xunma.net/getPhone"
         # ("PhoneType", random.randint(0, 3)),
         params = {
-            ("ItemId", ITEMID),
+            ("ItemId", itemid),
             ("token", token),
             ("Code", "UTF8"),
             ("PhoneType", PhoneType),
@@ -57,12 +58,12 @@ def xm_get_phone(token, area, PhoneType):
         raise RuntimeError(e)
 
 
-def xm_sms(token, phone, timeout):
+def xm_sms(token, phone, timeout, itemid=ITEMID):
     try:
         url = "http://xapi.xunma.net/getMessage"
         params = {
             ("token", token),
-            ("itemId", ITEMID),
+            ("itemId", itemid),
             ("phone", phone),
             ("Code", "UTF8"),
         }
@@ -82,11 +83,11 @@ def xm_sms(token, phone, timeout):
                 phone_list = phone + "-" + ITEMID + ";"
                 xm_relese(token, phone_list)
                 raise RuntimeError("xm_sms获取不到短信")
-            if "MSG" in response or "飞凡" in response:
+            if "MSG" in response:
                 black_phone_list = ITEMID + "-" + phone + ";"
                 xm_black(token, black_phone_list)
                 return response[3]
-            time.sleep(2)
+            time.sleep(5)
     except RuntimeError as e:
         print("[" + threading.current_thread().name + "] " + "讯码平台问题sms")
         raise RuntimeError(e)
@@ -128,13 +129,13 @@ if __name__ == '__main__':
     login_result = xm_login("demon3019", "12345678", "wdVJ21MmabfWT72lAxf3JA==")
     token = login_result[0]
     print("[" + threading.current_thread().name + "] " + token)
-    phone = xm_get_phone(token, "辽宁", random.randint(0, 4))
+    phone = xm_get_phone(token, "辽宁", random.randint(0, 4), "29188")
     print("[" + threading.current_thread().name + "] " + phone)
-    # # get_code.get_code(phone)
-    # time.sleep(2)
-    # sms = xm_sms(token, phone, 60)
-    # print(sms)
-    phone_list = phone + "-" + ITEMID + ";"
-    xm_relese(token, phone_list)
-    xm_black(token, phone_list)
-    xm_logout(token)
+    # get_code.get_code(phone)
+    time.sleep(15)
+    sms = xm_sms(token, phone, 120, "29188")
+    print(sms)
+    # phone_list = phone + "-" + ITEMID + ";"
+    # xm_relese(token, phone_list)
+    # xm_black(token, phone_list)
+    # xm_logout(token)

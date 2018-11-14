@@ -15,6 +15,8 @@ headers = {
 }
 TOKEN = "7920047BF00ED99E20CCCF859E648FA0"
 XMID = "5681"
+
+
 # XMID = "171348"  # 丙晟科技
 
 
@@ -26,9 +28,9 @@ def yx_login(username, password):
     return response.text
 
 
-def yx_phone():
+def yx_phone(xmid=XMID):
     url = "http://47.97.118.96:9180/service.asmx/GetHM2Str?token=%s&xmid=%s&sl=1&lx=6&ks=0&rj=demon3018&a1=&a2=&pk=" % (
-        TOKEN, XMID)
+        TOKEN, xmid)
     response = requests.get(url, headers=headers, timeout=10).text.split("=")
     # print(response)
     if response[0] == '-3':
@@ -40,8 +42,8 @@ def yx_phone():
     raise RuntimeError("云享获取不到号码")
 
 
-def yx_sms(phone, timeout):
-    url = "http://47.97.118.96:9180/service.asmx/GetYzm2Str?token=%s&xmid=%s&hm=%s&sf=1" % (TOKEN, XMID, phone)
+def yx_sms(phone, timeout, xmid=XMID):
+    url = "http://47.97.118.96:9180/service.asmx/GetYzm2Str?token=%s&xmid=%s&hm=%s&sf=1" % (TOKEN, xmid, phone)
     start = time.time()
     while True:
         response = requests.get(url, headers=headers, timeout=10)
@@ -72,15 +74,15 @@ def yx_release_all():
     # print("yx释放全部:" + response.text)
 
 
-def yx_black(phone):
-    url = "http://47.97.118.96:9180/service.asmx/Hmd2Str?token=%s&xmid=%s&hm=%s&sf=1" % (TOKEN, XMID, phone)
+def yx_black(phone, xmid=XMID):
+    url = "http://47.97.118.96:9180/service.asmx/Hmd2Str?token=%s&xmid=%s&hm=%s&sf=1" % (TOKEN, xmid, phone)
     response = requests.get(url, headers=headers, timeout=10)
     # print("yx拉黑:" + response.text)
 
 
-def yx_phone_many(num):
+def yx_phone_many(num, xmid=XMID):
     url = "http://47.97.118.96:9180/service.asmx/GetHM2Str?token=%s&xmid=%s&sl=%s&lx=6&ks=0&rj=demon3018&a1=&a2=&pk=" % (
-        TOKEN, XMID, num)
+        TOKEN, xmid, num)
     # print(url)
     response = requests.get(url, headers=headers, timeout=10).text.split("=")
     # print(response)

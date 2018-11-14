@@ -32,9 +32,9 @@ def hm_login(username, password):
     return response
 
 
-def hm_phone(hm_type, province):
+def hm_phone(hm_type, province, pid=PID):
     url = URL + "getMobilenum?uid=%s&pid=%s&token=%s&type=%s&province=%s&nonVirtual=true" % (
-        UID, PID, TOKEN, hm_type, province)
+        UID, pid, TOKEN, hm_type, province)
     response = requests.post(url, headers=header_dict, timeout=10).text
     # print("获取手机号：" + response)
     if "余额不足，请充值" == response:
@@ -44,9 +44,9 @@ def hm_phone(hm_type, province):
     return response
 
 
-def hm_sms(phone, timeout):
+def hm_sms(phone, timeout, pid=PID):
     url = URL + "getVcodeAndReleaseMobile?mobile=%s&uid=%s&token=%s&author_uid=%s&pid=%s" % (
-        phone, UID, TOKEN, USERNAME, PID)
+        phone, UID, TOKEN, USERNAME, pid)
     start = time.time()
     while True:
         response = requests.post(url, headers=header_dict, timeout=10).text
@@ -62,8 +62,8 @@ def hm_sms(phone, timeout):
         time.sleep(5)
 
 
-def hm_black(phone):
-    url = URL + "addIgnoreList?mobiles=%s&token=%s&uid=%s&pid=%s" % (phone, TOKEN, UID, PID)
+def hm_black(phone, pid=PID):
+    url = URL + "addIgnoreList?mobiles=%s&token=%s&uid=%s&pid=%s" % (phone, TOKEN, UID, pid)
     response = requests.post(url, headers=header_dict, timeout=10).text
     # print("海码拉黑：" + response)
 
