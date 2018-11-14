@@ -4,9 +4,9 @@ import random
 import requests
 
 # c57f13fb3b2e4b038b316bf4f0cd1e79
-# a7b45393151e432f99d958a6a1319f95
-wxFfanToken = "a7b45393151e432f99d958a6a1319f95"
-# cho = ["a7b45393151e432f99d958a6a1319f95", "a7b45393151e432f99d958a6a1319f95"]
+# 03e3a6b3cc0b44ea9247f75d661dc39f
+wxFfanToken = "03e3a6b3cc0b44ea9247f75d661dc39f"
+# cho = ["03e3a6b3cc0b44ea9247f75d661dc39f", "03e3a6b3cc0b44ea9247f75d661dc39f"]
 # wxFfanToken = random.choice(cho)
 print(wxFfanToken)
 

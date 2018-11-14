@@ -20,7 +20,7 @@ UID = ""
 COOKIESTR = ""
 PUID = ""
 ITEMID = '7982'
-WXFFANTOKEN = "a7b45393151e432f99d958a6a1319f95"
+WXFFANTOKEN = "03e3a6b3cc0b44ea9247f75d661dc39f"
 LOCK = threading.Lock()
 
 headers = {

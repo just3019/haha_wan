@@ -141,6 +141,7 @@ def gain_free_coupon(token, memberId, productId):
     data = '{"productId":%s,"channelId":1010}' % productId
     response = requests.post('https://api.beyonds.com/wdmp/coupon/v1/gainFreeCoupon', headers=headers, data=data)
     printf(response.text)
+    return json.loads(response.text)
 
 
 # 获取商品列表
@@ -268,7 +269,6 @@ def ui():
 
 def kuai_putong_submit():
     printf("进行快速普通券")
-    printf(comboxlist.get())
     num = entry1.get()
     if not num.isdigit() or int(num) <= 0:
         log("输入需要刷的量")
@@ -280,23 +280,26 @@ def kuai_putong_submit():
 
 
 def kuai_putong_thread():
+    product = str(comboxlist.get()).split("|")
+    log(product)
+    productId = product[2]
     printf("进入线程处理事件")
-    # i = 0
-    # while True:
-    #     # 如果当前大于等于要刷的数量则跳出循环
-    #     if COUNT >= int(entry1.get()):
-    #         break
-    #     log("进行第%s个任务" % i)
-    #     platform = random.randint(1, 1)
-    #     phone = new_get_phone(platform)
-    #     sms = new_get_sms(platform, phone)
-    #     code = get_code(sms)
-    #     login_result = login(phone, code)
-    #     memberId = login_result["memberId"]
-    #     token = login_result["token"]
-    #     gain_free_coupon(token, memberId, )
-    #
-    #     time.sleep(5)
+    i = 0
+    while True:
+        # 如果当前大于等于要刷的数量则跳出循环
+        if COUNT >= int(entry1.get()):
+            break
+        log("进行第%s个任务" % i)
+        platform = random.randint(1, 1)
+        phone = new_get_phone(platform)
+        sms = new_get_sms(platform, phone)
+        code = get_code(sms)
+        login_result = login(phone, code)
+        memberId = login_result["memberId"]
+        token = login_result["token"]
+        gain_free_coupon(token, memberId, productId)
+
+        time.sleep(5)
     printf("完成线程事件")
 
 
