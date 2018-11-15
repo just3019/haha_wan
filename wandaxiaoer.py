@@ -125,8 +125,7 @@ def deal():
 def scan(code, index):
     try:
         log("第%s个核销开始" % index)
-        # verify(code)
-
+        verify(code)
         log("核销第%s个券%s成功" % (index, code))
     except RuntimeError as e:
         log("%s核销有问题" % code)
@@ -134,7 +133,7 @@ def scan(code, index):
 
 def verify(code):
     storeId = user["orgList"][0]["code"]
-    tenantid = user["orgList"][0]["tenantId"]
+    tenantid = str(user["orgList"][0]["tenantId"])
     userid = user["id"]
     token = user["token"]
     headers = {
