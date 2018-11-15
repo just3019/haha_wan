@@ -8,7 +8,9 @@ from tkinter import ttk
 import requests
 from tkinter import *
 
+import haima
 import yima
+import yunxiang
 from thread_pool import ThreadPool
 
 LOCK = threading.Lock()
@@ -17,6 +19,8 @@ ym_username = "ye907182374"
 ym_password = "baobao1515"
 YM_TOKEN = yima.ym_login(ym_username, ym_password)
 YM_ITEMID = '27894'  # 丙晟科技
+HM_PID = "11147"
+YX_ID = "171348"
 COUNT = 1
 SUCCESS_COUNT = 0
 TIMEOUT = 80
@@ -380,6 +384,24 @@ def new_ym_phone():
     return phone
 
 
+# 海码获取号码
+def new_hm_phone():
+    phone = haima.hm_phone("", "", HM_PID)
+    if phone is None:
+        raise RuntimeError("手机号获取不到")
+    printf("海码获取手机号：%s" % phone)
+    return phone
+
+
+# 云享获取号码
+def new_yx_phone():
+    phone = yunxiang.yx_phone(YX_ID)
+    if phone is None:
+        raise RuntimeError("手机号码获取不到")
+    printf("云享获取手机号：%s" % phone)
+    return phone
+
+
 # 返回手机号
 def new_get_phone(platform):
     count = 0
@@ -387,11 +409,20 @@ def new_get_phone(platform):
         phone = ""
         if platform == 1:
             phone = new_ym_phone()
+        elif platform == 2:
+            phone = new_hm_phone()
+        elif platform == 3:
+            phone = new_yx_phone()
         check_result = check_phone(phone)
         if check_result['status'] != '0000' or check_result['_metadata']['totalCount'] != 0:
             if platform == 1:
                 yima.ym_release(YM_TOKEN, YM_ITEMID, phone)
                 yima.ym_ignore(YM_TOKEN, YM_ITEMID, phone)
+            elif platform == 2:
+                haima.hm_black(phone, HM_PID)
+            elif platform == 3:
+                yunxiang.yx_relese(phone)
+                yunxiang.yx_black(phone, YX_ID)
             count += 1
             if count >= 10:
                 raise RuntimeError("本次%s通道10次没有成功获取号码。" % platform)
@@ -405,6 +436,10 @@ def new_get_sms(platform, phone):
     time.sleep(5)
     if platform == 1:
         return yima.ym_sms(YM_TOKEN, YM_ITEMID, phone, TIMEOUT)
+    elif platform == 2:
+        return haima.hm_sms(phone, TIMEOUT, HM_PID)
+    elif platform == 3:
+        return yunxiang.yx_sms(phone, TIMEOUT, YX_ID)
 
 
 if __name__ == '__main__':
