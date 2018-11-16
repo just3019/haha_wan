@@ -132,6 +132,7 @@ def scan(code, index):
     try:
         log("第%s个核销开始" % index)
         verify(code)
+        write(code)
         log("核销第%s个券%s成功" % (index, code))
     except RuntimeError as e:
         log("%s核销有问题" % code)
