@@ -10,11 +10,11 @@ from thread_pool import ThreadPool
 
 lock = threading.Lock()
 
-place = "滨州"
+place = "通辽"
 
-storeId = "100000251"
-userid = "269129928065794048"
-token = "MjY5Nzg1OTczMDY3NjAzOTY4"
+storeId = "100006884"
+userid = "269038101515313152"
+token = "MjcwNjQ4NzMzMDExMzgyMjcy"
 
 
 def printf(s):
