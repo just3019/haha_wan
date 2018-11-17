@@ -13,11 +13,14 @@ import yima
 import yunxiang
 from thread_pool import ThreadPool
 
+PLAZAID = '1100754'
+PLACE = "乌海"
+
 LOCK = threading.Lock()
 WXFFANTOKEN = '0fb65ff60569472082c838fbadc9ff92'
-ym_username = "ye907182374"
-ym_password = "baobao1515"
-YM_TOKEN = yima.ym_login(ym_username, ym_password)
+YM_TOKEN = yima.ym_login("wuhaiwanda", "wuhaiwanda")
+haima.hm_login("wuhaiwanda", "wuhaiwanda")
+yunxiang.yx_login("wuhaiwanda", "wuhaiwanda")
 YM_ITEMID = '27894'  # 丙晟科技
 HM_PID = "11147"
 YX_ID = "171348"
@@ -334,7 +337,6 @@ def ui():
     fm2.pack()
     Button(fm2, text='快新', command=kuai_xin_submit).pack(side=LEFT)
     Button(fm2, text='快普', command=kuai_putong_submit).pack(side=LEFT)
-    Button(fm2, text='注册', command=kuai_register_submit).pack(side=LEFT)
 
     root.mainloop()
 
@@ -443,52 +445,5 @@ def kuai_xin_deal(num):
         printf(e)
 
 
-def kuai_register_submit():
-    num = entry1.get()
-    if not num.isdigit() or int(num) <= 0:
-        log("输入需要刷的量")
-        raise RuntimeError("输入需要刷的量")
-    t = threading.Thread(target=kuai_register_thread)
-    t.setDaemon(True)
-    t.start()
-
-
-def kuai_register_thread():
-    global COUNT
-    TP = ThreadPool(30)
-    while True:
-        # 如果当前大于等于要刷的数量则跳出循环
-        if COUNT > int(entry1.get()):
-            break
-        TP.add_task(kuai_register_deal, COUNT)
-        COUNT += 1
-        time.sleep(get_interval_time())
-
-    TP.wait_completion()
-    time.sleep(1)
-    COUNT = SUCCESS_COUNT
-    log("本次任务完成,成功%s,已修改成%s,如果缺失，请再点击开始。" % (SUCCESS_COUNT, COUNT))
-
-
-def kuai_register_deal(num):
-    try:
-        log("进行第%s个任务" % num)
-        platform = random.randint(1, 3)
-        phone = new_get_phone(platform)
-        sms = new_get_sms(platform, phone)
-        code = get_code(sms)
-        login(phone, code)
-        s = "%s" % phone
-        write(s)
-        global SUCCESS_COUNT
-        SUCCESS_COUNT += 1
-        log("第%s个任务完成" % num)
-    except RuntimeError as e:
-        printf(e)
-
-
 if __name__ == '__main__':
-    # new_user_coupon("2431933be35f422abb6c1639f1c51075", "15000000275022050", 1102461)
-    # get_product_list(1102461)
-    # ui()
-    printf()
+    ui()

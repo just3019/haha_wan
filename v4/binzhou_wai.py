@@ -13,10 +13,13 @@ import yima
 import yunxiang
 from thread_pool import ThreadPool
 
+PLAZAID = '1102461'
+PLACE = "滨州"
+
 LOCK = threading.Lock()
 WXFFANTOKEN = '0fb65ff60569472082c838fbadc9ff92'
-ym_username = "ye907182374"
-ym_password = "baobao1515"
+ym_username = "binzhou"
+ym_password = "binzhou"
 YM_TOKEN = yima.ym_login(ym_username, ym_password)
 YM_ITEMID = '27894'  # 丙晟科技
 HM_PID = "11147"
@@ -254,20 +257,11 @@ def new_get_phone(platform):
         phone = ""
         if platform == 1:
             phone = new_ym_phone()
-        elif platform == 2:
-            phone = new_hm_phone()
-        elif platform == 3:
-            phone = new_yx_phone()
         check_result = check_phone(phone)
         if check_result['status'] != '0000' or check_result['_metadata']['totalCount'] != 0:
             if platform == 1:
                 yima.ym_release(YM_TOKEN, YM_ITEMID, phone)
                 yima.ym_ignore(YM_TOKEN, YM_ITEMID, phone)
-            elif platform == 2:
-                haima.hm_black(phone, HM_PID)
-            elif platform == 3:
-                yunxiang.yx_relese(phone)
-                yunxiang.yx_black(phone, YX_ID)
             count += 1
             if count >= 10:
                 raise RuntimeError("本次%s通道10次没有成功获取号码。" % platform)
@@ -281,10 +275,6 @@ def new_get_sms(platform, phone):
     time.sleep(5)
     if platform == 1:
         return yima.ym_sms(YM_TOKEN, YM_ITEMID, phone, TIMEOUT)
-    elif platform == 2:
-        return haima.hm_sms(phone, TIMEOUT, HM_PID)
-    elif platform == 3:
-        return yunxiang.yx_sms(phone, TIMEOUT, YX_ID)
 
 
 def ui():
@@ -334,7 +324,6 @@ def ui():
     fm2.pack()
     Button(fm2, text='快新', command=kuai_xin_submit).pack(side=LEFT)
     Button(fm2, text='快普', command=kuai_putong_submit).pack(side=LEFT)
-    Button(fm2, text='注册', command=kuai_register_submit).pack(side=LEFT)
 
     root.mainloop()
 
@@ -372,7 +361,7 @@ def kuai_putong_thread():
 def kuai_putong_deal(num, productId):
     try:
         log("进行第%s个任务" % num)
-        platform = random.randint(1, 3)
+        platform = random.randint(1, 1)
         phone = new_get_phone(platform)
         sms = new_get_sms(platform, phone)
         code = get_code(sms)
@@ -421,7 +410,7 @@ def kuai_xin_thread():
 def kuai_xin_deal(num):
     try:
         log("进行第%s个任务" % num)
-        platform = random.randint(1, 3)
+        platform = random.randint(1, 1)
         phone = new_get_phone(platform)
         sms = new_get_sms(platform, phone)
         code = get_code(sms)
@@ -443,52 +432,5 @@ def kuai_xin_deal(num):
         printf(e)
 
 
-def kuai_register_submit():
-    num = entry1.get()
-    if not num.isdigit() or int(num) <= 0:
-        log("输入需要刷的量")
-        raise RuntimeError("输入需要刷的量")
-    t = threading.Thread(target=kuai_register_thread)
-    t.setDaemon(True)
-    t.start()
-
-
-def kuai_register_thread():
-    global COUNT
-    TP = ThreadPool(30)
-    while True:
-        # 如果当前大于等于要刷的数量则跳出循环
-        if COUNT > int(entry1.get()):
-            break
-        TP.add_task(kuai_register_deal, COUNT)
-        COUNT += 1
-        time.sleep(get_interval_time())
-
-    TP.wait_completion()
-    time.sleep(1)
-    COUNT = SUCCESS_COUNT
-    log("本次任务完成,成功%s,已修改成%s,如果缺失，请再点击开始。" % (SUCCESS_COUNT, COUNT))
-
-
-def kuai_register_deal(num):
-    try:
-        log("进行第%s个任务" % num)
-        platform = random.randint(1, 3)
-        phone = new_get_phone(platform)
-        sms = new_get_sms(platform, phone)
-        code = get_code(sms)
-        login(phone, code)
-        s = "%s" % phone
-        write(s)
-        global SUCCESS_COUNT
-        SUCCESS_COUNT += 1
-        log("第%s个任务完成" % num)
-    except RuntimeError as e:
-        printf(e)
-
-
 if __name__ == '__main__':
-    # new_user_coupon("2431933be35f422abb6c1639f1c51075", "15000000275022050", 1102461)
-    # get_product_list(1102461)
-    # ui()
-    printf()
+    ui()

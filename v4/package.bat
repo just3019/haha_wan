@@ -1,3 +1,10 @@
 pyinstaller -F binzhou.py
+pyinstaller -F binzhou_wai.py
 pyinstaller -F dalianganjingzi.py
+pyinstaller -F huhehaote_wai.py
+pyinstaller -F pingyang.py
+pyinstaller -F sanming_wai.py
+pyinstaller -F tongliao.py
+pyinstaller -F tongliao_wai.py
+pyinstaller -F wuhai_wai.py
 pyinstaller -F yancheng.py
