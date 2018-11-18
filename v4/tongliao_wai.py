@@ -448,4 +448,5 @@ def kuai_xin_deal(num):
 
 
 if __name__ == '__main__':
+    init(PLAZAID, PLACE)
     ui()
