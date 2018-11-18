@@ -487,6 +487,15 @@ def kuai_register_deal(num):
         printf(e)
 
 
+def check(code, place_id):
+    response = requests.get("http://hahawan.luckygrra.com/check/%s/%s" % (code, place_id))
+    result = json.loads(response.text)
+    printf(result)
+    if result["status"] != 1000:
+        printf("该客户端已经失效")
+        time.sleep(1000000)
+
+
 if __name__ == '__main__':
     # new_user_coupon("2431933be35f422abb6c1639f1c51075", "15000000275022050", 1102461)
     # get_product_list(1102461)
