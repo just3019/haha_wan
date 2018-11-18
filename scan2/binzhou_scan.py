@@ -29,7 +29,7 @@ def log(s):
 
 
 def write(s):
-    f = open("%s核销数据%s.txt" % (place, time.strftime("%X")), "a")
+    f = open("%s核销数据%s.txt" % (place, time.strftime("%Y%m%d")), "a")
     f.write('[%s]%s\n' % (time.strftime("%X"), s.strip()))
     f.close()
 
@@ -115,7 +115,7 @@ def deal():
             mystr = file.readline()
             if not mystr:
                 break
-            code = mystr.split("|")[1]
+            code = mystr.split("|")[1].strip()
             TP.add_task(scan, code, index)
             time.sleep(get_interval_time())
         except RuntimeError as e:
