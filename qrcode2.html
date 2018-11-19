@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>飞凡工具</title>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+    <style>
+        .cell {
+            list-style: none;
+            width: 300px;
+            float: left;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .cell .qr {
+            width: 100px;
+        }
+
+    </style>
+</head>
+<body>
+<input type="file" value="导入txt文件" id="upload" style="display:none;" onchange="parseFile()"/>
+<input type="button" value="导入范围" id="import">
+<div id="qrcode">
+
+</div>
+</body>
+<script>
+    $("#import").click(function () {
+        $("#upload").click();
+    });
+
+    function parseFile() {
+        console.info("开始解析");
+        var path = $("#upload").val();
+        console.info(path);
+        var selectedFile = document.getElementById("upload").files[0];
+        var name = selectedFile.name;
+        var size = selectedFile.size;
+        var reader = new FileReader();
+        reader.readAsText(selectedFile);
+        reader.onload = function (oFREvent) {
+            var result = oFREvent.target.result;
+            var list = result.split("\n");
+            for (var i = 0; i < list.length - 1; i++) {
+                var cell = list[i];
+                var cellList = cell.split("|");
+                var html = "<li class='cell'><div class='qr' id='" + cellList[1] + "'></div>" + cellList[0] + "</li>";
+                $("#" + cellList[1]).qrcode(cellList[1]);
+                $("#qrcode").append(html);
+            }
+            for (var j = 0; j < list.length - 1; j++) {
+                var c = list[j];
+                var cl = c.split("|");
+                var ii = cl[1];
+                $("#" + ii).qrcode(ii);
+            }
+        };
+    }
+</script>
+</html>

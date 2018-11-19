@@ -50,7 +50,7 @@ def log(s):
 
 def write(s):
     f = open(FILE_PATH, "a")
-    f.write('[%s]%s\n' % (time.strftime("%X"), s.strip()))
+    f.write('%s\n' % s.strip())
     f.close()
 
 
