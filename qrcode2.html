@@ -47,7 +47,7 @@
             for (var i = 0; i < list.length - 1; i++) {
                 var cell = list[i];
                 var cellList = cell.split("|");
-                var html = "<li class='cell'><div class='qr' id='" + cellList[1] + "'></div>" + cellList[0] + "</li>";
+                var html = "<li class='cell'><div class='qr' id='" + cellList[1].replace(/[\r\n]/g, "") + "'></div>" + cellList[0] + "</li>";
                 $("#" + cellList[1]).qrcode(cellList[1]);
                 $("#qrcode").append(html);
             }
