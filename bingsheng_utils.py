@@ -500,4 +500,6 @@ if __name__ == '__main__':
     # new_user_coupon("2431933be35f422abb6c1639f1c51075", "15000000275022050", 1102461)
     # get_product_list(1102461)
     # ui()
-    printf()
+    # printf()
+
+    gain_free_coupon("9b7777ae8e6043ecb9a222e4f9bc93eb", "17000001001320381", "40802")
