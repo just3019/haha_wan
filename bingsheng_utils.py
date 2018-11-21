@@ -14,7 +14,8 @@ import yunxiang
 from thread_pool import ThreadPool
 
 LOCK = threading.Lock()
-WXFFANTOKEN = '0fb65ff60569472082c838fbadc9ff92'
+# WXFFANTOKEN = '0fb65ff60569472082c838fbadc9ff92'
+WXFFANTOKEN = 'e7daa1530e4a49cfab6b7659e4af3d9a'
 ym_username = "ye907182374"
 ym_password = "baobao1515"
 YM_TOKEN = yima.ym_login(ym_username, ym_password)
@@ -101,7 +102,7 @@ def login(phone, code):
         'error': '',
         'downcount': 39,
         'inter': 92,
-        'phonefocus': 'true',
+        'phonefocus': 'false',
         'codefocus': 'false'
     }
     for i in range(0, 3):
