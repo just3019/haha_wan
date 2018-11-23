@@ -179,25 +179,37 @@ def get_product_list(plazaId):
 
 # 验证号码是否可用
 def check_phone(phone):
-    headers_guanli = {
-        'tenantId': '2017092600001',
-        'Accept': 'application/json, text/plain, */*',
+    headers = {
+        'orgname': '%E5%91%BC%E5%B8%82%E5%9B%9E%E6%B0%91%E5%8C%BA%E4%B8%87%E8%BE%BE%E5%B9%BF%E5%9C%BA',
+        'Accept-Encoding': 'gzip, deflate',
+        'plazaCode': '1104483',
+        'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8,zh-TW;q=0.7,ja;q=0.6',
+        'orgTypeName': '%E5%B9%BF%E5%9C%BA',
+        'userid': '259300419157991424',
         'orgcode': '1104483',
         'orgTypeCode': '10003',
-        'token': 'MjM1MDY0MDgxMjgxNzEyMTI4',
+        'Connection': 'keep-alive',
+        'workingOrgCode': '1104483',
+        'areaCode': '10018',
+        'groupCode': '101',
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36',
+        'tenantId': '2018092600001',
+        'Accept': 'application/json, text/plain, */*',
+        'username': '%E5%9B%9E%E6%B0%91%E5%8C%BA%E4%B8%87%E8%BE%BE%E5%B9%BF%E5%9C%BA%E7%AE%A1%E7%90%86%E5%91%98',
+        'storeCode': '',
+        'Referer': 'http://center.beyonds.com/',
+        'centerCode': '1008',
+        'token': 'MjcyODQxNTk5MjIxNjAwMjU2',
     }
     params = (
+        ('scope', 'DQFquanjituan'),
+        ('scopeType', '10003'),
+        ('mobileNo', phone),
         ('pageIndex', '1'),
         ('pageSize', '10'),
-        ('scopes[]', 'DQFquanjituan'),
-        ('scope', 'DQFquanjituan'),
-        ('orgType', '10001'),
-        ('mobileNo', phone),
-        ('drainageTypeshow', 'true'),
-        ('drainagedateshow', 'true'),
         ('timestr', time.time()),
     )
-    response = requests.get('http://wanda.ffan.com/sail/member/list', headers=headers_guanli, params=params)
+    response = requests.get('http://center.beyonds.com/member/members', headers=headers, params=params)
     printf("检测手机号有效性：%s" % response.text)
     return json.loads(response.text)
 
@@ -259,20 +271,20 @@ def new_get_phone(platform):
             phone = new_hm_phone()
         elif platform == 3:
             phone = new_yx_phone()
-        # check_result = check_phone(phone)
-        # if check_result['status'] != '0000' or check_result['_metadata']['totalCount'] != 0:
-        #     if platform == 1:
-        #         yima.ym_release(YM_TOKEN, YM_ITEMID, phone)
-        #         yima.ym_ignore(YM_TOKEN, YM_ITEMID, phone)
-        #     elif platform == 2:
-        #         haima.hm_black(phone, HM_PID)
-        #     elif platform == 3:
-        #         yunxiang.yx_relese(phone)
-        #         yunxiang.yx_black(phone, YX_ID)
-        #     count += 1
-        #     if count >= 10:
-        #         raise RuntimeError("本次%s通道10次没有成功获取号码。" % platform)
-        #     continue
+        check_result = check_phone(phone)
+        if check_result['data']['totalCount'] != 0:
+            if platform == 1:
+                yima.ym_release(YM_TOKEN, YM_ITEMID, phone)
+                yima.ym_ignore(YM_TOKEN, YM_ITEMID, phone)
+            elif platform == 2:
+                haima.hm_black(phone, HM_PID)
+            elif platform == 3:
+                yunxiang.yx_relese(phone)
+                yunxiang.yx_black(phone, YX_ID)
+            count += 1
+            if count >= 10:
+                raise RuntimeError("本次%s通道10次没有成功获取号码。" % platform)
+            continue
         return phone
 
 
