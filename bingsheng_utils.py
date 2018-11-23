@@ -259,20 +259,20 @@ def new_get_phone(platform):
             phone = new_hm_phone()
         elif platform == 3:
             phone = new_yx_phone()
-        check_result = check_phone(phone)
-        if check_result['status'] != '0000' or check_result['_metadata']['totalCount'] != 0:
-            if platform == 1:
-                yima.ym_release(YM_TOKEN, YM_ITEMID, phone)
-                yima.ym_ignore(YM_TOKEN, YM_ITEMID, phone)
-            elif platform == 2:
-                haima.hm_black(phone, HM_PID)
-            elif platform == 3:
-                yunxiang.yx_relese(phone)
-                yunxiang.yx_black(phone, YX_ID)
-            count += 1
-            if count >= 10:
-                raise RuntimeError("本次%s通道10次没有成功获取号码。" % platform)
-            continue
+        # check_result = check_phone(phone)
+        # if check_result['status'] != '0000' or check_result['_metadata']['totalCount'] != 0:
+        #     if platform == 1:
+        #         yima.ym_release(YM_TOKEN, YM_ITEMID, phone)
+        #         yima.ym_ignore(YM_TOKEN, YM_ITEMID, phone)
+        #     elif platform == 2:
+        #         haima.hm_black(phone, HM_PID)
+        #     elif platform == 3:
+        #         yunxiang.yx_relese(phone)
+        #         yunxiang.yx_black(phone, YX_ID)
+        #     count += 1
+        #     if count >= 10:
+        #         raise RuntimeError("本次%s通道10次没有成功获取号码。" % platform)
+        #     continue
         return phone
 
 
