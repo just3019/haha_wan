@@ -87,6 +87,7 @@ def send_v_code(phone):
 
 # 登录
 def login(phone, code):
+    printf("placeId :%s" % PLAZAID)
     headers = {
         'charset': 'utf-8',
         'referer': 'https://servicewechat.com/wx07dfb5d79541eca9/104/page-frame.html',
@@ -98,19 +99,24 @@ def login(phone, code):
         'mobile': phone,
         'verifyCode': code,
         'wxFfanToken': WXFFANTOKEN,
+        'plazaId': PLAZAID,
         'wandaUser': '[object Object]',
         'error': '',
-        'downcount': 39,
-        'inter': 92,
-        'phonefocus': 'false',
+        'downcount': '13',
+        'inter': '376',
+        'phonefocus': 'true',
         'codefocus': 'false'
     }
+
     for i in range(0, 3):
         response = requests.post('https://api.beyonds.com/wdmp/member/v1/manualLogin', headers=headers, data=data)
         printf(response.text)
         result = json.loads(response.text)
         if result["status"] == 200:
-            write_phone(phone)
+            memberId = result["data"]["memberId"]
+            token = result["data"]["token"]
+            fromOrgId = result["data"]["fromOrgId"]
+            write_phone("%s|%s|%s|%s" % (phone, memberId, token, fromOrgId))
             return result["data"]
         if i >= 2:
             raise RuntimeError("登录失败")
@@ -202,7 +208,7 @@ def check_phone(phone):
         'token': 'MjcyODQxNTk5MjIxNjAwMjU2',
     }
     params = (
-        ('scope', 'DQFquanjituan'),
+        ('scope', ''),
         ('scopeType', '10003'),
         ('mobileNo', phone),
         ('pageIndex', '1'),
